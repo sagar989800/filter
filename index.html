@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Microcrystalline Cellulose Filtration System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --estuary:#0E3B43; --estuary-2:#0A2C33; --husk:#C08F52; --clear:#5CCFE3;
+  --bg:#EEF4F1; --surface:#FFFFFF; --ink:#16282B; --muted:#4E6468; --line:#CFDDD9;
+  --chip:#E2ECE8;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B2328; --surface:#103036; --ink:#E4EFEC; --muted:#9DB5B6; --line:#1F4A51; --chip:#153A41;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B2328; --surface:#103036; --ink:#E4EFEC; --muted:#9DB5B6; --line:#1F4A51; --chip:#153A41;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--clear); outline-offset:3px; border-radius:4px}
+.wrap{max-width:1180px; margin:0 auto; padding:0 24px}
+
+/* ---------- NAV ---------- */
+nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:50; background:rgba(14,59,67,.86); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); color:#E6F4F2}
+nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px}
+.brand{font-family:var(--display); font-weight:800; font-size:1.3rem; letter-spacing:-.02em; text-decoration:none; display:flex; align-items:center; gap:10px}
+.brand .bs{display:none}
+.brand{font-size:1.05rem !important}
+@media (max-width:560px){.brand .bl{display:none}.brand .bs{display:inline}}
+.brand i{width:14px; height:20px; background:var(--clear); border-radius:50% 50% 50% 50%/60% 60% 40% 40%; display:inline-block; box-shadow:0 0 14px var(--clear)}
+nav ul{display:flex; gap:28px; list-style:none; margin:0; padding:0; font-size:.95rem}
+nav ul a{text-decoration:none; opacity:.8}
+nav ul a:hover{opacity:1}
+.btn{display:inline-flex; align-items:center; gap:8px; padding:13px 22px; border-radius:999px; font-weight:600; text-decoration:none; font-size:.97rem; border:1.5px solid transparent; cursor:pointer; font-family:var(--body); transition:transform .2s, background .2s}
+@media (hover:hover){.btn:hover{transform:translateY(-2px)}}
+.btn-primary{background:var(--clear); color:#06262B}
+.btn-ghost{border-color:rgba(230,244,242,.4); color:#E6F4F2; background:transparent}
+nav .btn{padding:9px 18px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative; overflow:hidden; background:radial-gradient(120% 90% at 75% 20%, #16555F 0%, var(--estuary) 45%, var(--estuary-2) 100%); color:#E6F4F2}
+#caustics{position:absolute; inset:0; width:100%; height:100%; opacity:.55; pointer-events:none}
+.hero .wrap{position:relative; display:grid; grid-template-columns:.75fr 1.25fr; gap:32px; max-width:1360px; align-items:center; min-height:calc(100vh - 64px); padding-top:40px; padding-bottom:80px}
+.hero h1{font-family:var(--display); font-weight:800; font-size:clamp(2.6rem,5vw,4.4rem); line-height:.98; letter-spacing:-.035em; margin:0 0 24px}
+.hero p.lede{font-size:1.18rem; max-width:34em; color:#BFD9D7; margin:0 0 34px}
+.hero .actions{display:flex; gap:14px; flex-wrap:wrap}
+.hero .tag{display:inline-flex; gap:10px; align-items:center; font-size:.9rem; color:#D6C09F; margin-bottom:26px}
+.hero .tag span{width:28px; height:2px; background:var(--husk)}
+.specs{display:flex; gap:36px; margin-top:52px; flex-wrap:wrap}
+.specs div{font-family:var(--display); font-size:2.2rem; font-weight:600; line-height:1}
+.specs small{display:block; font-family:var(--body); font-size:.85rem; font-weight:400; color:#9FC2C0; margin-top:8px}
+
+/* ---------- CARTRIDGE (3D) ---------- */
+.scene{perspective:1400px; display:flex; flex-direction:column; align-items:center; position:relative}
+.stream{width:12px; border-radius:6px; position:relative; z-index:1;
+  background:
+    repeating-linear-gradient(180deg, rgba(255,255,255,.75) 0 5px, rgba(255,255,255,0) 5px 22px),
+    linear-gradient(90deg, rgba(92,207,227,.35), rgba(200,245,255,.95) 50%, rgba(92,207,227,.35));
+  background-size:100% 44px,100% 100%;
+  animation:pour .55s linear infinite; box-shadow:0 0 18px rgba(92,207,227,.55)}
+.stream.in{height:90px; margin-bottom:-6px}
+.stream.out{height:120px; margin-top:-6px; width:9px; border-radius:4px 4px 50% 50%}
+@keyframes pour{to{background-position:0 44px,0 0}}
+.splash{width:120px; height:18px; border-radius:50%; background:radial-gradient(closest-side, rgba(160,235,250,.6), transparent); animation:ripple 1.4s ease-out infinite; margin-top:-8px}
+@keyframes ripple{0%{transform:scale(.4); opacity:1} 100%{transform:scale(1.4); opacity:0}}
+
+.cart{--w:190px; width:var(--w); position:relative}
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}}
+.cap{height:30px; width:calc(var(--w) + 16px); margin-left:-8px; position:relative;
+  background:linear-gradient(90deg, rgba(210,235,240,.35), rgba(255,255,255,.75) 40%, rgba(210,235,240,.25) 70%, rgba(160,200,210,.45));
+  border:1px solid rgba(255,255,255,.5)}
+.cap.top{border-radius:40% 40% 8px 8px/70% 70% 8px 8px}
+.cap.top::after{content:""; position:absolute; left:50%; top:-14px; transform:translateX(-50%); width:56px; height:18px; border-radius:10px 10px 4px 4px; background:linear-gradient(90deg, rgba(210,235,240,.4), rgba(255,255,255,.85), rgba(200,230,236,.4)); border:1px solid rgba(255,255,255,.6)}
+.cap.bottom{border-radius:8px 8px 40% 40%/8px 8px 70% 70%}
+.cap.bottom::after{content:""; position:absolute; left:50%; bottom:-12px; transform:translateX(-50%); width:44px; height:14px; border-radius:3px 3px 10px 10px; background:linear-gradient(90deg, rgba(210,235,240,.4), rgba(255,255,255,.85), rgba(200,230,236,.4))}
+.stack{position:relative; display:flex; flex-direction:column}
+.glass{position:absolute; inset:-4px -8px; border-radius:10px; pointer-events:none; z-index:4;
+  background:linear-gradient(90deg, rgba(255,255,255,.28) 0, rgba(255,255,255,.05) 12%, transparent 35%, rgba(255,255,255,.22) 58%, rgba(255,255,255,.04) 70%, rgba(255,255,255,.25) 100%);
+  border:1px solid rgba(255,255,255,.45); box-shadow:inset 0 0 22px rgba(180,230,240,.25); transition:opacity .5s}
+.layer{position:relative; width:100%; transform:translate(var(--dx,0px), var(--dy,0px)); transition:transform .7s cubic-bezier(.2,.8,.2,1), filter .3s, box-shadow .3s; cursor:move; touch-action:none}
+.layer.lifting{transition:filter .3s, box-shadow .3s; z-index:3}
+.layer::after{content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(90deg, rgba(0,0,0,.55) 0, rgba(0,0,0,.12) 22%, rgba(255,255,255,.14) 48%, rgba(0,0,0,.08) 70%, rgba(0,0,0,.6) 100%);
+  border-radius:inherit}
+.layer::before{content:""; position:absolute; left:0; right:0; top:-9px; height:18px; border-radius:50%; background:inherit; opacity:0; transition:opacity .5s; filter:brightness(1.35); z-index:1}
+.stack .layer + .layer{border-top:1px solid rgba(255,255,255,.1)}
+.layer.hot{filter:brightness(1.35) saturate(1.2); box-shadow:0 0 0 2px var(--clear), 0 0 30px rgba(92,207,227,.6); z-index:3}
+
+.exploded .glass{opacity:0}
+.exploded .layer{border-radius:0 0 50% 50%/0 0 9px 9px; transform:translate(var(--dx,0px), calc((var(--i) - 3.5) * 26px + var(--dy,0px)))}
+.exploded .layer::before{opacity:1}
+.exploded .stack{margin:94px 0}
+.exploded + .scene-foot{margin-top:0}
+
+/* textures */
+.t-pva{background-color:#EEF3F4; background-image:repeating-linear-gradient(35deg, rgba(40,60,70,.12) 0 1px, transparent 1px 4px), repeating-linear-gradient(-35deg, rgba(40,60,70,.09) 0 1px, transparent 1px 5px)}
+.t-ac{background-color:#141619; background-image:radial-gradient(circle at 30% 30%, #4a4e55 0 1.2px, transparent 1.7px), radial-gradient(circle at 70% 65%, #2c2f34 0 2px, transparent 2.5px), radial-gradient(circle at 50% 50%, #5b6068 0 .8px, transparent 1.2px); background-size:7px 6px, 10px 9px, 5px 11px}
+.t-cel{background-color:#B98A4E; background-image:repeating-linear-gradient(62deg, rgba(95,58,20,.55) 0 1px, transparent 1px 5px), repeating-linear-gradient(-58deg, rgba(245,215,160,.45) 0 1px, transparent 1px 6px), radial-gradient(circle, rgba(220,230,240,.7) 0 .7px, transparent 1px); background-size:auto, auto, 9px 9px}
+.t-min{background-color:#9D9584; background-image:radial-gradient(circle at 45% 40%, #EEE9DC 0 1.6px, #BDB5A2 2.6px, transparent 3.4px), radial-gradient(circle at 45% 40%, #D8D1C0 0 1.4px, #A59D8B 2.4px, transparent 3.1px); background-size:8px 8px, 8px 8px; background-position:0 0, 4px 4px}
+.t-cer{background-color:#5E3120; background-image:radial-gradient(circle at 38% 34%, #F6B08A 0 1.5px, #D5723F 5px, #8A4121 8.6px, transparent 9.2px); background-size:19px 19px; background-position:0 6px}
+.t-zeo{background-color:#5E6B77; background-image:radial-gradient(circle at 40% 40%, #D4DDE5 0 1.4px, transparent 2px), radial-gradient(circle at 60% 60%, #34404B 0 2px, transparent 2.6px), radial-gradient(circle, #A8B6C2 0 1.2px, transparent 1.7px); background-size:9px 8px, 7px 9px, 5px 6px}
+
+.flowcanvas{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:5; mix-blend-mode:screen}
+/* labels */
+.lbl{position:absolute; left:calc(100% + 14px); top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:8px; white-space:nowrap; font-size:.8rem; line-height:1.2; color:#E6F4F2; pointer-events:none; z-index:6}
+.lbl::before{content:""; width:26px; height:1px; background:rgba(230,244,242,.55); flex:none}
+.lbl::after{content:""; position:absolute; left:-4px; top:50%; width:5px; height:5px; margin-top:-2.5px; border-radius:50%; background:var(--clear)}
+.lbl b{font-weight:600}
+.lbl em{font-style:normal; color:var(--clear); margin-left:4px}
+.lbl.num{font-family:var(--display); font-weight:600; font-size:.95rem}
+.lbl.num::before{width:22px}
+.layer.hot .lbl{color:var(--clear)}
+.hero .scene{--pl:70px; --pr:260px}
+.lbl .short{display:none}
+.hero .cart-shell{position:relative; padding:0 var(--pr) 0 var(--pl)}
+.hero .scene > .stream,.hero .scene > .flowtxt{transform:translateX(calc((var(--pl) - var(--pr)) / 2))}
+.hero .scene > .splash{margin-left:calc(var(--pl) - var(--pr))}
+.dim{position:absolute; left:14px; top:30px; bottom:30px; width:40px; border-left:1px solid rgba(230,244,242,.45)}
+.dim::before,.dim::after{content:""; position:absolute; left:-7px; width:13px; height:1px; background:rgba(230,244,242,.7)}
+.dim::before{top:0} .dim::after{bottom:0}
+.dim span{position:absolute; left:10px; top:50%; transform:translateY(-50%) rotate(180deg); writing-mode:vertical-rl; font-size:.8rem; color:#BFD9D7; white-space:nowrap}
+.flowtxt{font-size:.85rem; color:#BFD9D7; margin:4px 0}
+.tip{display:none !important; position:absolute; left:calc(100% + 34px); transform:translateY(-50%); white-space:nowrap; background:rgba(8,36,41,.92); color:#E6F4F2; border:1px solid rgba(92,207,227,.5); padding:7px 12px; border-radius:8px; font-size:.85rem; pointer-events:none; opacity:0; transition:opacity .2s; z-index:10}
+.tip::before{content:""; position:absolute; right:100%; top:50%; width:28px; height:1px; background:rgba(92,207,227,.7)}
+.tip.show{opacity:1}
+
+/* ---------- SECTIONS ---------- */
+section.band{padding:110px 0}
+.h2{font-family:var(--display); font-weight:800; font-size:clamp(2rem,4vw,3.2rem); line-height:1.05; letter-spacing:-.03em; margin:0 0 20px; max-width:18ch}
+.intro{max-width:40em; color:var(--muted); font-size:1.08rem; margin:0 0 56px}
+
+.problem{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start}
+.problem p{margin:0 0 16px; color:var(--muted)}
+.problem blockquote{margin:0; font-family:var(--display); font-size:1.6rem; line-height:1.3; font-weight:600; letter-spacing:-.015em; border-left:4px solid var(--husk); padding-left:24px}
+
+/* anatomy */
+.anatomy{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.anat-grid{display:grid; grid-template-columns:340px 1fr; gap:56px; align-items:start}
+.anat-grid .scene{position:sticky; top:100px; background:radial-gradient(circle at 50% 40%, #1A5A64, var(--estuary) 70%); border-radius:28px; padding:30px 0 40px}
+.anat-grid .cart{--w:150px; margin-right:40px}
+.toggle{margin-top:30px}
+.stages{list-style:none; margin:0; padding:0; counter-reset:s}
+.stage{display:grid; grid-template-columns:52px 1fr auto; gap:18px; padding:22px 18px; border-bottom:1px solid var(--line); cursor:pointer; border-radius:14px; transition:background .25s}
+.stage.hot{background:var(--chip)}
+@media (hover:hover){.stage:hover{background:var(--chip)}}
+.stage .num{font-family:var(--display); font-size:1.5rem; font-weight:600; color:var(--husk)}
+.stage h3{margin:0 0 4px; font-family:var(--display); font-size:1.25rem; font-weight:600; letter-spacing:-.01em}
+.stage p{margin:0; color:var(--muted); font-size:.97rem}
+.stage .meta{text-align:right; font-size:.85rem; color:var(--muted); white-space:nowrap}
+.stage .meta b{display:block; font-family:var(--display); font-size:1.15rem; color:var(--ink)}
+.swatch{display:inline-block; width:14px; height:14px; border-radius:4px; vertical-align:-2px; margin-right:6px}
+
+/* mechanisms */
+.mech{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:2px solid var(--ink)}
+.mech div{padding:28px 24px 0 0}
+.mech div + div{padding-left:24px; border-left:1px solid var(--line)}
+.mech h3{font-family:var(--display); font-size:1.35rem; margin:0 0 10px; letter-spacing:-.01em}
+.mech p{margin:0; color:var(--muted); font-size:.97rem}
+.mech .ic{height:46px; margin-bottom:18px}
+
+/* husk */
+.husk{background:linear-gradient(135deg, #3B2A17, #6E4B26 60%, #8C6232); color:#F6EBDD; position:relative; overflow:hidden}
+.husk .wrap{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center}
+.husk .h2{color:#FFF5E8}
+.husk p{color:#E9D6BE}
+.fiber{height:360px; border-radius:24px; position:relative; overflow:hidden;
+  background:repeating-linear-gradient(64deg, rgba(60,35,12,.7) 0 2px, transparent 2px 9px), repeating-linear-gradient(-56deg, rgba(240,205,150,.45) 0 1px, transparent 1px 11px), linear-gradient(160deg,#A8763D,#C7955A 50%,#8A5A28)}
+.fiber::after{content:""; position:absolute; inset:0; background:radial-gradient(circle at 70% 30%, rgba(255,255,255,.25), transparent 50%)}
+.chain{display:flex; gap:10px; margin-top:28px; flex-wrap:wrap}
+.chain span{padding:8px 14px; border:1px solid rgba(255,235,210,.35); border-radius:999px; font-size:.9rem}
+
+/* compare */
+.table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:18px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:680px; font-size:.97rem}
+th,td{text-align:left; padding:18px 22px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+thead th{font-family:var(--display); font-weight:600; font-size:1.05rem}
+thead th.us{background:var(--estuary); color:#E6F4F2}
+td.us{background:rgba(92,207,227,.08); font-weight:500}
+.pill{display:inline-block; padding:3px 10px; border-radius:999px; font-size:.82rem; font-weight:600}
+.pill.ok{background:#D8F2E4; color:#1D6B43}
+.pill.wait{background:#FBEBCB; color:#7A5410}
+
+/* validation */
+.validate{background:var(--estuary); color:#E6F4F2}
+.validate .intro{color:#B8D3D1}
+.vgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.14); border-radius:20px; overflow:hidden}
+.vgrid div{background:var(--estuary); padding:28px}
+.vgrid h3{margin:0 0 6px; font-family:var(--display); font-size:1.3rem}
+.vgrid .unit{color:var(--clear); font-size:.9rem; margin-bottom:12px; display:block}
+.vgrid p{margin:0; color:#B8D3D1; font-size:.95rem}
+.note{margin-top:40px; padding:22px 26px; border-left:4px solid var(--husk); background:rgba(255,255,255,.05); border-radius:0 14px 14px 0; max-width:62em; color:#D9E9E7}
+
+/* cta */
+.cta{text-align:center}
+.cta .h2{margin-left:auto; margin-right:auto}
+.cta .intro{margin-left:auto; margin-right:auto}
+.cta .btn-ghost{color:var(--ink); border-color:var(--line)}
+footer{padding:36px 0; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem}
+footer .wrap{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap}
+
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .8s, transform .8s}
+.reveal.in{opacity:1; transform:none}
+
+
+/* ---------- 3D VIEWER ---------- */
+.viewer{position:relative; height:min(940px, 94vh); min-height:760px; border-radius:24px; outline-offset:6px; user-select:none; -webkit-user-select:none}
+.viewer canvas{position:absolute; inset:0; width:100%; height:100%; display:block; cursor:grab; touch-action:pan-y}
+.viewer.grab canvas{cursor:grabbing}
+.viewer.lifting canvas{cursor:move}
+.vlines{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible}
+.vlines path{fill:none; stroke:rgba(230,244,242,.5); stroke-width:1}
+.vlines path.hot{stroke:var(--clear); stroke-width:1.5}
+.vlines circle{fill:var(--clear)}
+.vlines path.dim3{stroke:rgba(230,244,242,.5)}
+.vlabels{position:absolute; inset:0; pointer-events:none}
+.vlbl{position:absolute; left:0; top:0; white-space:nowrap; font-size:.8rem; color:#E6F4F2; pointer-events:auto; cursor:pointer; padding:2px 4px; border-radius:6px; transition:color .2s, background .2s}
+.vlbl b{font-weight:600}
+.vlbl em{font-style:normal; color:var(--clear); margin-left:6px}
+.vlbl.hot{background:rgba(92,207,227,.16); color:#fff}
+.vlbl .short{display:none}
+.dimtxt,.flowtag{position:absolute; left:0; top:0; white-space:nowrap; font-size:.78rem; color:#BFD9D7}
+.nolabels .vlabels,.nolabels .vlines{display:none}
+.vctrl{position:absolute; left:50%; bottom:6px; transform:translateX(-50%); display:flex; align-items:center; gap:4px; padding:5px; border-radius:999px; background:rgba(6,32,37,.72); border:1px solid rgba(230,244,242,.16); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px)}
+.vctrl button{height:34px; min-width:34px; border-radius:999px; border:0; background:transparent; color:#E6F4F2; cursor:pointer; display:grid; place-items:center; font:500 .82rem var(--body); padding:0}
+.vctrl button.txt{padding:0 12px}
+.vctrl button:hover{background:rgba(92,207,227,.18)}
+.vctrl button[aria-pressed="true"]{background:rgba(92,207,227,.22); color:#fff}
+.vctrl svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.vctrl .sep{width:1px; height:20px; background:rgba(230,244,242,.2); margin:0 4px}
+.vhint{position:absolute; right:8px; top:4px; font-size:.78rem; color:#9FC2C0}
+.vinfo{position:absolute; right:0; top:28px; max-width:230px; font-size:.84rem; color:#CFE4E2; background:rgba(6,32,37,.62); border:1px solid rgba(230,244,242,.14); border-radius:14px; padding:12px 14px; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px)}
+.vinfo b{display:block; font-family:var(--display); font-size:1rem; color:#fff; font-weight:600}
+.vinfo .vi-meta{display:block; color:var(--clear); font-size:.78rem; margin:2px 0 6px}
+.vinfo p{margin:0; line-height:1.45}
+.vinfo .vi-hint{color:#9FC2C0}
+.vfallback{display:none; position:absolute; inset:0; margin:auto; height:fit-content; text-align:center; color:#BFD9D7; padding:24px}
+.nogl .vfallback{display:block}
+.nogl canvas,.nogl .vctrl,.nogl .vhint,.nogl .vinfo{display:none}
+@media (max-width:960px){
+  .viewer{height:860px; min-height:0}
+}
+@media (max-width:560px){
+  .viewer{height:780px; min-height:0; margin:0 -16px}
+  .vlbl{font-size:.72rem}
+  .vlbl .long{display:none}
+  .vlbl .short{display:inline}
+  .vlbl em{display:none}
+  .vinfo{max-width:none; left:8px; right:8px; top:auto; bottom:52px; font-size:.78rem; padding:9px 11px}
+  .vinfo:has(.vi-hint){display:none}
+  .vctrl button{height:32px; min-width:30px}
+  .vctrl button.txt{padding:0 8px; font-size:.76rem}
+  .vctrl .sep{display:none}
+  .vctrl{gap:1px}
+  .vhint{left:10px; right:auto; top:8px; font-size:.72rem}
+}
+@media (max-width:960px){
+  nav ul{display:none}
+  .hero .wrap,.problem,.anat-grid,.husk .wrap{grid-template-columns:1fr}
+  .hero .wrap{min-height:auto; padding-top:50px}
+  .anat-grid .scene{position:relative; top:0}
+  .mech{grid-template-columns:1fr 1fr}
+  .mech div:nth-child(3){padding-left:0; border-left:none}
+  .mech div{padding-bottom:28px}
+  .vgrid{grid-template-columns:1fr 1fr}
+  .tip{display:none}
+  .hero .scene{--pl:50px; --pr:190px}
+  .lbl{font-size:.74rem}
+  .lbl::before{width:18px}
+}
+@media (max-width:560px){
+  .mech,.vgrid{grid-template-columns:1fr}
+  .mech div + div{padding-left:0; border-left:none; border-top:1px solid var(--line)}
+  .stage{grid-template-columns:40px 1fr}
+  .stage .meta{grid-column:2; text-align:left}
+  .cart{--w:130px}
+  .hero .scene{--pl:46px; --pr:160px}
+  .dim{left:4px}
+  .lbl .long{display:none}
+  .lbl .short{display:inline}
+  .lbl{font-size:.74rem}
+  .lbl em{display:none}
+  section.band{padding:80px 0}
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{display:none; width:42px; height:42px; border:0; border-radius:12px; background:transparent; color:#E6F4F2; cursor:pointer; padding:0; flex-direction:column; align-items:center; justify-content:center; gap:5px}
+.menu-btn span{display:block; width:20px; height:2px; border-radius:2px; background:currentColor; transition:transform .25s, opacity .25s}
+nav.open .menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+nav.open .menu-btn span:nth-child(2){opacity:0}
+nav.open .menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.menu-cta{display:none}
+.stage .meta .swatch{margin-left:0}
+
+@media (max-width:960px){
+  nav .wrap{gap:10px}
+  .brand{min-width:0}
+  .brand span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .nav-cta{margin-left:auto; white-space:nowrap}
+  .menu-btn{display:flex; flex:none}
+  nav ul{display:flex; position:absolute; left:0; right:0; top:100%; flex-direction:column; gap:0; padding:8px 16px 16px; background:rgba(10,44,51,.97); border-top:1px solid rgba(230,244,242,.12); box-shadow:0 18px 30px rgba(0,0,0,.25); transform:translateY(-8px); opacity:0; visibility:hidden; transition:opacity .2s, transform .2s, visibility .2s}
+  nav.open ul{opacity:1; transform:none; visibility:visible}
+  nav ul a{display:block; padding:14px 8px; font-size:1.02rem; opacity:.92; border-bottom:1px solid rgba(230,244,242,.1)}
+  nav ul .menu-cta a{border:0; margin-top:12px; justify-content:center; opacity:1; padding:13px 22px}
+}
+
+/* ---------- PHONES ---------- */
+@media (max-width:640px){
+  .wrap{padding:0 18px}
+  body{font-size:16px}
+  nav .wrap{height:58px}
+  .nav-cta{padding:8px 14px !important; font-size:.86rem}
+
+  .hero .wrap{padding-top:34px; padding-bottom:28px; gap:12px}
+  .hero .tag{font-size:.82rem; margin-bottom:18px}
+  .hero h1{font-size:clamp(2.1rem,10.5vw,2.8rem); margin-bottom:18px}
+  .hero p.lede{font-size:1.02rem; margin-bottom:26px}
+  .hero .actions{flex-direction:column; gap:10px}
+  .hero .actions .btn{justify-content:center; width:100%}
+  .specs{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:34px; padding-top:22px; border-top:1px solid rgba(230,244,242,.16)}
+  .specs div{font-size:1.75rem}
+  .specs small{font-size:.74rem; line-height:1.3; margin-top:6px}
+
+  /* 3D viewer: shorter, controls clear of the model */
+  .viewer{height:clamp(540px, 150vw, 640px); margin:0 -18px; border-radius:0}
+  .vctrl{bottom:8px; max-width:calc(100% - 16px)}
+  .vinfo{bottom:58px}
+
+  section.band{padding:64px 0}
+  .h2{font-size:clamp(1.75rem,8vw,2.2rem); max-width:none}
+  .intro{font-size:1rem; margin-bottom:36px}
+  .problem{gap:32px}
+  .problem blockquote{font-size:1.22rem; padding-left:18px}
+
+  .anat-grid{gap:28px}
+  .anat-grid .scene{border-radius:22px; padding:26px 0 30px}
+  .stage{grid-template-columns:32px 1fr; gap:12px; padding:18px 10px}
+  .stage .num{font-size:1.3rem; line-height:1.2}
+  .stage h3{font-size:1.1rem}
+  .stage p{font-size:.94rem}
+  .stage .meta{display:flex; align-items:center; gap:10px; margin-top:6px}
+  .stage .meta b{display:inline; font-size:1rem}
+
+  .mech div{padding-top:22px; padding-bottom:22px}
+  .husk .wrap{gap:32px}
+  .fiber{height:190px; border-radius:18px}
+  .chain{gap:8px}
+  .chain span{font-size:.84rem; padding:6px 12px}
+
+  /* comparison table becomes one card per criterion */
+  .table-wrap{overflow:visible; border:0; background:transparent; border-radius:0}
+  table{min-width:0}
+  table, tbody, tr, td{display:block; width:100%}
+  thead{display:none}
+  tr{background:var(--surface); border:1px solid var(--line); border-radius:16px; margin-bottom:12px; overflow:hidden}
+  td{padding:10px 16px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; gap:14px; text-align:right}
+  td::before{content:attr(data-label); color:var(--muted); text-align:left; font-size:.88rem; flex:none; max-width:48%}
+  td.rowh{display:block; text-align:left; font-family:var(--display); font-weight:600; font-size:1.05rem; background:var(--chip); padding:12px 16px}
+  td.rowh::before{content:none}
+  td.us{background:rgba(92,207,227,.1)}
+  tr:last-child td{border-bottom:1px solid var(--line)}
+  tr td:last-child{border-bottom:none}
+
+  .vgrid div{padding:22px}
+  .note{padding:18px 18px; margin-top:28px}
+  .cta .reveal[style]{flex-direction:column; align-items:stretch}
+  .cta .btn{justify-content:center}
+  footer .wrap{flex-direction:column; gap:8px}
+}
+@media (max-width:420px){
+  .nav-cta{display:none}
+  .brand{margin-right:auto}
+  .menu-cta{display:block}
+  .vctrl button{min-width:28px}
+  .vctrl button.txt{padding:0 7px; font-size:.72rem}
+  .vctrl button{flex:none}
+}
+@media (max-width:360px){
+  .vctrl [data-act="up"],.vctrl [data-act="down"]{display:none}
+}
+/* ---------- 3D VIEWER: FULL SCREEN ---------- */
+.vfull-btn{position:absolute; left:8px; top:0; z-index:3; display:inline-flex; align-items:center; gap:8px; height:34px; padding:0 14px 0 10px; border-radius:999px; border:1px solid rgba(230,244,242,.18); background:rgba(6,32,37,.72); color:#E6F4F2; font:500 .82rem var(--body); cursor:pointer; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px)}
+.vfull-btn:hover{background:rgba(92,207,227,.18)}
+.vfull-btn svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.vfull-btn .ic-exit{display:none}
+.viewer.isfull .vfull-btn .ic-exit{display:block}
+.viewer.isfull .vfull-btn .ic-enter{display:none}
+.nogl .vfull-btn{display:none}
+.viewer.isfull{background:radial-gradient(120% 90% at 60% 20%, #16555F 0%, #0E3B43 45%, #0A2C33 100%); border-radius:0; margin:0; width:100%; height:100%; min-height:0; max-height:none}
+.viewer.vfull{position:fixed; inset:0; z-index:1000; width:100vw; height:100vh; height:100dvh}
+.viewer.isfull .vfull-btn{left:16px; top:max(14px, env(safe-area-inset-top))}
+.viewer.isfull .vhint{right:18px; top:max(20px, env(safe-area-inset-top))}
+.viewer.isfull .vinfo{right:16px; top:max(48px, calc(env(safe-area-inset-top) + 40px))}
+.viewer.isfull .vctrl{bottom:max(16px, env(safe-area-inset-bottom))}
+body.vfull-lock,body.mol-lock{overflow:hidden}
+@media (max-width:560px){
+  .vfull-btn{left:auto; right:8px; top:6px; width:36px; height:36px; padding:0; justify-content:center}
+  .vfull-btn span{display:none}
+  .viewer.isfull .vfull-btn{left:auto; right:12px}
+  .viewer.isfull .vhint{left:14px; right:auto}
+  .viewer.isfull .vinfo{left:10px; right:10px; top:auto; bottom:calc(max(16px, env(safe-area-inset-bottom)) + 50px)}
+}
+
+/* ---------- "SEE HOW IT WORKS" BUTTONS ---------- */
+.vi-how,.how-btn{display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:7px 14px; border-radius:999px; border:0; background:var(--clear); color:#06262B; font:600 .8rem var(--body); cursor:pointer; pointer-events:auto}
+.vi-how svg,.how-btn svg{width:14px; height:14px; fill:currentColor}
+.vi-how:hover,.how-btn:hover{filter:brightness(1.08)}
+.how-btn{display:none; margin-top:12px}
+.stage.hot .how-btn{display:inline-flex}
+
+/* ---------- MOLECULAR ANIMATION MODAL ---------- */
+.mol{position:fixed; inset:0; z-index:2000; display:flex; align-items:center; justify-content:center; padding:16px; background:rgba(3,18,22,.74); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); user-select:none; -webkit-user-select:none}
+.mol[hidden]{display:none}
+.viewer .mol canvas{position:static; inset:auto; cursor:default; touch-action:auto}
+.viewer .mol .mol-stage canvas{position:absolute; inset:0}
+.mol-legend canvas{width:30px !important; height:30px !important}
+.mol-panel{width:min(1160px,100%); height:min(800px, calc(100vh - 32px)); height:min(800px, calc(100dvh - 32px)); display:flex; flex-direction:column; background:#0A2C33; color:#E6F4F2; border:1px solid rgba(230,244,242,.16); border-radius:22px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.45); font-family:var(--body)}
+.mol-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:14px 18px 12px 20px; border-bottom:1px solid rgba(230,244,242,.12)}
+.mol-kicker{font-size:.74rem; color:var(--clear); letter-spacing:.06em; text-transform:uppercase}
+.mol-head h3{margin:2px 0 0; font-family:var(--display); font-size:1.35rem; font-weight:600; letter-spacing:-.01em; line-height:1.2}
+.mol-x{flex:none; width:40px; height:40px; border-radius:999px; border:1px solid rgba(230,244,242,.2); background:transparent; color:#E6F4F2; cursor:pointer; display:grid; place-items:center}
+.mol-x:hover{background:rgba(92,207,227,.18)}
+.mol-x svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round}
+.mol-body{flex:1; min-height:0; display:grid; grid-template-columns:1fr 330px}
+.mol-stage{position:relative; min-height:0; overflow:hidden}
+.mol-stage canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+.mol-side{overflow-y:auto; padding:16px 18px 18px; border-left:1px solid rgba(230,244,242,.12); font-size:.9rem; line-height:1.5}
+.mol-sum{margin:0 0 14px; color:#CFE4E2}
+.mol-steps{margin:0 0 14px; padding:0; list-style:none; counter-reset:m}
+.mol-steps li{counter-increment:m; position:relative; padding:7px 10px 7px 38px; border-radius:10px; color:#9DB5B6; transition:background .35s, color .35s}
+.mol-steps li::before{content:counter(m); position:absolute; left:10px; top:8px; width:19px; height:19px; border-radius:50%; border:1px solid currentColor; font-size:.72rem; display:grid; place-items:center; line-height:1}
+.mol-steps li.on{background:rgba(92,207,227,.15); color:#fff}
+.mol-stats{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px}
+.mol-stats div{background:rgba(255,255,255,.05); border:1px solid rgba(230,244,242,.1); border-radius:12px; padding:8px 10px}
+.mol-stats b{display:block; font-family:var(--display); font-size:1.3rem; color:var(--clear); font-weight:600; line-height:1.15; font-variant-numeric:tabular-nums}
+.mol-stats span{display:block; font-size:.74rem; color:#9DB5B6; line-height:1.3}
+.mol-lh{margin:0 0 6px; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:#9DB5B6}
+.mol-legend{display:grid; gap:2px}
+.mol-legend div{display:flex; align-items:center; gap:10px; font-size:.84rem; color:#CFE4E2}
+.mol-legend canvas{width:30px; height:30px; flex:none}
+.mol-note{margin:14px 0 0; font-size:.8rem; color:#D6C09F; border-left:3px solid var(--husk); padding-left:10px}
+.mol-note:empty{display:none}
+.mol-ctrl{display:flex; gap:6px; justify-content:center; flex-wrap:wrap; padding:10px 12px; border-top:1px solid rgba(230,244,242,.12)}
+.mol-ctrl button{height:36px; padding:0 14px; border-radius:999px; border:1px solid rgba(230,244,242,.2); background:transparent; color:#E6F4F2; font:500 .85rem var(--body); cursor:pointer}
+.mol-ctrl button:hover{background:rgba(92,207,227,.18)}
+.mol-ctrl button[aria-pressed="true"]{background:rgba(92,207,227,.24); border-color:rgba(92,207,227,.5)}
+@media (max-width:760px){
+  .mol{padding:0}
+  .mol-panel{width:100%; height:100vh; height:100dvh; border-radius:0; border:0}
+  .mol-head{padding:max(12px, env(safe-area-inset-top)) 12px 10px 16px}
+  .mol-head h3{font-size:1.1rem}
+  .mol-body{grid-template-columns:1fr; grid-template-rows:minmax(280px, 55%) 1fr}
+  .mol-side{border-left:0; border-top:1px solid rgba(230,244,242,.12); padding:12px 16px 16px}
+  .mol-ctrl{padding:8px 8px max(8px, env(safe-area-inset-bottom)); gap:4px}
+  .mol-ctrl button{padding:0 11px; font-size:.8rem}
+  .mol-ctrl .long{display:none}
+}
+
+/* ---------- FULL FILTER: ALL LAYERS AT ONCE (added) ---------- */
+.fa-launch-wrap{margin:-28px 0 44px}
+.fa-launch{display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:999px; border:0; background:var(--clear); color:#06262B; font:600 .9rem var(--body); cursor:pointer}
+.fa-launch svg{width:16px; height:16px; fill:currentColor}
+.fa-launch:hover{filter:brightness(1.08)}
+.fa-launch-note{display:block; margin-top:8px; font-size:.85rem; color:var(--muted)}
+.mech + .fa-launch-wrap{margin:32px 0 0}
+.fa .mol-stage canvas{cursor:pointer}
+.fa-rows{display:grid; gap:4px; margin:0 0 14px}
+.fa-row{display:grid; grid-template-columns:8px 1fr auto; align-items:center; gap:10px; width:100%; text-align:left; padding:6px 10px 6px 8px; border-radius:10px; border:1px solid transparent; background:rgba(255,255,255,.03); color:#CFE4E2; font:inherit; font-size:.84rem; line-height:1.3; cursor:pointer; transition:background .35s, border-color .35s}
+.fa-row:hover,.fa-row:focus-visible{border-color:rgba(92,207,227,.45)}
+.fa-row.on{background:rgba(92,207,227,.16)}
+.fa-row i{width:8px; height:30px; border-radius:3px}
+.fa-row b{display:block; font-weight:600; color:#E6F4F2}
+.fa-row small{display:block; font-size:.74rem; color:#9DB5B6}
+.fa-row em{font-style:normal; font-family:var(--display); font-weight:600; color:var(--clear); font-variant-numeric:tabular-nums; white-space:nowrap; font-size:.9rem}
+.fa .mol-legend{grid-template-columns:1fr 1fr; column-gap:6px}
+.fa .mol-legend div{font-size:.76rem; gap:6px; line-height:1.2}
+.fa .mol-legend canvas{width:26px !important; height:26px !important}
+.fa-hbtns{display:flex; gap:8px; flex:none}
+.fa-fs .ic-exit{display:none}
+.fa.isfull .fa-fs .ic-exit{display:block}
+.fa.isfull .fa-fs .ic-enter{display:none}
+.fa.isfull{padding:0}
+.fa.isfull .mol-panel{width:100%; height:100%; max-height:none; border-radius:0; border:0}
+.fa .mol-stage canvas[hidden],.fa .mol-ctrl button[hidden]{display:none}
+#fa3d{cursor:grab; touch-action:none}
+#fa3d.grab{cursor:grabbing}
+#faOv{pointer-events:none}
+@media (max-width:760px){
+  .fa-launch-wrap{margin:-16px 0 32px}
+  .fa .mol-body{grid-template-rows:minmax(380px, 68%) 1fr}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important; transition:none !important; scroll-behavior:auto !important}
+  .reveal{opacity:1; transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><i></i><span class="bl">Microcrystalline cellulose filtration system</span><span class="bs">MCC filtration system</span></a>
+    <ul id="navMenu">
+      <li><a href="#layers">Filter layers</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#husk">Coconut husk</a></li>
+      <li><a href="#testing">Testing</a></li>
+      <li class="menu-cta"><a class="btn btn-primary" href="#contact">Join the pilot</a></li>
+    </ul>
+    <a class="btn btn-primary nav-cta" href="#contact">Join the pilot</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="caustics"></canvas>
+  <div class="wrap">
+    <div>
+      <div class="tag"><span></span>Design and Developed by Department of BME,MIST </div>
+      <h1>Safe water, filtered through the coconut.</h1>
+      <p class="lede">An eight-stage filter cartridge built around cellulose extracted from coconut husk. It combines physical filtration, adsorption, silver-based antimicrobial treatment and mineral exchange in a single 10-inch unit, without the pumps and energy bills of reverse osmosis.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#layers">Explore the layers</a>
+        <a class="btn btn-ghost" href="#testing">See our testing plan</a>
+      </div>
+      <div class="specs">
+        <div data-count="8">0<small>Filtration stages</small></div>
+        <div data-count="10" data-suffix="″">0<small>Cartridge height</small></div>
+        <div data-count="4">0<small>Treatment mechanisms</small></div>
+      </div>
+    </div>
+
+    <div class="viewer" id="viewer" tabindex="0" aria-label="Interactive 3D model of the filter cartridge. Drag or use arrow keys to rotate. Select a layer, then use Shift and the arrow keys to move it.">
+      <canvas id="v3d"></canvas>
+      <svg class="vlines" id="vlines" aria-hidden="true"></svg>
+      <div class="vlabels" id="vlabels"></div>
+      <div class="vinfo" id="vinfo" aria-live="polite"></div>
+      <div class="vctrl" role="toolbar" aria-label="3D view controls">
+        <button data-act="left" title="Rotate left" aria-label="Rotate left"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button data-act="right" title="Rotate right" aria-label="Rotate right"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        <button data-act="up" title="Tilt up" aria-label="Tilt up"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
+        <button data-act="down" title="Tilt down" aria-label="Tilt down"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+        <button data-act="zin" title="Zoom in" aria-label="Zoom in"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></button>
+        <button data-act="zout" title="Zoom out" aria-label="Zoom out"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg></button>
+        <span class="sep"></span>
+        <button data-act="explode" class="txt" aria-pressed="false">Explode</button>
+        <button data-act="labels" class="txt" aria-pressed="true">Labels</button>
+        <button data-act="reset" class="txt">Reset</button>
+      </div>
+      <div class="vhint">Drag to rotate, or drag a layer to move it</div>
+      <button class="vfull-btn" id="vfullBtn" type="button" aria-pressed="false" aria-label="Full screen" title="Full screen"><svg class="ic-enter" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="ic-exit" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg><span>Full screen</span></button>
+      <p class="vfallback">The 3D view needs WebGL, which isn't available in this browser. Scroll down to explore each layer.</p>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="problem">
+  <div class="wrap problem">
+    <div class="reveal">
+      <h2 class="h2">Salty, contaminated water shouldn't need a power plant to fix.</h2>
+      <p>Across coastal and rural regions, saline intrusion and groundwater contamination make everyday drinking water unsafe, and treatment infrastructure is often out of reach.</p>
+      <p>Reverse osmosis and thermal desalination work, but they depend on high pressure, steady electricity and ongoing operating costs that many households and communities can't sustain.</p>
+    </div>
+    <blockquote class="reveal">We set out to build a decentralised filter from low-cost, locally available materials, starting with the coconut husk that coastal communities already have in abundance.</blockquote>
+  </div>
+</section>
+
+<section class="band anatomy" id="layers">
+  <div class="wrap">
+    <h2 class="h2 reveal">Eight layers, one direction of flow.</h2>
+    <p class="intro reveal">Water enters at the top and passes through each stage in sequence. Select a stage to find it in the cartridge, drag any layer up, down or sideways to pull it out, or pull the cartridge apart to see every layer.</p>
+    <div class="fa-launch-wrap reveal"><button class="fa-launch" type="button" data-fullfilter><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch all 8 layers at molecular scale</button><span class="fa-launch-note">See water, salt ions, metals and microbes pass through the whole cartridge at once.</span></div>
+    <div class="anat-grid">
+      <div class="scene" id="anatScene">
+        <div class="cart" data-cart data-labels="num">
+          <div class="cap top"></div>
+          <div class="stack"></div>
+          <div class="cap bottom"></div>
+        </div>
+        <button class="btn btn-ghost toggle" id="explode" aria-pressed="false">Pull layers apart</button>
+      </div>
+      <ol class="stages" id="stages"></ol>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="wrap">
+    <h2 class="h2 reveal">Four mechanisms working in sequence.</h2>
+    <p class="intro reveal">Each layer is chosen for what it removes or adds, so the water is treated in stages rather than by one material doing everything.</p>
+    <div class="mech reveal">
+      <div>
+        <svg class="ic" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10h38M4 23h38M4 36h38"/><circle cx="14" cy="16" r="3" fill="var(--husk)" stroke="none"/><circle cx="31" cy="16" r="4" fill="var(--husk)" stroke="none"/></svg>
+        <h3>Physical filtration</h3>
+        <p>PVA non-woven sheets and a fine cellulose matrix trap sediment, suspended matter and carbon fines.</p>
+      </div>
+      <div>
+        <svg class="ic" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="34" height="34" rx="6"/><circle cx="17" cy="17" r="3"/><circle cx="29" cy="20" r="3"/><circle cx="20" cy="30" r="3"/><circle cx="31" cy="31" r="2" fill="var(--clear)" stroke="none"/></svg>
+        <h3>Adsorption</h3>
+        <p>Two beds of activated carbon capture chlorine, organic contaminants and taste and odour compounds.</p>
+      </div>
+      <div>
+        <svg class="ic" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="2"><circle cx="23" cy="23" r="15"/><path d="M13 33L33 13"/><text x="23" y="10" font-size="0" /><circle cx="23" cy="23" r="4" fill="var(--clear)" stroke="none"/></svg>
+        <h3>Desalination and antimicrobial</h3>
+        <p>The silver-functionalised MCC layer adsorbs saline ions and heavy metals, and its Ag⁺ ions inhibit bacterial growth within the filter bed.</p>
+      </div>
+      <div>
+        <svg class="ic" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14l10 6-10 6M36 20l-10 6 10 6"/><circle cx="23" cy="10" r="3" fill="var(--husk)" stroke="none"/><circle cx="23" cy="38" r="3" fill="var(--clear)" stroke="none"/></svg>
+        <h3>Mineral and ion exchange</h3>
+        <p>Mineral stone adds calcium and magnesium, while zeolite and silica exchange and adsorb selected dissolved metals.</p>
+      </div>
+    </div>
+    <div class="fa-launch-wrap reveal"><button class="fa-launch" type="button" data-fullfilter><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch all 8 layers at molecular scale</button></div>
+  </div>
+</section>
+
+<section class="band husk" id="husk">
+  <div class="wrap">
+    <div class="reveal">
+      <h2 class="h2">From agricultural waste to filter media.</h2>
+      <p>Coconut husk is usually discarded or burned. Its fibres are rich in cellulose, which we process into microcrystalline cellulose (MCC), a fine, high-surface-area material that forms the heart of our desalination layer. Silver-functionalised MCC adsorbs saline ions and heavy metals while also inhibiting microbial growth.</p>
+      <p>Using a local by-product keeps the cartridge affordable, makes replacement media easier to source, and turns waste into something useful.</p>
+      <div class="chain"><span>Coconut husk</span><span>Fibre extraction</span><span>Cellulose purification</span><span>Microcrystalline cellulose</span><span>Silver functionalisation</span></div>
+    </div>
+    <div class="fiber reveal" role="img" aria-label="Close-up texture of coconut husk fibres"></div>
+  </div>
+</section>
+
+<section class="band" id="compare">
+  <div class="wrap">
+    <h2 class="h2 reveal">Where it fits.</h2>
+    <p class="intro reveal">The MCC filtration system is designed for decentralised, low-energy treatment. Here is how it compares with established desalination technologies, including what is still being tested.</p>
+    <div class="table-wrap reveal">
+      <table>
+        <thead><tr><th></th><th>Reverse osmosis</th><th>Thermal desalination</th><th class="us">MCC filtration system</th></tr></thead>
+        <tbody>
+          <tr><td class="rowh">Energy demand</td><td data-label="Reverse osmosis">High (pumped pressure)</td><td data-label="Thermal desalination">Very high (heating)</td><td class="us" data-label="MCC filtration system">Low, no high-pressure pump</td></tr>
+          <tr><td class="rowh">Operating cost</td><td data-label="Reverse osmosis">Membranes, power, maintenance</td><td data-label="Thermal desalination">Fuel and infrastructure</td><td class="us" data-label="MCC filtration system">Replaceable local media</td></tr>
+          <tr><td class="rowh">Materials</td><td data-label="Reverse osmosis">Imported membranes</td><td data-label="Thermal desalination">Industrial plant</td><td class="us" data-label="MCC filtration system">Coconut-husk cellulose and common minerals</td></tr>
+          <tr><td class="rowh">Scale</td><td data-label="Reverse osmosis">Household to industrial</td><td data-label="Thermal desalination">Industrial</td><td class="us" data-label="MCC filtration system">Household and community</td></tr>
+          <tr><td class="rowh">Salt (NaCl / TDS) removal</td><td data-label="Reverse osmosis"><span class="pill ok">Proven</span></td><td data-label="Thermal desalination"><span class="pill ok">Proven</span></td><td class="us" data-label="MCC filtration system"><span class="pill wait">Under evaluation</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band validate" id="testing">
+  <div class="wrap">
+    <h2 class="h2 reveal">Claims we will prove before we make them.</h2>
+    <p class="intro reveal">Multiple filtration layers do not automatically mean desalination. Substantial salt removal needs an ion-selective mechanism, so every cartridge design is being tested against these six measures before we state its performance.</p>
+    <div class="vgrid reveal">
+      <div><h3>Total dissolved solids</h3><span class="unit">mg/L</span><p>The headline measure of desalination. WHO considers water below about 600 mg/L to taste good.</p></div>
+      <div><h3>Electrical conductivity</h3><span class="unit">µS/cm</span><p>A fast proxy for dissolved ions, tracked before and after filtration.</p></div>
+      <div><h3>Sodium and chloride</h3><span class="unit">Na⁺ / Cl⁻, mg/L</span><p>Direct measurement of salt ions, the real test of any desalination claim.</p></div>
+      <div><h3>pH</h3><span class="unit">6.5 – 8.5 target</span><p>Confirms the mineral stage keeps water within the acceptable drinking range.</p></div>
+      <div><h3>Turbidity</h3><span class="unit">NTU</span><p>Shows how well the physical layers remove suspended particles and fines.</p></div>
+      <div><h3>Microbial quality</h3><span class="unit">E. coli, CFU / 100 mL</span><p>Verifies the silver-cellulose layer's antimicrobial effect. Safe water has none detected.</p></div>
+    </div>
+    <p class="note reveal">Current status: the filtration, adsorption and antimicrobial stages are designed on established principles. Desalination performance will only be claimed once laboratory results for TDS, conductivity and Na⁺/Cl⁻ are available.</p>
+  </div>
+</section>
+
+<section class="band cta" id="contact">
+  <div class="wrap">
+    <h2 class="h2 reveal">Help us put it to the test.</h2>
+    <p class="intro reveal">We are looking for laboratories, NGOs and community partners in saline-affected regions to run field trials and share water-quality data.</p>
+    <div class="reveal" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn-primary" href="mailto:team@example.com?subject=MCC%20filtration%20system%20pilot">Join the pilot</a>
+      <a class="btn btn-ghost" href="#layers">Review the design</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Microcrystalline cellulose-based filtration system for desalination and purification</span>
+    <span>Website designed by Sagor Das</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const LAYERS = [
+  {short:"PVA sheet", name:"PVA non-woven sheet", h:.20, tex:"pva", color:"#EEF3F4", mech:"Physical", role:"Pre-filter", desc:"Traps sediment, large particles and suspended matter before they reach the media bed."},
+  {short:"Ceramic balls", name:"Ceramic balls", h:1.00, tex:"cer", color:"#C9683A", mech:"Physical", role:"Flow distribution", desc:"Porous ceramic spheres spread flow evenly across the bed and support the layers above."},
+  {short:"Activated carbon", name:"Activated carbon", h:2.50, tex:"ac", color:"#2A2D32", mech:"Adsorption", role:"Primary adsorption", desc:"Removes chlorine, organic chemical contaminants and disinfection by-products that affect taste and odour."},
+  {short:"MCC + Ag", name:"MCC cellulose with silver", h:1.00, tex:"cel", color:"#B98A4E", mech:"Desalination", role:"Desalination and antimicrobial", desc:"Coconut-husk microcrystalline cellulose functionalised with Ag⁺. The core desalination layer: adsorbs saline ions (Na⁺, Cl⁻) and heavy metals, captures fine particles and inhibits microbial growth."},
+  {short:"Mineral stone", name:"Mineral stone", h:1.25, tex:"min", color:"#C9C2B0", mech:"Mineral", role:"Remineralisation", desc:"Adds trace calcium (Ca) and magnesium (Mg) and can raise the pH of treated water."},
+  {short:"Activated carbon", name:"Activated carbon", h:1.75, tex:"ac", color:"#2A2D32", mech:"Adsorption", role:"Second-stage polish", desc:"Removes residual taste and odour compounds for a clean finish."},
+  {short:"Zeolite / silica", name:"Zeolite and silica", h:2.10, tex:"zeo", color:"#7A8894", mech:"Ion exchange", role:"Heavy-metal capture", desc:"Ion-exchange media that can adsorb selected dissolved heavy metals such as lead (Pb) and mercury (Hg)."},
+  {short:"PVA sheet", name:"PVA non-woven sheet", h:.20, tex:"pva", color:"#EEF3F4", mech:"Physical", role:"Final barrier", desc:"Stops carbon fines migrating downstream and ensures clear output."}
+];
+const PX_PER_IN = window.innerWidth < 560 ? 36 : 44;
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const carts = [];
+
+document.querySelectorAll("[data-cart]").forEach(cart => {
+  const stack = cart.querySelector(".stack");
+  const glass = document.createElement("div"); glass.className = "glass";
+  LAYERS.forEach((L, i) => {
+    const el = document.createElement("div");
+    el.className = "layer t-" + L.tex;
+    el.style.height = Math.max(8, L.h * PX_PER_IN) + "px";
+    el.style.setProperty("--i", i);
+    el.dataset.i = i;
+    el.setAttribute("aria-label", L.name);
+    const lb = document.createElement("div");
+    if (cart.dataset.labels === "num") { lb.className = "lbl num"; lb.textContent = i + 1; }
+    else { lb.className = "lbl"; lb.innerHTML = `<b><span class="long">${L.name}</span><span class="short">${L.short}</span></b><em>${L.h.toFixed(2)}″</em>`; }
+    el.appendChild(lb);
+    stack.appendChild(el);
+  });
+  stack.appendChild(glass);
+  const canvas = document.createElement("canvas"); canvas.className = "flowcanvas";
+  stack.appendChild(canvas);
+  const tip = document.createElement("div"); tip.className = "tip"; cart.appendChild(tip);
+  carts.push({cart, stack, canvas, tip, particles:[]});
+});
+
+/* tooltip + highlight */
+function highlight(i){
+  if (window.v3dHighlight) window.v3dHighlight(i);
+  document.querySelectorAll(".layer").forEach(l => l.classList.toggle("hot", +l.dataset.i === i));
+  document.querySelectorAll(".stage").forEach(s => s.classList.toggle("hot", +s.dataset.i === i));
+}
+carts.forEach(c => {
+  c.stack.querySelectorAll(".layer").forEach(l => {
+    l.addEventListener("mouseenter", () => {
+      const i = +l.dataset.i, L = LAYERS[i];
+      c.tip.textContent = L.name + " · " + L.h.toFixed(2) + "″";
+      const r = l.getBoundingClientRect(), cr = c.cart.getBoundingClientRect();
+      c.tip.style.top = (r.top - cr.top + r.height / 2) + "px";
+      c.tip.classList.add("show"); highlight(i);
+    });
+    l.addEventListener("mouseleave", () => { c.tip.classList.remove("show"); highlight(-1); });
+    /* drag a layer up and down */
+    l.addEventListener("pointerdown", e => {
+      if (e.button !== undefined && e.button !== 0) return;
+      const i = +l.dataset.i, d = {x:e.clientX, y:e.clientY, bx:+(l.dataset.dx || 0), by:+(l.dataset.dy || 0), moved:false};
+      l.setPointerCapture(e.pointerId); l.classList.add("lifting"); highlight(i);
+      const mv = ev => {
+        const dx = ev.clientX - d.x, dy = ev.clientY - d.y;
+        if (Math.hypot(dx, dy) > 4) d.moved = true;
+        const vx = Math.max(-80, Math.min(80, d.bx + dx)), vy = Math.max(-90, Math.min(90, d.by + dy));
+        l.dataset.dx = vx; l.dataset.dy = vy;
+        l.style.setProperty("--dx", vx + "px"); l.style.setProperty("--dy", vy + "px");
+      };
+      const up = () => {
+        l.classList.remove("lifting");
+        l.removeEventListener("pointermove", mv); l.removeEventListener("pointerup", up); l.removeEventListener("pointercancel", up);
+        if (d.moved) l.dataset.justDragged = "1";
+      };
+      l.addEventListener("pointermove", mv); l.addEventListener("pointerup", up); l.addEventListener("pointercancel", up);
+    });
+    l.addEventListener("click", () => {
+      if (l.dataset.justDragged) { delete l.dataset.justDragged; return; }
+      const s = document.querySelector('.stage[data-i="' + l.dataset.i + '"]');
+      if (s && !c.cart.closest("#anatScene")) s.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"center"});
+      highlight(+l.dataset.i);
+    });
+  });
+});
+
+/* mobile menu */
+const navEl = document.querySelector("nav"), menuBtn = document.getElementById("menuBtn");
+function setMenu(open){
+  navEl.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+}
+menuBtn.addEventListener("click", () => setMenu(!navEl.classList.contains("open")));
+navEl.querySelectorAll("ul a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+document.addEventListener("click", e => { if (!navEl.contains(e.target)) setMenu(false); });
+window.addEventListener("resize", () => { if (window.innerWidth > 960) setMenu(false); });
+
+/* stage list */
+const list = document.getElementById("stages");
+LAYERS.forEach((L, i) => {
+  const li = document.createElement("li");
+  li.className = "stage"; li.dataset.i = i; li.tabIndex = 0;
+  li.innerHTML = `<span class="num">${i + 1}</span>
+    <div><h3>${L.name}</h3><p>${L.desc}</p><button class="how-btn" type="button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>See how it works</button></div>
+    <div class="meta"><b>${L.h.toFixed(2)}″</b><span class="swatch" style="background:${L.color}"></span>${L.mech}</div>`;
+  const hb = li.querySelector(".how-btn");
+  hb.addEventListener("click", e => { e.stopPropagation(); if (window.openHowItWorks) window.openHowItWorks(i, hb); });
+  li.addEventListener("mouseenter", () => highlight(i));
+  li.addEventListener("focus", () => highlight(i));
+  li.addEventListener("mouseleave", () => highlight(-1));
+  li.addEventListener("click", () => highlight(i));
+  list.appendChild(li);
+});
+
+/* explode toggle */
+const exBtn = document.getElementById("explode");
+const anatCart = document.querySelector("#anatScene .cart");
+exBtn.addEventListener("click", () => {
+  const on = anatCart.classList.toggle("exploded");
+  anatCart.querySelectorAll(".layer").forEach(l => { l.dataset.dx = l.dataset.dy = 0; l.style.setProperty("--dx", "0px"); l.style.setProperty("--dy", "0px"); });
+  exBtn.setAttribute("aria-pressed", on);
+  exBtn.textContent = on ? "Put layers back together" : "Pull layers apart";
+});
+document.querySelector("#anatScene .toggle").style.color = "#E6F4F2";
+
+/* water particles flowing through each cartridge */
+function sizeCanvas(c){
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = c.stack.offsetWidth, h = c.stack.offsetHeight;
+  c.canvas.width = w * dpr; c.canvas.height = h * dpr;
+  c.ctx = c.canvas.getContext("2d"); c.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  c.w = w; c.h = h;
+  // resistance per layer: finer media = slower flow
+  const slow = {pva:.45, ac:.8, cel:.4, min:.7, cer:1.1, zeo:.6};
+  c.bounds = []; let y = 0;
+  c.stack.querySelectorAll(".layer").forEach((l, i) => {
+    c.bounds.push({y0:y, y1:y + l.offsetHeight, s:slow[LAYERS[i].tex]}); y += l.offsetHeight;
+  });
+}
+function speedAt(c, y){
+  for (const b of c.bounds) if (y >= b.y0 && y < b.y1) return b.s;
+  return 1;
+}
+carts.forEach(sizeCanvas);
+window.addEventListener("resize", () => carts.forEach(sizeCanvas));
+
+function tick(t){
+  carts.forEach(c => {
+    const ctx = c.ctx; if (!ctx) return;
+    ctx.clearRect(0, 0, c.w, c.h);
+    if (c.particles.length < 70 && Math.random() < .55) {
+      c.particles.push({x: c.w * (.2 + Math.random() * .6), y: -4, v: .9 + Math.random() * .7, r: 1 + Math.random() * 1.8, p: Math.random() * 6.28});
+    }
+    c.particles = c.particles.filter(p => p.y < c.h + 6);
+    for (const p of c.particles) {
+      p.y += p.v * speedAt(c, p.y);
+      p.x += Math.sin(t / 400 + p.p) * .35;
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
+      g.addColorStop(0, "rgba(190,245,255,.95)");
+      g.addColorStop(.35, "rgba(92,207,227,.55)");
+      g.addColorStop(1, "rgba(92,207,227,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 4, 0, 6.28); ctx.fill();
+    }
+  });
+  drawCaustics(t);
+  if (!reduce) requestAnimationFrame(tick);
+}
+
+/* hero background: soft moving caustic light */
+const cc = document.getElementById("caustics"), cx = cc.getContext("2d");
+let blobs = [];
+function sizeCaustics(){
+  cc.width = cc.offsetWidth; cc.height = cc.offsetHeight;
+  blobs = Array.from({length:14}, () => ({x:Math.random() * cc.width, y:Math.random() * cc.height, r:80 + Math.random() * 180, s:.2 + Math.random() * .5, p:Math.random() * 6.28}));
+}
+function drawCaustics(t){
+  cx.clearRect(0, 0, cc.width, cc.height);
+  for (const b of blobs) {
+    const x = b.x + Math.sin(t / 3000 * b.s + b.p) * 60, y = b.y + Math.cos(t / 3500 * b.s + b.p) * 40;
+    const g = cx.createRadialGradient(x, y, 0, x, y, b.r);
+    g.addColorStop(0, "rgba(92,207,227,.14)"); g.addColorStop(1, "rgba(92,207,227,0)");
+    cx.fillStyle = g; cx.beginPath(); cx.arc(x, y, b.r, 0, 6.28); cx.fill();
+  }
+}
+sizeCaustics(); window.addEventListener("resize", sizeCaustics);
+requestAnimationFrame(tick);
+
+/* counters + reveals */
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add("in"); io.unobserve(e.target);
+}), {threshold:.15});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+document.querySelectorAll("[data-count]").forEach(el => {
+  const target = +el.dataset.count, suf = el.dataset.suffix || "", small = el.querySelector("small").outerHTML;
+  const start = performance.now(), dur = reduce ? 0 : 1400;
+  (function step(now){
+    const k = dur ? Math.min(1, (now - start) / dur) : 1;
+    el.innerHTML = Math.round(target * (1 - Math.pow(1 - k, 3))) + suf + small;
+    if (k < 1) requestAnimationFrame(step);
+  })(start);
+});
+/* ================= 3D VIEWER (three.js) ================= */
+(function(){
+  const V = document.getElementById("viewer");
+  if (!window.THREE) { V.classList.add("nogl"); return; }
+  const canvas = document.getElementById("v3d");
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true}); }
+  catch(e){ V.classList.add("nogl"); return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, .1, 200);
+  scene.add(new THREE.HemisphereLight(0xdff6ff, 0x0b2a30, .75));
+  const key = new THREE.DirectionalLight(0xffffff, .95); key.position.set(6, 10, 8); scene.add(key);
+  const rim = new THREE.PointLight(0x5ccfe3, 1.4, 40); rim.position.set(-7, 3, -6); scene.add(rim);
+  const fill = new THREE.DirectionalLight(0xffe6c8, .35); fill.position.set(-6, -4, 6); scene.add(fill);
+
+  const R = 1.6, GAP = .9;
+  /* ---- procedural textures ---- */
+  function cnv(s){ const c = document.createElement("canvas"); c.width = c.height = s; return [c, c.getContext("2d")]; }
+  function wrapDraw(s, x, y, r, fn){ for (const dx of [-s,0,s]) for (const dy of [-s,0,s]) if (x+dx > -r && x+dx < s+r && y+dy > -r && y+dy < s+r) fn(x+dx, y+dy); }
+  function ball(ctx, x, y, r, c0, c1, c2){
+    const g = ctx.createRadialGradient(x - r*.35, y - r*.35, r*.1, x, y, r);
+    g.addColorStop(0, c0); g.addColorStop(.55, c1); g.addColorStop(1, c2);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill();
+  }
+  function grain(ctx, x, y, r, col){
+    ctx.fillStyle = col; ctx.beginPath();
+    const n = 5 + (Math.random()*3|0);
+    for (let k = 0; k < n; k++){ const a = k/n*6.283, rr = r*(.6 + Math.random()*.5); ctx[k ? "lineTo" : "moveTo"](x + Math.cos(a)*rr, y + Math.sin(a)*rr); }
+    ctx.closePath(); ctx.fill();
+  }
+  function makeTex(kind){
+    const S = 256, [c, ctx] = cnv(S);
+    const rnd = (a, b) => a + Math.random()*(b - a);
+    if (kind === "ac"){
+      ctx.fillStyle = "#0e1012"; ctx.fillRect(0,0,S,S);
+      for (let i = 0; i < 1400; i++){ const x = rnd(0,S), y = rnd(0,S), r = rnd(2,5), l = rnd(18,58)|0;
+        wrapDraw(S, x, y, r, (X,Y) => grain(ctx, X, Y, r, `rgb(${l},${l+2},${l+6})`)); }
+    } else if (kind === "pva"){
+      ctx.fillStyle = "#eef3f4"; ctx.fillRect(0,0,S,S);
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 700; i++){ ctx.strokeStyle = `rgba(90,110,120,${rnd(.05,.2)})`; const x = rnd(0,S), y = rnd(0,S), a = rnd(0,6.28), L = rnd(10,40);
+        ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x + Math.cos(a)*L, y + Math.sin(a)*L); ctx.stroke(); }
+    } else if (kind === "cel"){
+      ctx.fillStyle = "#a9793f"; ctx.fillRect(0,0,S,S);
+      for (let i = 0; i < 900; i++){ ctx.strokeStyle = Math.random() < .5 ? `rgba(85,50,18,${rnd(.3,.7)})` : `rgba(245,212,150,${rnd(.3,.6)})`;
+        ctx.lineWidth = rnd(.6,1.8); const x = rnd(-20,S), y = rnd(-20,S), a = (Math.random() < .5 ? .5 : -.6) + rnd(-.25,.25), L = rnd(20,70);
+        ctx.beginPath(); ctx.moveTo(x,y); ctx.quadraticCurveTo(x + Math.cos(a)*L/2 + rnd(-6,6), y + Math.sin(a)*L/2, x + Math.cos(a)*L, y + Math.sin(a)*L); ctx.stroke(); }
+      for (let i = 0; i < 90; i++){ ctx.fillStyle = "rgba(225,235,245,.8)"; ctx.fillRect(rnd(0,S), rnd(0,S), 1.5, 1.5); }
+    } else if (kind === "min"){
+      ctx.fillStyle = "#7d7666"; ctx.fillRect(0,0,S,S);
+      for (let i = 0; i < 520; i++){ const x = rnd(0,S), y = rnd(0,S), r = rnd(5,8);
+        wrapDraw(S, x, y, r, (X,Y) => ball(ctx, X, Y, r, "#f6f2e6", "#cfc7b3", "#8a826f")); }
+    } else if (kind === "cer"){
+      ctx.fillStyle = "#4a2415"; ctx.fillRect(0,0,S,S);
+      const n = 8, s = S/n;
+      for (let row = 0; row < n; row++) for (let col = 0; col < n; col++){
+        const x = col*s + (row % 2 ? s/2 : 0) + rnd(-1.5,1.5), y = row*s + s/2 + rnd(-1.5,1.5);
+        wrapDraw(S, x, y, s*.5, (X,Y) => ball(ctx, X, Y, s*.47, "#ffc09a", "#d5723f", "#6e3219")); }
+    } else if (kind === "zeo"){
+      ctx.fillStyle = "#3f4a55"; ctx.fillRect(0,0,S,S);
+      const cols = ["#c9d3dc","#8795a3","#5d6b79","#e6ecf1","#6f7f8e","#aab7c3"];
+      for (let i = 0; i < 1100; i++){ const x = rnd(0,S), y = rnd(0,S), r = rnd(2.5,6), col = cols[i % cols.length];
+        wrapDraw(S, x, y, r, (X,Y) => grain(ctx, X, Y, r, col)); }
+    }
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.encoding = THREE.sRGBEncoding;
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return t;
+  }
+  const texCache = {};
+  const tex = k => texCache[k] || (texCache[k] = makeTex(k));
+
+  /* ---- layers ---- */
+  const layers = []; let cum = 0;
+  LAYERS.forEach((L, i) => {
+    const t = tex(L.tex).clone(); t.needsUpdate = true;
+    t.repeat.set(4, Math.max(.12, L.h / 2.5));
+    const top = tex(L.tex).clone(); top.needsUpdate = true; top.repeat.set(1.3, 1.3);
+    const side = new THREE.MeshStandardMaterial({map:t, roughness: L.tex === "cer" ? .55 : .85, metalness:0, emissive:0x000000});
+    const cap = new THREE.MeshStandardMaterial({map:top, roughness:.85, emissive:0x000000});
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(R, R, L.h, 72, 1), [side, cap, cap]);
+    const base = 5 - cum - L.h/2; cum += L.h;
+    m.userData = {i, base}; layers.push(m); scene.add(m);
+  });
+
+  /* ---- glass shell, end caps, nozzles ---- */
+  const glassMat = new THREE.MeshPhongMaterial({color:0xcfefff, transparent:true, opacity:.17, shininess:140, specular:0xffffff, side:THREE.DoubleSide, depthWrite:false});
+  const glass = new THREE.Mesh(new THREE.CylinderGeometry(R + .1, R + .1, 10.12, 72, 1, true), glassMat); scene.add(glass);
+  const capMat = new THREE.MeshPhongMaterial({color:0xdcf0f4, transparent:true, opacity:.6, shininess:120, specular:0xffffff, side:THREE.DoubleSide, depthWrite:false});
+  const prof = [[R+.08,-.12],[R+.26,-.12],[R+.26,.1],[R+.08,.28],[1.2,.42],[.62,.48],[.5,.48]].map(p => new THREE.Vector2(p[0], p[1]));
+  const capGeo = new THREE.LatheGeometry(prof, 72);
+  const nozGeo = new THREE.CylinderGeometry(.42, .46, .38, 40);
+  const topCap = new THREE.Group(), botCap = new THREE.Group();
+  [topCap, botCap].forEach(g => { g.add(new THREE.Mesh(capGeo, capMat)); const n = new THREE.Mesh(nozGeo, capMat); n.position.y = .66; g.add(n); scene.add(g); });
+  botCap.scale.y = -1;
+
+  /* ---- water streams ---- */
+  function stripeTex(){
+    const [c, ctx] = [document.createElement("canvas"), null]; c.width = 32; c.height = 128;
+    const x = c.getContext("2d");
+    const g = x.createLinearGradient(0,0,32,0); g.addColorStop(0,"rgba(92,207,227,.25)"); g.addColorStop(.5,"rgba(215,250,255,.95)"); g.addColorStop(1,"rgba(92,207,227,.25)");
+    x.fillStyle = g; x.fillRect(0,0,32,128);
+    x.fillStyle = "rgba(255,255,255,.9)"; x.fillRect(0,0,32,14); x.fillRect(0,64,32,6);
+    const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t;
+  }
+  const SL = 9;
+  const streamMat = new THREE.MeshBasicMaterial({map:stripeTex(), transparent:true, opacity:.9, depthWrite:false, blending:THREE.AdditiveBlending, side:THREE.DoubleSide});
+  streamMat.map.repeat.set(1, SL/1.4);
+  const sIn = new THREE.Mesh(new THREE.CylinderGeometry(.13, .13, SL, 20, 1, true), streamMat);
+  const sOut = new THREE.Mesh(new THREE.CylinderGeometry(.08, .11, SL, 20, 1, true), streamMat);
+  scene.add(sIn, sOut);
+
+  /* ---- flowing droplets on the media surface ---- */
+  const [gc, gx] = cnv(64);
+  const gg = gx.createRadialGradient(32,32,0,32,32,32); gg.addColorStop(0,"rgba(230,252,255,1)"); gg.addColorStop(.3,"rgba(120,215,235,.7)"); gg.addColorStop(1,"rgba(92,207,227,0)");
+  gx.fillStyle = gg; gx.fillRect(0,0,64,64);
+  const N = 320, pos = new Float32Array(N*3), P = [];
+  for (let k = 0; k < N; k++) P.push({a:Math.random()*6.283, y:-5 + Math.random()*10, v:.9 + Math.random()*.9, w:Math.random()*6.28});
+  const pGeo = new THREE.BufferGeometry(); pGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  const pts = new THREE.Points(pGeo, new THREE.PointsMaterial({size:.2, map:new THREE.CanvasTexture(gc), transparent:true, depthWrite:false, blending:THREE.AdditiveBlending}));
+  scene.add(pts);
+  const slow = {pva:.35, ac:.75, cel:.35, min:.65, cer:1.1, zeo:.55};
+  const layerAt = y => { for (const m of layers){ const h = LAYERS[m.userData.i].h/2; if (y <= m.userData.base + h && y >= m.userData.base - h) return m.userData.i; } return 7; };
+
+  /* ---- labels overlay ---- */
+  const svg = document.getElementById("vlines"), lblBox = document.getElementById("vlabels");
+  const NS = "http://www.w3.org/2000/svg";
+  const lbls = LAYERS.map((L, i) => {
+    const d = document.createElement("div"); d.className = "vlbl";
+    d.innerHTML = `<b><span class="long">${L.name}</span><span class="short">${L.short}</span></b><em>${L.h.toFixed(2)}″</em>`;
+    d.addEventListener("click", () => select(i));
+    lblBox.appendChild(d);
+    const path = document.createElementNS(NS, "path"); svg.appendChild(path);
+    const dot = document.createElementNS(NS, "circle"); dot.setAttribute("r", 2.6); svg.appendChild(dot);
+    return {d, path, dot};
+  });
+  const dimPath = document.createElementNS(NS, "path"); dimPath.setAttribute("class", "dim3"); svg.appendChild(dimPath);
+  const dimTxt = document.createElement("div"); dimTxt.className = "dimtxt"; dimTxt.textContent = "Total height: 10 inches"; lblBox.appendChild(dimTxt);
+  const flowIn = document.createElement("div"), flowOut = document.createElement("div");
+  flowIn.className = flowOut.className = "flowtag"; flowIn.textContent = "Flow in"; flowOut.textContent = "Flow out";
+  lblBox.append(flowIn, flowOut);
+
+  /* ---- camera orbit state ---- */
+  const HOME = {yaw:-.5, pitch:.18, dist:30};
+  let yaw = HOME.yaw, pitch = HOME.pitch, dist = HOME.dist;
+  let tYaw = yaw, tPitch = pitch, tDist = dist;
+  let expT = 0, expTarget = 0, showLabels = true, lastInteract = -1e9, hovered = -1, selected = -1;
+  const reduceM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clampP = p => Math.max(-1.1, Math.min(1.1, p));
+  const touch = () => lastInteract = performance.now();
+
+  let W = 1, H = 1;
+  function resize(){
+    W = V.clientWidth; H = V.clientHeight;
+    renderer.setSize(W, H, false);
+    camera.aspect = W/H;
+    camera.setViewOffset(W, H, W * (W < 500 ? .16 : W > 700 ? .09 : .14), W < 640 ? 26 : 0, W, H);
+    camera.updateProjectionMatrix();
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  }
+  new ResizeObserver(resize).observe(V); resize();
+
+  /* pointer: drag to rotate, tap to select */
+  /* per-layer vertical offset set by dragging a layer (world units) */
+  const lift = new Array(LAYERS.length).fill(0), LIFT_MAX = 4;
+  const shiftX = new Array(LAYERS.length).fill(0), shiftZ = new Array(LAYERS.length).fill(0), SHIFT_MAX = 4;
+  const setLift = (i, v) => { lift[i] = Math.max(-LIFT_MAX, Math.min(LIFT_MAX, v)); };
+  const camRight = new THREE.Vector3();
+  /* move layer i sideways by `u` world units along the screen's left-right direction */
+  function slide(i, u){
+    camRight.setFromMatrixColumn(camera.matrixWorld, 0); camRight.y = 0; camRight.normalize();
+    let x = shiftX[i] + camRight.x*u, z = shiftZ[i] + camRight.z*u;
+    const r = Math.hypot(x, z); if (r > SHIFT_MAX){ x *= SHIFT_MAX/r; z *= SHIFT_MAX/r; }
+    shiftX[i] = x; shiftZ[i] = z;
+  }
+  function pxPerUnitX(i){
+    camRight.setFromMatrixColumn(camera.matrixWorld, 0); camRight.y = 0; camRight.normalize();
+    const m = layers[i].position, a = proj(m.x, m.y, m.z), b = proj(m.x + camRight.x, m.y, m.z + camRight.z);
+    return Math.max(6, b[0] - a[0]);
+  }
+  const resetLayers = () => { lift.fill(0); shiftX.fill(0); shiftZ.fill(0); };
+  function hitLayer(x, y){
+    const r = canvas.getBoundingClientRect();
+    ndc.set((x - r.left)/r.width*2 - 1, -((y - r.top)/r.height)*2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const hit = ray.intersectObjects(layers)[0];
+    return hit ? hit.object.userData.i : -1;
+  }
+  function pxPerUnit(i){
+    const m = layers[i].position, a = proj(m.x, m.y, m.z), b = proj(m.x, m.y + 1, m.z);
+    return Math.max(6, a[1] - b[1]);
+  }
+
+  let drag = null;
+  canvas.addEventListener("pointerdown", e => {
+    const li = hitLayer(e.clientX, e.clientY);
+    drag = {x:e.clientX, y:e.clientY, sx:e.clientX, sy:e.clientY, layer:li};
+    canvas.setPointerCapture(e.pointerId);
+    V.classList.add(li >= 0 ? "lifting" : "grab");
+    if (li >= 0) setHover(li);
+    touch();
+  });
+  canvas.addEventListener("pointermove", e => {
+    if (drag){
+      if (drag.layer >= 0){
+        setLift(drag.layer, lift[drag.layer] - (e.clientY - drag.y) / pxPerUnit(drag.layer));
+        slide(drag.layer, (e.clientX - drag.x) / pxPerUnitX(drag.layer));
+        if (selected !== drag.layer && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 4) select(drag.layer);
+      } else {
+        tYaw -= (e.clientX - drag.x) * .009;
+        tPitch = clampP(tPitch + (e.clientY - drag.y) * .006);
+      }
+      drag.x = e.clientX; drag.y = e.clientY; touch();
+    } else pick(e, false);
+  });
+  const end = e => {
+    if (drag && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < 5) pick(e, true);
+    drag = null; V.classList.remove("grab", "lifting");
+  };
+  canvas.addEventListener("pointerup", end);
+  canvas.addEventListener("pointercancel", () => { drag = null; V.classList.remove("grab", "lifting"); });
+  /* on touch screens: a finger that starts on a layer moves the layer instead of scrolling the page */
+  canvas.addEventListener("touchstart", e => {
+    const t = e.touches[0];
+    if (e.touches.length === 1 && hitLayer(t.clientX, t.clientY) >= 0) e.preventDefault();
+  }, {passive:false});
+  canvas.addEventListener("pointerleave", () => { if (!drag) setHover(-1); });
+
+  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  function pick(e, click){
+    const r = canvas.getBoundingClientRect();
+    ndc.set((e.clientX - r.left)/r.width*2 - 1, -((e.clientY - r.top)/r.height)*2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const hit = ray.intersectObjects(layers)[0];
+    const i = hit ? hit.object.userData.i : -1;
+    setHover(i);
+    if (click) select(i);
+  }
+  function setHover(i){
+    hovered = i; canvas.style.cursor = i >= 0 ? "ns-resize" : "grab";
+  }
+  const info = document.getElementById("vinfo");
+  function select(i){
+    selected = i;
+    if (i < 0){ info.innerHTML = `<span class="vi-hint">Tap a layer to see what it does, or drag it to move it.</span>`; return; }
+    const L = LAYERS[i];
+    info.innerHTML = `<b>${i + 1}. ${L.name}</b><span class="vi-meta">${L.h.toFixed(2)}″ · ${L.role}</span><p>${L.desc}</p><button class="vi-how" type="button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>See how it works</button>`;
+    const hb = info.querySelector(".vi-how");
+    hb.addEventListener("pointerdown", e => e.stopPropagation());
+    hb.addEventListener("click", e => { e.stopPropagation(); if (window.openHowItWorks) window.openHowItWorks(i, hb); });
+  }
+  select(-1);
+  window.v3dHighlight = i => { hovered = i; };
+
+  /* buttons + keyboard */
+  const act = {
+    left:  () => tYaw += Math.PI/4,
+    right: () => tYaw -= Math.PI/4,
+    up:    () => tPitch = clampP(tPitch + .3),
+    down:  () => tPitch = clampP(tPitch - .3),
+    zin:   () => tDist = Math.max(16, tDist - 4),
+    zout:  () => tDist = Math.min(56, tDist + 4),
+    reset: () => { resetLayers(); tYaw = HOME.yaw + Math.round((tYaw - HOME.yaw)/6.283)*6.283; tPitch = HOME.pitch; tDist = expTarget ? 44 : HOME.dist; select(-1); },
+    explode: b => { expTarget = expTarget ? 0 : 1; tDist = expTarget ? 44 : HOME.dist; b.setAttribute("aria-pressed", !!expTarget); b.textContent = expTarget ? "Assemble" : "Explode"; },
+    labels: b => { showLabels = !showLabels; b.setAttribute("aria-pressed", showLabels); V.classList.toggle("nolabels", !showLabels); }
+  };
+  V.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => { act[b.dataset.act](b); touch(); }));
+  V.addEventListener("keydown", e => {
+    /* Shift + Up/Down moves the selected layer */
+    if (e.shiftKey && selected >= 0 && e.key.startsWith("Arrow") && e.target === V){
+      e.preventDefault();
+      if (e.key === "ArrowUp") setLift(selected, lift[selected] + .25);
+      else if (e.key === "ArrowDown") setLift(selected, lift[selected] - .25);
+      else slide(selected, e.key === "ArrowRight" ? .25 : -.25);
+      touch(); return;
+    }
+    const map = {ArrowLeft:"left", ArrowRight:"right", ArrowUp:"up", ArrowDown:"down", "+":"zin", "=":"zin", "-":"zout"};
+    if (map[e.key] && e.target === V){ e.preventDefault(); act[map[e.key]](); touch(); }
+  });
+
+  /* ---- full screen ---- */
+  const fsBtn = document.getElementById("vfullBtn");
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+  function setFullUI(on){
+    V.classList.toggle("isfull", on);
+    fsBtn.setAttribute("aria-pressed", on);
+    fsBtn.setAttribute("aria-label", on ? "Exit full screen" : "Full screen");
+    fsBtn.title = on ? "Exit full screen" : "Full screen";
+    fsBtn.querySelector("span").textContent = on ? "Exit full screen" : "Full screen";
+    window.dispatchEvent(new Event("v3dfullchange"));
+  }
+  function cssFull(on){
+    V.classList.toggle("vfull", on);
+    document.body.classList.toggle("vfull-lock", on);
+    setFullUI(on);
+  }
+  function toggleFull(){
+    if (!V.classList.contains("isfull")){
+      const req = V.requestFullscreen || V.webkitRequestFullscreen;
+      if (req){
+        try { const r = req.call(V); if (r && r.catch) r.catch(() => cssFull(true)); }
+        catch(e){ cssFull(true); }
+      } else cssFull(true);
+    } else if (fsEl()){
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    } else cssFull(false);
+    touch(); V.focus({preventScroll:true});
+  }
+  fsBtn.addEventListener("click", toggleFull);
+  ["fullscreenchange", "webkitfullscreenchange"].forEach(ev => document.addEventListener(ev, () => {
+    if (!V.classList.contains("vfull")) setFullUI(fsEl() === V);
+  }));
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && V.classList.contains("vfull") && !document.querySelector(".mol:not([hidden])")) cssFull(false);
+  });
+
+  /* ---- frame ---- */
+  const v3 = new THREE.Vector3(), right = new THREE.Vector3();
+  function proj(x, y, z){ v3.set(x, y, z).project(camera); return [(v3.x + 1)/2*W, (1 - v3.y)/2*H]; }
+  let visible = true;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }, {threshold:0}).observe(V);
+  let last = performance.now();
+  function frame(now){
+    requestAnimationFrame(frame);
+    const dt = Math.max(0, Math.min(.05, (now - last)/1000)); last = now;
+    if (!visible || document.body.classList.contains("mol-lock")) return;
+    if (!reduceM && !drag && now - lastInteract > 3500) tYaw -= dt * .25;
+    const k = 1 - Math.pow(.0015, dt);
+    yaw += (tYaw - yaw)*k; pitch += (tPitch - pitch)*k; dist += (tDist - dist)*k;
+    expT += (expTarget - expT)*(1 - Math.pow(.02, dt));
+    camera.position.set(dist*Math.cos(pitch)*Math.sin(yaw), dist*Math.sin(pitch), dist*Math.cos(pitch)*Math.cos(yaw));
+    camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
+
+    // layers
+    const off = i => (3.5 - i) * GAP * expT;
+    layers.forEach(m => {
+      const i = m.userData.i;
+      m.position.set(shiftX[i], m.userData.base + off(i) + lift[i], shiftZ[i]);
+      const on = i === hovered || i === selected;
+      m.material.forEach(mt => mt.emissive.setHex(on ? 0x1d5c66 : 0x000000));
+    });
+    const topY = 5 + off(0) + .45*expT, botY = -5 + off(7) - .45*expT;
+    topCap.position.y = topY; botCap.position.y = botY;
+    glassMat.opacity = .17 * (1 - expT); glass.visible = expT < .98;
+    sIn.position.y = topY + .85 + SL/2; sOut.position.y = botY - .85 - SL/2;
+    streamMat.map.offset.y -= dt * 2.2;
+
+    // droplets
+    for (let n = 0; n < N; n++){
+      const p = P[n], li = layerAt(p.y);
+      p.y -= p.v * slow[LAYERS[li].tex] * dt;
+      if (p.y < -5){ p.y = 5; p.a = Math.random()*6.283; }
+      const a = p.a + Math.sin(now/700 + p.w)*.03;
+      pos[n*3] = Math.cos(a)*(R + .03) + shiftX[li]; pos[n*3 + 1] = p.y + off(li) + lift[li]; pos[n*3 + 2] = Math.sin(a)*(R + .03) + shiftZ[li];
+    }
+    pGeo.attributes.position.needsUpdate = true;
+
+    renderer.render(scene, camera);
+
+    // labels
+    right.setFromMatrixColumn(camera.matrixWorld, 0).normalize();
+    const anchors = layers.map(m => proj(m.position.x + right.x*R, m.position.y + right.y*R, m.position.z + right.z*R));
+    const colX = Math.max(...anchors.map(a => a[0])) + 30;
+    const ys = anchors.map(a => a[1]);
+    const gapPx = W < 500 ? 17 : 20;
+    for (let i = 1; i < 8; i++) ys[i] = Math.max(ys[i], ys[i-1] + gapPx);
+    lbls.forEach((l, i) => {
+      const [ax, ay] = anchors[i], hot = i === hovered || i === selected;
+      l.d.style.transform = `translate(${colX}px, ${ys[i]}px) translateY(-50%)`;
+      l.d.classList.toggle("hot", hot);
+      l.path.setAttribute("d", `M${ax + 3},${ay} L${colX - 14},${ys[i]} L${colX - 4},${ys[i]}`);
+      l.path.setAttribute("class", hot ? "hot" : "");
+      l.dot.setAttribute("cx", ax); l.dot.setAttribute("cy", ay);
+    });
+    // dimension bar on the left silhouette
+    const s = R + .7;
+    const [tx, ty] = proj(-right.x*s, 5 - right.y*s, -right.z*s), [bx, by] = proj(-right.x*s, -5 - right.y*s, -right.z*s);
+    dimPath.setAttribute("d", `M${tx - 6},${ty} L${tx + 6},${ty} M${tx},${ty} L${bx},${by} M${bx - 6},${by} L${bx + 6},${by}`);
+    dimPath.style.opacity = dimTxt.style.opacity = 1 - expT;
+    dimTxt.style.transform = `translate(${(tx + bx)/2 - 12}px, ${(ty + by)/2}px) translate(-50%,-50%) rotate(-90deg)`;
+    const [fx, fy] = proj(0, topY + 1.9, 0), [ox, oy] = proj(0, botY - 2.1, 0);
+    flowIn.style.transform = `translate(${fx + 14}px, ${fy}px) translateY(-50%)`;
+    flowOut.style.transform = `translate(${ox + 14}px, ${oy}px) translateY(-50%)`;
+  }
+  requestAnimationFrame(frame);
+})();
+
+
+/* ================= "SEE HOW IT WORKS": MOLECULAR-LEVEL ANIMATIONS ================= */
+(function(){
+  const TAU = Math.PI*2, rnd = (a, b) => a + Math.random()*(b - a);
+  const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) * 2;
+  /* colour, label, text colour */
+  const ION = {
+    na:["#a88bff","Na⁺","#fff"], cl:["#5fd07a","Cl⁻","#06260f"], clion:["#5fd07a","Cl⁻","#06260f"],
+    pb:["#6f7a86","Pb²⁺","#fff"], hg:["#c6d0da","Hg²⁺","#1d2a33"], ca:["#ffb35c","Ca²⁺","#3a2200"],
+    mg:["#a6e47e","Mg²⁺","#173300"], h:["#ff7fb0","H⁺","#3a0019"], hco3:["#7fd4ff","HCO₃⁻","#002a3a"],
+    ag:["#e9eef3","Ag⁺","#26323b"], hocl:["#d4e84a","HOCl","#2a3300"]
+  };
+  const RAD = {water:6, sed:12, fine:3.5, org:9, odour:8, bact:16, na:8.5, cl:9, clion:9, pb:9.5, hg:9.5, ca:9.5, mg:9, h:6.5, hco3:11.5, ag:6.5, hocl:11};
+  const SPEED = {bact:.5, sed:.95};
+  const NAMES = {
+    water:"Water molecule (H₂O)", sed:"Sediment / silt grain", fine:"Carbon fines (dust)", org:"Organic contaminant",
+    odour:"Taste and odour compound", bact:"Bacterium", na:"Sodium ion (Na⁺)", cl:"Chloride ion (Cl⁻)", clion:"Chloride ion (Cl⁻)",
+    pb:"Lead ion (Pb²⁺)", hg:"Mercury ion (Hg²⁺)", ca:"Calcium ion (Ca²⁺)", mg:"Magnesium ion (Mg²⁺)",
+    h:"Hydrogen ion (H⁺), acidity", hco3:"Bicarbonate (HCO₃⁻)", ag:"Silver ion (Ag⁺)", hocl:"Free chlorine (HOCl)",
+    fibre:"PVA fibre", carbon:"Activated carbon granule with pores", chain:"Cellulose chain with –OH sites",
+    stone:"Mineral stone (CaCO₃ / MgCO₃)", sphere:"Porous ceramic sphere", frame:"Zeolite cage (Si, Al, O framework)"
+  };
+
+  /* ---------- drawing primitives ---------- */
+  function circ(c, x, y, r){ c.beginPath(); c.arc(x, y, r, 0, TAU); }
+  function ion(c, x, y, r, t){
+    const [col, lbl, tc] = ION[t];
+    circ(c, x, y, r); c.fillStyle = col; c.fill();
+    const g = c.createRadialGradient(x - r*.4, y - r*.45, 0, x, y, r);
+    g.addColorStop(0, "rgba(255,255,255,.6)"); g.addColorStop(.5, "rgba(255,255,255,.06)"); g.addColorStop(1, "rgba(0,0,0,.28)");
+    c.fillStyle = g; c.fill();
+    c.fillStyle = tc; c.textAlign = "center"; c.textBaseline = "middle";
+    c.font = `600 ${Math.max(5.5, r*(lbl.length > 3 ? .6 : .82))}px "IBM Plex Sans", system-ui, sans-serif`;
+    c.fillText(lbl, x, y + .5);
+  }
+  function water(c, x, y, a, u){
+    c.fillStyle = "#eef8ff";
+    for (const s of [-1, 1]){ circ(c, x + Math.cos(a + s*.91)*6.2*u, y + Math.sin(a + s*.91)*6.2*u, 3*u); c.fill(); }
+    circ(c, x, y, 5.2*u); c.fillStyle = "#e2504a"; c.fill();
+    circ(c, x - 1.6*u, y - 1.8*u, 1.7*u); c.fillStyle = "rgba(255,255,255,.45)"; c.fill();
+  }
+  function hexPath(c, x, y, r, rot){
+    c.beginPath();
+    for (let k = 0; k < 6; k++){ const a = rot + k*TAU/6; c[k ? "lineTo" : "moveTo"](x + Math.cos(a)*r, y + Math.sin(a)*r); }
+    c.closePath();
+  }
+  function bacterium(c, x, y, a, u, p){
+    const L = 17*u, w = 7.5*u, dead = p.dead;
+    c.save(); c.translate(x, y); c.rotate(a);
+    c.beginPath(); c.moveTo(-L + 2*u, 0);
+    for (let k = 1; k <= 12; k++) c.lineTo(-L - k*2.2*u, Math.sin(k*.9 + (dead ? 0 : p.t*12))*2.4*u);
+    c.strokeStyle = dead ? "rgba(150,155,150,.6)" : "rgba(150,230,140,.85)"; c.lineWidth = 1.2*u; c.stroke();
+    c.beginPath(); c.arc(-L + w, 0, w, Math.PI/2, Math.PI*1.5); c.lineTo(L - w, -w); c.arc(L - w, 0, w, -Math.PI/2, Math.PI/2); c.closePath();
+    c.fillStyle = dead ? "#6d7570" : "#5fc46a"; c.fill();
+    if (dead) c.setLineDash([3*u, 3*u]);
+    c.strokeStyle = dead ? "rgba(220,220,220,.6)" : "#2f7d3a"; c.lineWidth = 1.5*u; c.stroke(); c.setLineDash([]);
+    c.fillStyle = dead ? "rgba(40,40,40,.5)" : "rgba(20,70,30,.55)";
+    for (const [dx, dy] of [[-8,-2],[-2,2],[5,-1.5],[10,2]]){ circ(c, dx*u, dy*u, 1.4*u); c.fill(); }
+    for (let k = 0; k < (p.hits || 0); k++){ circ(c, (-10 + k*9)*u, (k % 2 ? w : -w), 2.6*u); c.fillStyle = "#e9eef3"; c.fill(); }
+    c.restore();
+  }
+  function shapeFor(p){
+    if (p.type === "sed") p.shape = Array.from({length:8}, () => rnd(.7, 1.15));
+    if (p.type === "fine") p.shape = [[0,0],[rnd(-3,3),rnd(-3,3)],[rnd(-3,3),rnd(-3,3)]];
+  }
+  function drawP(c, p, S){
+    const u = S.u, b = p.state === "bound";
+    const x = b ? p.bx + Math.sin(S.t*3 + p.ph)*.8*u : p.x, y = b ? p.by + Math.cos(S.t*2.6 + p.ph)*.8*u : p.y;
+    c.globalAlpha = (p.alpha == null ? 1 : p.alpha) * (p.state === "dying" ? Math.max(0, p.life/p.max) : 1) * (p.type === "water" ? .82 : 1);
+    switch (p.type){
+      case "water": water(c, x, y, p.a, u); break;
+      case "sed": {
+        const r = RAD.sed*u, n = p.shape.length; c.beginPath();
+        for (let k = 0; k < n; k++){ const a = p.a + k/n*TAU, rr = r*p.shape[k]; c[k ? "lineTo" : "moveTo"](x + Math.cos(a)*rr, y + Math.sin(a)*rr); }
+        c.closePath(); c.fillStyle = "#8b6a44"; c.fill(); c.strokeStyle = "#5a4128"; c.lineWidth = 1.4*u; c.stroke();
+        c.fillStyle = "rgba(230,200,150,.55)"; circ(c, x - 3*u, y - 3*u, 1.6*u); c.fill(); circ(c, x + 3*u, y + 2*u, 1.2*u); c.fill();
+        break;
+      }
+      case "fine":
+        for (const [dx, dy] of p.shape){ circ(c, x + dx*u, y + dy*u, 2.3*u); c.fillStyle = "#141518"; c.fill(); c.strokeStyle = "rgba(170,180,190,.55)"; c.lineWidth = .8*u; c.stroke(); }
+        break;
+      case "org":
+        hexPath(c, x, y, 7*u, p.a); c.fillStyle = "rgba(240,184,90,.18)"; c.fill(); c.strokeStyle = "#f0b85a"; c.lineWidth = 2*u; c.stroke();
+        circ(c, x, y, 3.6*u); c.lineWidth = 1.2*u; c.stroke();
+        c.beginPath(); c.moveTo(x + Math.cos(p.a)*7*u, y + Math.sin(p.a)*7*u); c.lineTo(x + Math.cos(p.a)*13*u, y + Math.sin(p.a)*13*u); c.lineWidth = 2*u; c.stroke();
+        break;
+      case "odour": {
+        c.save(); c.translate(x, y); c.rotate(p.a);
+        const r = 5.4*u;
+        for (const s of [-1, 1]){ hexPath(c, s*r*.866, 0, r, TAU/12); c.fillStyle = "rgba(201,162,255,.2)"; c.fill(); c.strokeStyle = "#c9a2ff"; c.lineWidth = 1.8*u; c.stroke(); }
+        circ(c, r*1.9, -r*.5, 1.8*u); c.fillStyle = "#e2504a"; c.fill();
+        c.restore(); break;
+      }
+      case "bact": bacterium(c, x, y, p.a, u, p); break;
+      default: ion(c, x, y, RAD[p.type]*u, p.type);
+    }
+    c.globalAlpha = 1;
+  }
+  function blob(c, g){
+    const n = g.poly.length; c.beginPath();
+    for (let k = 0; k < n; k++){ const a = k/n*TAU, rr = g.r*g.poly[k]; c[k ? "lineTo" : "moveTo"](g.x + Math.cos(a)*rr, g.y + Math.sin(a)*rr); }
+    c.closePath();
+  }
+  function smoothBlob(c, g){
+    const n = g.poly.length, P = [];
+    for (let k = 0; k < n; k++){ const a = k/n*TAU, rr = g.r*g.poly[k]; P.push([g.x + Math.cos(a)*rr, g.y + Math.sin(a)*rr]); }
+    c.beginPath(); c.moveTo((P[0][0] + P[n-1][0])/2, (P[0][1] + P[n-1][1])/2);
+    for (let k = 0; k < n; k++){ const p = P[k], q = P[(k + 1) % n]; c.quadraticCurveTo(p[0], p[1], (p[0] + q[0])/2, (p[1] + q[1])/2); }
+    c.closePath();
+  }
+  function granule(c, g, u){
+    blob(c, g);
+    const gr = c.createRadialGradient(g.x - g.r*.3, g.y - g.r*.35, g.r*.1, g.x, g.y, g.r*1.1);
+    gr.addColorStop(0, "#474c54"); gr.addColorStop(1, "#0d0f11");
+    c.fillStyle = gr; c.fill(); c.strokeStyle = "rgba(255,255,255,.14)"; c.lineWidth = 1.2*u; c.stroke();
+    for (const [a, rr, pr] of g.pores){ circ(c, g.x + Math.cos(a)*g.r*rr, g.y + Math.sin(a)*g.r*rr, pr); c.fillStyle = "#040506"; c.fill(); c.strokeStyle = "rgba(140,150,160,.35)"; c.lineWidth = .8*u; c.stroke(); }
+  }
+  function stone(c, g, u){
+    smoothBlob(c, g);
+    const gr = c.createRadialGradient(g.x - g.r*.35, g.y - g.r*.4, g.r*.1, g.x, g.y, g.r*1.1);
+    gr.addColorStop(0, "#f3ecdc"); gr.addColorStop(.6, "#cbc1aa"); gr.addColorStop(1, "#8f8570");
+    c.fillStyle = gr; c.fill(); c.strokeStyle = "rgba(0,0,0,.25)"; c.lineWidth = 1.2*u; c.stroke();
+    for (const [a, rr, s, col] of g.spk){ circ(c, g.x + Math.cos(a)*g.r*rr, g.y + Math.sin(a)*g.r*rr, s); c.fillStyle = col; c.fill(); }
+  }
+  function sphere(c, g, u){
+    circ(c, g.x, g.y, g.r);
+    const gr = c.createRadialGradient(g.x - g.r*.35, g.y - g.r*.35, g.r*.1, g.x, g.y, g.r);
+    gr.addColorStop(0, "#ffc09a"); gr.addColorStop(.55, "#d5723f"); gr.addColorStop(1, "#6e3219");
+    c.fillStyle = gr; c.fill();
+    c.fillStyle = "rgba(60,20,8,.55)";
+    for (const [a, rr, s] of g.pores){ circ(c, g.x + Math.cos(a)*g.r*rr, g.y + Math.sin(a)*g.r*rr, s); c.fill(); }
+  }
+  function cage(c, g, u, withCharge){
+    const n = 8, P = [];
+    for (let k = 0; k < n; k++){ const a = k/n*TAU + TAU/16; P.push([g.x + Math.cos(a)*g.r, g.y + Math.sin(a)*g.r]); }
+    c.beginPath(); P.forEach((p, k) => c[k ? "lineTo" : "moveTo"](p[0], p[1])); c.closePath();
+    c.fillStyle = "rgba(127,178,255,.07)"; c.fill(); c.strokeStyle = "rgba(230,244,242,.45)"; c.lineWidth = 1.6*u; c.stroke();
+    for (let k = 0; k < n; k++){ const p = P[k], q = P[(k + 1) % n]; circ(c, (p[0] + q[0])/2, (p[1] + q[1])/2, 2.2*u); c.fillStyle = "#e2504a"; c.fill(); }
+    P.forEach((p, k) => {
+      const al = k === 1 || k === 5;
+      circ(c, p[0], p[1], 3.6*u); c.fillStyle = al ? "#7fb2ff" : "#e8d27a"; c.fill();
+      if (al && withCharge){
+        const a = k/n*TAU + TAU/16;
+        c.fillStyle = "#9fc8ff"; c.font = `700 ${Math.max(8, 10*u)}px "IBM Plex Sans", sans-serif`; c.textAlign = "center"; c.textBaseline = "middle";
+        c.fillText("−", p[0] + Math.cos(a)*8*u, p[1] + Math.sin(a)*8*u);
+      }
+    });
+  }
+
+  /* ---------- simulation helpers ---------- */
+  function make(S, type, x, y){
+    const p = {type, x, y, vx:0, vy:S.flow, a:rnd(0, TAU), spin:rnd(-1.5, 1.5), ph:rnd(0, TAU), state:"free", alpha:1, t:0, hits:0, cool:0};
+    shapeFor(p);
+    if (type === "bact"){ p.a = Math.PI/2 + rnd(-.4, .4); p.spin = 0; }
+    if (type !== "water") p.spin *= .4;
+    S.parts.push(p); return p;
+  }
+  function spawn(S, type, y){
+    const pad = 16*S.u, p = make(S, type, rnd(pad, S.W - pad), y == null ? -18*S.u : y);
+    if (S.sc.born) S.sc.born(S, p);
+    return p;
+  }
+  function nearestSite(S, p, reach){
+    let best = null, bd = reach;
+    for (const s of S.sites){ if (s.taken) continue; const d = Math.hypot(s.x - p.x, s.y - p.y); if (d < bd){ bd = d; best = s; } }
+    return best;
+  }
+  function goTo(p, s){ p.state = "seek"; p.site = s; s.taken = p; p.tx = s.x; p.ty = s.y; }
+  function fx(S, x, y, txt, col){
+    S.fx.push({x, y, txt, col:col || "#E6F4F2", life:1.7, max:1.7});
+    S.fx.push({ring:1, x, y:y + 14*S.u, life:.7, max:.7, col:col || "#E6F4F2"});
+  }
+  function kill(p, t){
+    if (p.state === "dying") return;
+    p.state = "dying"; p.life = p.max = t;
+    if (p.site && p.site.taken === p) p.site.taken = null;
+  }
+  function bind(S, p, noList){
+    p.state = "bound"; p.bx = p.x; p.by = p.y; p.vx = p.vy = 0;
+    if (noList) return;
+    S.bound.push(p);
+    if (S.bound.length > S.sc.cap) kill(S.bound.shift(), 1.2);
+  }
+
+  /* ---------- the eight scenes ---------- */
+  function fibreScene(o){
+    return {
+      spawn:o.spawn, slow:.6, cap:o.cap, zone:"PVA fibre web", legend:o.legend,
+      setup(S){
+        const u = S.u; S.fib = [];
+        for (let k = 0; k < o.n; k++){
+          const y = rnd(S.y0 + 8*u, S.y1 - 8*u), a = rnd(-.5, .5), L = rnd(.45, 1)*S.W, x = rnd(-.25, .75)*S.W;
+          const x1 = x + Math.cos(a)*L, y1 = Math.min(S.y1 - 4, Math.max(S.y0 + 4, y + Math.sin(a)*L*.35));
+          S.fib.push({x, y, x1, y1, cx:(x + x1)/2 + rnd(-50, 50)*u, cy:(y + y1)/2 + rnd(-35, 35)*u, w:rnd(1.8, 3.4)*u, s:rnd(.3, .65)});
+        }
+      },
+      born(S, p){ if (p.type !== "water") p.catchY = rnd(S.y0 + 12*S.u, S.y1 - 12*S.u); },
+      bg(S, c){ S.fib.forEach(f => { c.beginPath(); c.moveTo(f.x, f.y); c.quadraticCurveTo(f.cx, f.cy, f.x1, f.y1); c.strokeStyle = `rgba(232,240,243,${f.s})`; c.lineWidth = f.w; c.stroke(); }); },
+      fg(S, c){ S.fib.forEach((f, k) => { if (k % 3) return; c.beginPath(); c.moveTo(f.x, f.y); c.quadraticCurveTo(f.cx, f.cy, f.x1, f.y1); c.strokeStyle = `rgba(232,240,243,${f.s*.8})`; c.lineWidth = f.w*.8; c.stroke(); }); },
+      interact(S, p){
+        if (p.catchY && p.y >= p.catchY){
+          p.catchY = 0; bind(S, p); S.stats.trap++;
+          if (Math.random() < o.fxP) fx(S, p.x, p.y - 16*S.u, o.fxTxt, "#ffd79a");
+        }
+      },
+      exit(S, p){ if (p.type === "water") S.stats.water++; },
+      stats:S => [[S.stats.trap, o.trapLbl], [S.stats.water, o.waterLbl]]
+    };
+  }
+  function carbonScene(o){
+    return {
+      spawn:o.spawn, slow:.55, cap:o.cap, zone:o.zone, legend:o.legend,
+      setup(S){
+        const u = S.u, r = o.r*u, rows = 3, cols = Math.max(3, Math.round(S.W/(r*3.1)));
+        S.gr = []; S.sites = []; S.obst = [];
+        for (let row = 0; row < rows; row++) for (let col = 0; col <= cols; col++){
+          const x = (col + (row % 2 ? 0 : .5))*S.W/cols + rnd(-6, 6)*u, y = S.y0 + (row + .5)*(S.y1 - S.y0)/rows + rnd(-4, 4)*u;
+          if (x < r*.4 || x > S.W - r*.4) continue;
+          const g = {x, y, r:r*rnd(.85, 1.06), poly:Array.from({length:14}, () => rnd(.86, 1.08)),
+            pores:Array.from({length:7}, () => [rnd(0, TAU), rnd(.15, .72), rnd(1.8, 4)*u])};
+          S.gr.push(g); S.obst.push(g);
+          for (let k = 0; k < 9; k++){ const a = k/9*TAU + rnd(-.15, .15); S.sites.push({x:g.x + Math.cos(a)*(g.r + 4*u), y:g.y + Math.sin(a)*(g.r + 4*u), g, ox:-9}); }
+        }
+      },
+      bg(S, c){
+        S.gr.forEach(g => granule(c, g, S.u));
+        S.sites.forEach(s => { const k = 1 - (S.t - s.ox)/4; if (k > 0){ c.globalAlpha = k; circ(c, s.x, s.y, 3*S.u); c.fillStyle = "#e2504a"; c.fill(); c.globalAlpha = 1; } });
+      },
+      interact(S, p){
+        if (!o.targets.includes(p.type) || p.y < S.y0 - 20*S.u) return;
+        const s = nearestSite(S, p, 62*S.u); if (s) goTo(p, s);
+      },
+      arrive(S, p){
+        if (p.type === "hocl"){
+          p.site.taken = null; p.site.ox = S.t; p.site = null;
+          p.type = "clion"; p.state = "free"; p.vx = rnd(-20, 20)*S.u; p.vy = S.flow*.4;
+          S.stats.hocl++; fx(S, p.x, p.y - 16*S.u, "HOCl → Cl⁻", "#d4e84a");
+        } else {
+          bind(S, p); S.stats[p.type]++;
+          if (Math.random() < .7) fx(S, p.x, p.y - 16*S.u, "adsorbed", p.type === "odour" ? "#d7bcff" : "#f0c77a");
+        }
+      },
+      stats:o.stats
+    };
+  }
+
+  const SC = [
+    /* 1. PVA pre-filter */
+    fibreScene({n:26, cap:45, fxP:1, fxTxt:"trapped", spawn:{water:20, sed:1.3}, legend:["water","sed","fibre"],
+      trapLbl:"Particles trapped", waterLbl:"Water molecules through"}),
+    /* 2. Activated carbon */
+    carbonScene({r:30, cap:36, zone:"Activated carbon (porous)", targets:["org","hocl"], spawn:{water:20, org:1.1, hocl:1.1},
+      legend:["water","org","hocl","clion","carbon"],
+      stats:S => [[S.stats.org, "Organic molecules adsorbed"], [S.stats.hocl, "HOCl reduced to Cl⁻"]]}),
+    /* 3. MCC + silver */
+    {
+      spawn:{water:16, na:.8, cl:.8, pb:.3, bact:.34}, slow:.55, cap:42, zone:"Cellulose chains with Ag⁺",
+      legend:["water","na","cl","pb","bact","ag","chain"],
+      setup(S){
+        const u = S.u, n = 3, sp = 31*u; S.rings = []; S.sites = []; S.ag = [];
+        for (let k = 0; k < n; k++){
+          const y = S.y0 + (k + .5)*(S.y1 - S.y0)/n, row = [];
+          for (let x = 20*u + (k % 2)*sp*.5, j = 0; x < S.W - 14*u; x += sp, j++){
+            const up = j % 2 === 0, ry = y + (up ? -3 : 3)*u;
+            row.push({x, y:ry, up});
+            if (j % 4 === 2) S.ag.push({x, y:ry + (up ? -20 : 20)*u, ry, n:3, regen:0});
+            else S.sites.push({x, y:ry + (up ? -17 : 17)*u, ry});
+          }
+          S.rings.push(row);
+        }
+      },
+      bg(S, c){
+        const u = S.u;
+        S.rings.forEach(row => {
+          c.beginPath(); row.forEach((r, j) => c[j ? "lineTo" : "moveTo"](r.x, r.y));
+          c.strokeStyle = "rgba(226,181,120,.55)"; c.lineWidth = 1.6*u; c.stroke();
+          for (let j = 0; j < row.length - 1; j++){ circ(c, (row[j].x + row[j+1].x)/2, (row[j].y + row[j+1].y)/2, 2.5*u); c.fillStyle = "#e2504a"; c.fill(); }
+          row.forEach(r => { hexPath(c, r.x, r.y, 8.5*u, TAU/12); c.fillStyle = "rgba(185,138,78,.4)"; c.fill(); c.strokeStyle = "#e2b578"; c.lineWidth = 2*u; c.stroke(); });
+        });
+        S.sites.forEach(s => {
+          const dir = s.y < s.ry ? -1 : 1;
+          c.beginPath(); c.moveTo(s.x, s.ry + dir*8.5*u); c.lineTo(s.x, s.y); c.strokeStyle = "rgba(226,181,120,.6)"; c.lineWidth = 1.2*u; c.stroke();
+          if (!s.taken){ circ(c, s.x, s.y, 2.8*u); c.fillStyle = "#e2504a"; c.fill(); circ(c, s.x + 3*u, s.y + dir*2.5*u, 1.8*u); c.fillStyle = "#eef8ff"; c.fill(); }
+        });
+        S.ag.forEach(a => {
+          const dir = a.y < a.ry ? -1 : 1;
+          c.beginPath(); c.moveTo(a.x, a.ry + dir*8.5*u); c.lineTo(a.x, a.y); c.strokeStyle = "rgba(233,238,243,.5)"; c.lineWidth = 1.2*u; c.stroke();
+          const g = c.createRadialGradient(a.x, a.y, 0, a.x, a.y, 16*u);
+          g.addColorStop(0, `rgba(220,232,245,${.12 + a.n*.1})`); g.addColorStop(1, "rgba(220,232,245,0)");
+          c.fillStyle = g; circ(c, a.x, a.y, 16*u); c.fill();
+          if (a.n > 1){ c.globalAlpha = .55; ion(c, a.x + 5*u, a.y + dir*4*u, 5.5*u, "ag"); c.globalAlpha = 1; }
+          if (a.n > 0) ion(c, a.x, a.y, 6.5*u, "ag");
+        });
+      },
+      tick(S, dt){ S.ag.forEach(a => { if (a.n < 3 && (a.regen += dt) > 2.4){ a.n++; a.regen = 0; } }); },
+      interact(S, p){
+        const u = S.u;
+        if (p.type === "na" || p.type === "cl" || p.type === "pb"){ const s = nearestSite(S, p, 56*u); if (s) goTo(p, s); }
+        else if (p.type === "bact" && !p.dead && p.cool <= 0){
+          for (const a of S.ag){
+            if (a.n > 0 && Math.hypot(a.x - p.x, a.y - p.y) < 72*u){
+              a.n--; a.regen = 0; p.cool = .45;
+              const q = make(S, "ag", a.x, a.y); q.state = "chase"; q.tp = p; S.stats.ag++;
+              break;
+            }
+          }
+        }
+      },
+      chaseHit(S, q, p){
+        p.hits++;
+        if (p.hits === 1) fx(S, p.x, p.y - 22*S.u, "Ag⁺ attaches", "#e9eef3");
+        if (p.hits >= 3 && !p.dead){ p.dead = true; kill(p, 2.6); S.stats.bact++; fx(S, p.x, p.y - 22*S.u, "membrane disrupted", "#ff9a8a"); }
+      },
+      arrive(S, p){
+        bind(S, p); S.stats.ions++;
+        if (Math.random() < .55) fx(S, p.x, p.y + (p.y < p.site.ry ? -16 : 20)*S.u, (ION[p.type][1]) + " held", ION[p.type][0]);
+      },
+      stats:S => [[S.stats.ions, "Ions held on cellulose"], [S.stats.bact, "Microbes inactivated"], [S.stats.ag, "Ag⁺ ions released"]]
+    },
+    /* 4. Mineral stone */
+    {
+      spawn:{water:20, h:1.5}, slow:.6, cap:40, zone:"Mineral stone", legend:["water","h","ca","mg","hco3","stone"],
+      setup(S){
+        const u = S.u, n = Math.max(3, Math.round(S.W/(130*u))); S.obst = []; S.neut = 0; S.dis = 0;
+        for (let row = 0; row < 2; row++) for (let k = 0; k < n; k++){
+          const x = (k + .5)*S.W/n + (row ? S.W/n*.5 : 0) + rnd(-8, 8)*u;
+          if (x > S.W - 24*u) continue;
+          const r = rnd(30, 38)*u;
+          S.obst.push({x, y:S.y0 + (row + .5)*(S.y1 - S.y0)/2 + rnd(-6, 6)*u, r, poly:Array.from({length:10}, () => rnd(.84, 1.1)),
+            spk:Array.from({length:14}, () => [rnd(0, TAU), rnd(0, .8), rnd(.8, 2.2)*u, Math.random() < .5 ? "rgba(255,179,92,.55)" : "rgba(110,100,80,.45)"])});
+        }
+      },
+      bg(S, c){ S.obst.forEach(o => stone(c, o, S.u)); },
+      release(S, o, nx, ny, t){
+        const u = S.u, q = make(S, t, o.x + nx*(o.r + 11*u), o.y + ny*(o.r + 11*u));
+        q.vx = nx*45*u + rnd(-15, 15)*u; q.vy = S.flow*.3; q.alpha = 0;
+        return q;
+      },
+      hit(S, p, o, nx, ny){
+        if (p.type !== "h" || p.used) return;
+        p.used = 1; kill(p, .35);
+        const t = Math.random() < .7 ? "ca" : "mg";
+        this.release(S, o, nx, ny, t);
+        const b = this.release(S, o, nx, ny, "hco3"); b.x += (nx >= 0 ? 16 : -16)*S.u; b.vx *= 1.4;
+        S.stats.h++; S.stats.ca++; S.neut++;
+        fx(S, p.x, p.y - 16*S.u, t === "ca" ? "H⁺ used, +Ca²⁺" : "H⁺ used, +Mg²⁺", ION[t][0]);
+      },
+      interact(S, p, dt){
+        if (p.type !== "h" || p.y < S.y0 - 60*S.u) return;
+        let best = null, bd = 1e9;
+        for (const o of S.obst){ const d = Math.hypot(o.x - p.x, o.y - p.y) - o.r; if (d < bd){ bd = d; best = o; } }
+        if (best && bd < 90*S.u){ const d = Math.hypot(best.x - p.x, best.y - p.y); p.vx += (best.x - p.x)/d*170*S.u*dt; }
+      },
+      tick(S, dt){
+        if ((S.dis += dt) > 3.2 && S.obst.length){
+          S.dis = 0; const o = S.obst[Math.random()*S.obst.length | 0];
+          this.release(S, o, 0, 1, Math.random() < .65 ? "ca" : "mg"); S.stats.ca++;
+        }
+      },
+      fg(S, c){
+        const u = S.u, ph = 6.5 + 1.0*(1 - Math.exp(-S.neut/14));
+        const txt = `pH in 6.5  →  pH out ${ph.toFixed(1)}`;
+        c.font = `600 ${Math.max(11, 12*u)}px "IBM Plex Sans", sans-serif`; c.textAlign = "right"; c.textBaseline = "middle";
+        const w = c.measureText(txt).width + 22, x = S.W - 12, y = S.H - 22;
+        c.fillStyle = "rgba(6,32,37,.85)"; c.strokeStyle = "rgba(255,179,92,.6)"; c.lineWidth = 1;
+        c.beginPath(); c.rect(x - w, y - 14, w, 28); c.fill(); c.stroke();
+        c.fillStyle = "#ffd6a6"; c.fillText(txt, x - 11, y + .5);
+      },
+      stats:S => [[S.stats.h, "H⁺ neutralised"], [S.stats.ca, "Ca²⁺ / Mg²⁺ added"], [(6.5 + 1.0*(1 - Math.exp(-S.neut/14))).toFixed(1), "pH of water out"]]
+    },
+    /* 5. Ceramic balls */
+    {
+      spawn:{water:30}, slow:.7, cap:10, damp:.18, prewarm:10, zone:"Ceramic spheres", legend:["water","sphere"],
+      setup(S){
+        const u = S.u, r = 17*u, dx = 62*u, dy = dx*.87, rows = Math.max(2, Math.floor((S.y1 - S.y0)/dy));
+        const top = S.y0 + ((S.y1 - S.y0) - rows*dy)/2 + dy/2;
+        S.obst = []; S.hin = new Array(12).fill(0); S.hout = new Array(12).fill(0);
+        for (let row = 0; row < rows; row++) for (let x = (row % 2 ? dx : dx/2) - dx/4; x < S.W + r; x += dx){
+          S.obst.push({x, y:top + row*dy, r, pores:Array.from({length:9}, () => [rnd(0, TAU), rnd(0, .8), rnd(.8, 1.8)*u])});
+        }
+      },
+      bin(S, x){ return Math.max(0, Math.min(11, Math.floor(x/S.W*12))); },
+      born(S, p){ p.x = Math.max(16*S.u, Math.min(S.W - 16*S.u, S.W*.3 + gauss()*S.W*.045)); if (p.y < 0) S.hin[this.bin(S, p.x)]++; },
+      hit(S, p, o, nx){ if (p.lastO !== o){ p.lastO = o; p.vx = (nx >= 0 ? 1 : -1)*rnd(60, 150)*S.u; } },
+      exit(S, p){ S.hout[this.bin(S, p.x)]++; },
+      tick(S, dt){ const k = Math.pow(.5, dt/4); for (let i = 0; i < 12; i++){ S.hin[i] *= k; S.hout[i] *= k; } },
+      bg(S, c){ S.obst.forEach(o => sphere(c, o, S.u)); },
+      fg(S, c){
+        const u = S.u, draw = (h, y0, y1, lbl, col) => {
+          const mx = Math.max(1, ...h), bw = S.W/12;
+          c.fillStyle = col;
+          h.forEach((v, i) => { const bh = (y1 - y0)*v/mx; c.fillRect(i*bw + 2, y1 - bh, bw - 4, bh); });
+          c.fillStyle = "rgba(230,244,242,.75)"; c.font = `600 ${Math.max(10, 11*u)}px "IBM Plex Sans", sans-serif`;
+          c.textAlign = "right"; c.textBaseline = "top"; c.fillText(lbl, S.W - 10, y0);
+        };
+        draw(S.hin, 34*u, S.y0 - 16*u, "Flow in: channelled", "rgba(255,154,138,.22)");
+        draw(S.hout, S.y1 + 16*u, S.H - 34*u, "Flow out: evenly spread", "rgba(92,207,227,.22)");
+      },
+      stats:S => {
+        const ev = h => { const t = h.reduce((a, b) => a + b, 0); if (t < .5) return 0; let e = 0; h.forEach(v => { if (v > 0){ const q = v/t; e -= q*Math.log(q); } }); return Math.round(e/Math.log(h.length)*100); };
+        return [[ev(S.hin) + "%", "Evenness of flow in"], [ev(S.hout) + "%", "Evenness of flow out"]];
+      }
+    },
+    /* 6. Activated carbon, second stage */
+    carbonScene({r:24, cap:40, zone:"Fine activated carbon", targets:["odour","org"], spawn:{water:22, odour:1.4, org:.4},
+      legend:["water","odour","org","carbon"],
+      stats:S => [[S.stats.odour, "Odour molecules adsorbed"], [S.stats.org, "Residual organics adsorbed"]]}),
+    /* 7. Zeolite and silica */
+    {
+      spawn:{water:20, pb:.55, hg:.4}, slow:.55, cap:999, zone:"Zeolite framework", legend:["water","pb","hg","na","frame"],
+      addNa(S, g, fade){
+        g.na = [-1, 1].map(s => { const q = make(S, "na", g.x + s*8*S.u, g.y); q.bx = q.x; q.by = q.y; q.state = "bound"; q.alpha = fade ? 0 : 1; return q; });
+      },
+      setup(S){
+        const u = S.u, r = 25*u, gap = 86*u, cols = Math.max(3, Math.floor((S.W - 30*u)/gap)), off = (S.W - cols*gap)/2 + gap/2;
+        S.cages = [];
+        for (let row = 0; row < 2; row++) for (let k = 0; k < cols; k++){
+          const g = {x:off + k*gap, y:S.y0 + (row + .5)*(S.y1 - S.y0)/2, r, metal:null, t:0, row, k};
+          this.addNa(S, g, false); S.cages.push(g);
+        }
+        S.cols = cols;
+      },
+      bg(S, c){
+        const u = S.u;
+        c.strokeStyle = "rgba(230,244,242,.22)"; c.lineWidth = 1.4*u;
+        S.cages.forEach(g => S.cages.forEach(h => {
+          if ((h.row === g.row && h.k === g.k + 1) || (h.k === g.k && h.row === g.row + 1)){
+            const d = Math.hypot(h.x - g.x, h.y - g.y), ux = (h.x - g.x)/d, uy = (h.y - g.y)/d;
+            c.beginPath(); c.moveTo(g.x + ux*g.r, g.y + uy*g.r); c.lineTo(h.x - ux*h.r, h.y - uy*h.r); c.stroke();
+          }
+        }));
+        S.cages.forEach(g => cage(c, g, u, true));
+      },
+      interact(S, p){
+        if (p.type !== "pb" && p.type !== "hg") return;
+        for (const g of S.cages){
+          if (!g.metal && g.na.length === 2 && Math.hypot(g.x - p.x, g.y - p.y) < g.r + 34*S.u){
+            g.metal = p; p.cage = g; p.state = "seek"; p.tx = g.x; p.ty = g.y;
+            g.na.forEach(q => { q.state = "free"; q.vx = (q.x < g.x ? -1 : 1)*55*S.u; q.vy = S.flow*.25; q.fromCage = 1; });
+            g.na = [];
+            return;
+          }
+        }
+      },
+      arrive(S, p){
+        bind(S, p, true); p.cage.t = 0; S.stats.metal++; S.stats.na += 2;
+        fx(S, p.x, p.y - p.cage.r - 12*S.u, ION[p.type][1] + " in, 2 Na⁺ out", ION[p.type][0] === "#6f7a86" ? "#b9c3cc" : ION[p.type][0]);
+      },
+      tick(S, dt){
+        S.cages.forEach(g => {
+          if (g.metal && g.metal.state === "bound" && (g.t += dt) > 9){ kill(g.metal, 1.2); g.metal = null; this.addNa(S, g, true); }
+        });
+      },
+      stats:S => [[S.stats.metal, "Heavy-metal ions captured"], [S.stats.na, "Na⁺ ions released"]]
+    },
+    /* 8. PVA final barrier */
+    fibreScene({n:40, cap:80, fxP:.3, fxTxt:"fine caught", spawn:{water:22, fine:4.5}, legend:["water","fine","fibre"],
+      trapLbl:"Carbon fines caught", waterLbl:"Clear water molecules out"})
+  ];
+
+  const INFO = [
+    {sum:"A tangle of polyvinyl alcohol fibres works like a net. Water molecules are tiny, about 0.3 nm across, and slip through the gaps. Sediment grains are thousands of times larger and get caught on the fibres.",
+     steps:["Raw water arrives carrying sand, silt and suspended matter.","Water molecules pass freely between the non-woven fibres.","Grains larger than the gaps are caught on or between fibres (size exclusion)."],
+     note:"Sizes are exaggerated so molecules and grains can be seen together."},
+    {sum:"Activated carbon is full of microscopic pores, so one gram has a surface area of several hundred square metres. Organic molecules stick to that surface by weak van der Waals forces (adsorption), and free chlorine is chemically reduced to harmless chloride.",
+     steps:["Water carries dissolved organics and free chlorine (HOCl) into the carbon bed.","Organic molecules diffuse to the carbon surface and are held there (adsorption).","HOCl reacts at the carbon surface and leaves as chloride ion (Cl⁻), removing the chlorine taste."],
+     note:""},
+    {sum:"Microcrystalline cellulose from coconut husk is made of long chains of glucose rings covered in hydroxyl (–OH) groups. These polar sites can hold ions and metals. Silver ions anchored on the chains are released onto passing microbes and disrupt their cell membranes.",
+     steps:["Na⁺, Cl⁻ and heavy-metal ions are drawn to polar –OH sites and held on the cellulose chains.","A bacterium comes close to a silver site and Ag⁺ ions attach to its cell wall.","Silver damages the membrane and enzymes, and the microbe is inactivated."],
+     note:"Salt (Na⁺ / Cl⁻) removal by this layer is the proposed mechanism and is still under laboratory evaluation."},
+    {sum:"Mineral stone contains calcium and magnesium carbonates. Slightly acidic water dissolves a tiny amount of the surface: every H⁺ that reacts frees a Ca²⁺ or Mg²⁺ ion and a bicarbonate ion, so the water gains minerals and its pH rises.",
+     steps:["Acidic water (excess H⁺) meets the mineral surface.","H⁺ reacts with carbonate: CaCO₃ + H⁺ → Ca²⁺ + HCO₃⁻.","Ca²⁺ and Mg²⁺ join the flow, and with fewer free H⁺ the pH goes up."],
+     note:"pH values shown are illustrative, not measured results."},
+    {sum:"Water tends to find one easy path and rush down it (channelling), which leaves most of the filter unused. Porous ceramic spheres split and deflect the stream again and again, so it leaves evenly spread across the full width of the bed below.",
+     steps:["Water arrives unevenly, concentrated in one channel.","Each sphere splits the flow and pushes molecules sideways.","Flow leaves evenly distributed, so every part of the next layer does its job."],
+     note:"The bars show where water molecules enter and leave across the width of the cartridge."},
+    {sum:"The second carbon bed catches what slipped past earlier: traces of taste and odour compounds such as geosmin, and residual organics. The fine carbon surface adsorbs them so the water tastes clean.",
+     steps:["Water still carries traces of odour molecules.","They diffuse to the fine carbon surface and are adsorbed.","Adsorbed molecules stay on the carbon; clean water flows on."],
+     note:""},
+    {sum:"Zeolite is an aluminosilicate crystal built from cages. Each aluminium in the framework carries a negative charge, balanced by loosely held sodium ions. Heavy metals such as Pb²⁺ and Hg²⁺ bind more strongly, so they swap in and the sodium is released. This is ion exchange.",
+     steps:["Each cage holds exchangeable Na⁺ ions that balance the framework charge (−).","A Pb²⁺ or Hg²⁺ ion enters the cage and binds to the framework.","To keep the charge balanced, two Na⁺ leave for every 2+ metal ion captured."],
+     note:"Captured metals fade after a while only to keep the animation running; in the real filter they stay until the media is replaced."},
+    {sum:"The last sheet is a safety net. Fine carbon dust (fines) shed by the beds above is caught in the fibre web, so what leaves the cartridge is clear.",
+     steps:["Water carries tiny carbon fines from the layers above.","Fines hit the fibres and stick in the web.","Only clear water leaves the cartridge."],
+     note:""}
+  ];
+
+  /* ceramic balls sit in layer 2, so its scene and text follow the same order as LAYERS */
+  SC.splice(1, 0, SC.splice(4, 1)[0]);
+  INFO.splice(1, 0, INFO.splice(4, 1)[0]);
+
+  /* ---------- legend icons ---------- */
+  function legendIcon(k){
+    const cv = document.createElement("canvas"); cv.width = cv.height = 60;
+    const c = cv.getContext("2d"); c.scale(2, 2);
+    const F = {u:.95, t:0};
+    if (k === "fibre"){
+      c.strokeStyle = "rgba(232,240,243,.85)"; c.lineCap = "round";
+      c.lineWidth = 2.4; c.beginPath(); c.moveTo(2, 22); c.quadraticCurveTo(15, 2, 28, 14); c.stroke();
+      c.lineWidth = 1.6; c.beginPath(); c.moveTo(3, 7); c.quadraticCurveTo(14, 26, 28, 24); c.stroke();
+    } else if (k === "carbon") granule(c, {x:15, y:15, r:12, poly:Array.from({length:12}, () => rnd(.86, 1.08)), pores:[[0,.4,2],[2,.5,1.6],[4,.3,1.8]]}, .8);
+    else if (k === "stone") stone(c, {x:15, y:15, r:12, poly:Array.from({length:10}, () => rnd(.86, 1.08)), spk:[[1,.4,1,"rgba(255,179,92,.6)"],[3,.5,1,"rgba(110,100,80,.5)"]]}, .8);
+    else if (k === "sphere") sphere(c, {x:15, y:15, r:11, pores:[[0,.4,1],[2,.5,1],[4,.6,1]]}, .8);
+    else if (k === "frame") cage(c, {x:15, y:15, r:11}, .6, false);
+    else if (k === "chain"){
+      hexPath(c, 12, 15, 7, TAU/12); c.fillStyle = "rgba(185,138,78,.4)"; c.fill(); c.strokeStyle = "#e2b578"; c.lineWidth = 1.8; c.stroke();
+      c.beginPath(); c.moveTo(19, 15); c.lineTo(28, 15); c.strokeStyle = "rgba(226,181,120,.6)"; c.stroke();
+      circ(c, 23, 15, 2); c.fillStyle = "#e2504a"; c.fill();
+      circ(c, 12, 4, 2.2); c.fill(); circ(c, 14.5, 2.5, 1.4); c.fillStyle = "#eef8ff"; c.fill();
+    } else {
+      const p = {type:k, x:15, y:15, a:k === "bact" ? 0 : -Math.PI/2 + .3, state:"free", alpha:1, t:0, ph:0};
+      shapeFor(p);
+      drawP(c, p, k === "bact" ? {u:.62, t:0} : F);
+    }
+    return cv;
+  }
+
+  /* ---------- modal ---------- */
+  const M = document.createElement("div");
+  M.className = "mol"; M.hidden = true;
+  M.setAttribute("role", "dialog"); M.setAttribute("aria-modal", "true"); M.setAttribute("aria-labelledby", "molTitle");
+  M.innerHTML = `
+    <div class="mol-panel">
+      <div class="mol-head">
+        <div><span class="mol-kicker" id="molKicker"></span><h3 id="molTitle"></h3></div>
+        <button class="mol-x" type="button" data-m="close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="mol-body">
+        <div class="mol-stage" id="molStage"><canvas id="molCanvas" role="img"></canvas></div>
+        <div class="mol-side">
+          <p class="mol-sum" id="molSum"></p>
+          <ol class="mol-steps" id="molSteps"></ol>
+          <div class="mol-stats" id="molStats" aria-live="off"></div>
+          <p class="mol-lh">Key</p>
+          <div class="mol-legend" id="molLegend"></div>
+          <p class="mol-note" id="molNote"></p>
+        </div>
+      </div>
+      <div class="mol-ctrl">
+        <button type="button" data-m="prev">‹ <span class="long">Previous layer</span><span class="short-l">Prev</span></button>
+        <button type="button" data-m="play" aria-pressed="false">Pause</button>
+        <button type="button" data-m="restart">Replay</button>
+        <button type="button" data-m="slow" aria-pressed="false">Slow motion</button>
+        <button type="button" data-m="next"><span class="long">Next layer</span><span class="short-l">Next</span> ›</button>
+      </div>
+    </div>`;
+  document.body.appendChild(M);
+  const st = document.createElement("style");
+  st.textContent = ".mol-ctrl .short-l{display:none}@media (max-width:760px){.mol-ctrl .short-l{display:inline}}";
+  document.head.appendChild(st);
+  const $ = id => M.querySelector("#" + id);
+  const stage = $("molStage"), cv = $("molCanvas");
+  let S = null, cur = -1, playing = true, slowMo = false, raf = 0, opener = null, lastT = 0, stepOn = -1, statT = 0;
+
+  function build(){
+    const r = stage.getBoundingClientRect();
+    const W = Math.max(220, r.width), H = Math.max(220, r.height), dpr = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    const u = Math.max(.72, Math.min(1.25, Math.min(W/620, H/540)));
+    S = {W, H, u, dpr, c:cv.getContext("2d"), y0:H*.3, y1:H*.72, flow:62*u, parts:[], obst:[], sites:[], fx:[], bound:[], acc:{}, t:0, neut:0,
+      sc:SC[cur], stats:{trap:0, water:0, org:0, hocl:0, odour:0, ions:0, bact:0, ag:0, h:0, ca:0, metal:0, na:0}};
+    S.sc.setup(S);
+    /* start with water already flowing through */
+    const nW = Math.round(S.sc.spawn.water * H / S.flow);
+    for (let k = 0; k < nW; k++) spawn(S, "water", rnd(0, H));
+    for (const t in S.sc.spawn){ if (t === "water") continue; const n = Math.round(S.sc.spawn[t]*S.y0/S.flow); for (let k = 0; k < n; k++) spawn(S, t, rnd(20*u, S.y0 - 10*u)); }
+    if (S.sc.prewarm){ for (let k = 0; k < S.sc.prewarm/.034; k++) update(.034); S.fx = []; S.t = 0; }
+    stepOn = -1; statT = 0; renderStats();
+    cv.setAttribute("aria-label", "Molecular animation of how the " + LAYERS[cur].name + " layer works");
+  }
+
+  function update(dt){
+    const sc = S.sc, u = S.u; S.t += dt;
+    for (const k in sc.spawn){ S.acc[k] = (S.acc[k] || 0) + sc.spawn[k]*dt; while (S.acc[k] >= 1){ S.acc[k]--; spawn(S, k); } }
+    if (sc.tick) sc.tick(S, dt);
+    const pad = 10*u, damp = sc.damp == null ? 1.4 : sc.damp;
+    for (const p of S.parts){
+      p.t += dt; p.a += p.spin*dt;
+      if (p.alpha < 1) p.alpha = Math.min(1, p.alpha + dt*1.4);
+      if (p.state === "free"){
+        const inZ = p.y > S.y0 && p.y < S.y1;
+        const tv = S.flow*(inZ ? sc.slow : 1)*(SPEED[p.type] || 1);
+        p.vy += (tv - p.vy)*Math.min(1, dt*2.5);
+        p.vx += gauss()*70*u*dt; p.vx *= Math.max(0, 1 - damp*dt);
+        p.x += p.vx*dt; p.y += p.vy*dt;
+        if (p.x < pad){ p.x = pad; p.vx = Math.abs(p.vx); } else if (p.x > S.W - pad){ p.x = S.W - pad; p.vx = -Math.abs(p.vx); }
+        const pr = (RAD[p.type] || 6)*u*.6;
+        for (const o of S.obst){
+          const dx = p.x - o.x, dy = p.y - o.y, d = Math.hypot(dx, dy), m = o.r + pr;
+          if (d < m && d > .001){
+            const nx = dx/d, ny = dy/d; p.x = o.x + nx*m; p.y = o.y + ny*m;
+            const vn = p.vx*nx + p.vy*ny; if (vn < 0){ p.vx -= vn*nx; p.vy -= vn*ny; }
+            p.vx += (nx >= 0 ? 1 : -1)*120*u*dt;
+            if (sc.hit) sc.hit(S, p, o, nx, ny);
+            if (p.state !== "free") break;
+          }
+        }
+        if (p.type === "bact"){ p.cool -= dt; p.a += (Math.atan2(p.vy, p.vx) + Math.sin(p.t*3)*.25 - p.a)*Math.min(1, dt*3); }
+        if (sc.interact && p.state === "free") sc.interact(S, p, dt);
+        if (p.y > S.H + 24*u){ p.gone = true; if (sc.exit) sc.exit(S, p); }
+      } else if (p.state === "seek"){
+        const k = Math.min(1, dt*3.2);
+        p.x += (p.tx - p.x)*k; p.y += (p.ty - p.y)*k;
+        if (Math.hypot(p.tx - p.x, p.ty - p.y) < 1.2*u){ p.x = p.tx; p.y = p.ty; sc.arrive(S, p); }
+      } else if (p.state === "chase"){
+        const t = p.tp; if (!t || t.gone){ p.gone = true; continue; }
+        const k = Math.min(1, dt*5); p.x += (t.x - p.x)*k; p.y += (t.y - p.y)*k;
+        if (Math.hypot(t.x - p.x, t.y - p.y) < 10*u){ p.gone = true; sc.chaseHit(S, p, t); }
+      } else if (p.state === "dying"){
+        p.life -= dt;
+        if (p.type === "bact") p.y += S.flow*.35*dt;
+        if (p.life <= 0) p.gone = true;
+      }
+    }
+    S.parts = S.parts.filter(p => !p.gone);
+    S.fx.forEach(f => f.life -= dt); S.fx = S.fx.filter(f => f.life > 0);
+  }
+
+  function draw(){
+    const c = S.c, u = S.u, W = S.W, H = S.H, sc = S.sc, L = LAYERS[cur];
+    c.setTransform(S.dpr, 0, 0, S.dpr, 0, 0);
+    const bg = c.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, "#0d3f49"); bg.addColorStop(1, "#06252b");
+    c.fillStyle = bg; c.fillRect(0, 0, W, H);
+    c.globalAlpha = .13; c.fillStyle = L.color; c.fillRect(0, S.y0, W, S.y1 - S.y0); c.globalAlpha = 1;
+    c.strokeStyle = "rgba(230,244,242,.22)"; c.setLineDash([5, 6]); c.lineWidth = 1;
+    c.beginPath(); c.moveTo(0, S.y0); c.lineTo(W, S.y0); c.moveTo(0, S.y1); c.lineTo(W, S.y1); c.stroke(); c.setLineDash([]);
+    const fs = Math.max(10, 11*u);
+    c.font = `600 ${fs}px "IBM Plex Sans", sans-serif`; c.textBaseline = "middle";
+    c.fillStyle = "rgba(230,244,242,.6)"; c.textAlign = "left";
+    c.fillText("WATER IN ↓", 12, 16);
+    c.fillText("WATER OUT ↓", 12, H - 16);
+    c.fillStyle = "rgba(230,244,242,.75)"; c.fillText(sc.zone, 12, S.y0 - 10);
+    if (sc.bg) sc.bg(S, c);
+    for (const p of S.parts) if (p.type === "water") drawP(c, p, S);
+    for (const p of S.parts) if (p.type !== "water") drawP(c, p, S);
+    if (sc.fg) sc.fg(S, c);
+    c.textAlign = "center"; c.textBaseline = "middle";
+    for (const f of S.fx){
+      const k = f.life/f.max;
+      if (f.ring){ circ(c, f.x, f.y, (1 - k)*20*u + 5*u); c.strokeStyle = f.col; c.globalAlpha = k*.8; c.lineWidth = 1.5; c.stroke(); c.globalAlpha = 1; continue; }
+      c.globalAlpha = Math.min(1, k*2);
+      c.font = `600 ${Math.max(10.5, 11.5*u)}px "IBM Plex Sans", sans-serif`;
+      const tw = c.measureText(f.txt).width/2 + 6, x = Math.max(tw, Math.min(W - tw, f.x)), y = f.y - (1 - k)*16*u;
+      c.lineWidth = 3.5; c.strokeStyle = "rgba(4,24,28,.9)"; c.strokeText(f.txt, x, y);
+      c.fillStyle = f.col; c.fillText(f.txt, x, y); c.globalAlpha = 1;
+    }
+    if (!playing){
+      c.fillStyle = "rgba(4,24,28,.55)"; c.fillRect(W - 86, 8, 76, 26);
+      c.fillStyle = "#E6F4F2"; c.font = `600 11px "IBM Plex Sans", sans-serif`; c.textAlign = "center"; c.fillText("PAUSED", W - 48, 21);
+    }
+  }
+
+  function renderStats(){
+    $("molStats").innerHTML = S.sc.stats(S).map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join("");
+  }
+  function loop(now){
+    raf = requestAnimationFrame(loop);
+    let dt = Math.min(.2, Math.max(0, (now - lastT)/1000)); lastT = now;
+    if (!playing) dt = 0; else if (slowMo) dt *= .35;
+    for (let left = dt; left > 1e-4; left -= .034) update(Math.min(.034, left));
+    draw();
+    const on = Math.floor(S.t/5) % 3;
+    if (on !== stepOn){ stepOn = on; $("molSteps").querySelectorAll("li").forEach((li, k) => li.classList.toggle("on", k === on)); }
+    if ((statT += dt) > .25){ statT = 0; renderStats(); }
+  }
+
+  function fill(){
+    const L = LAYERS[cur], I = INFO[cur], sc = SC[cur];
+    $("molKicker").textContent = `How it works · Layer ${cur + 1} of 8 · ${L.mech}`;
+    $("molTitle").textContent = `${L.name}: ${L.role.toLowerCase()}`;
+    $("molSum").textContent = I.sum;
+    $("molSteps").innerHTML = I.steps.map(s => `<li>${s}</li>`).join("");
+    $("molNote").textContent = I.note;
+    const lg = $("molLegend"); lg.innerHTML = "";
+    sc.legend.forEach(k => { const d = document.createElement("div"); d.appendChild(legendIcon(k)); d.appendChild(document.createTextNode(NAMES[k])); lg.appendChild(d); });
+  }
+  function start(){
+    fill();
+    requestAnimationFrame(() => {
+      build(); lastT = performance.now();
+      cancelAnimationFrame(raf); raf = requestAnimationFrame(loop);
+    });
+  }
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+  function place(){ const par = fsEl() || document.body; if (M.parentNode !== par) par.appendChild(M); }
+  function open(i, from){
+    cur = i; opener = from || document.activeElement;
+    place(); M.hidden = false; document.body.classList.add("mol-lock");
+    playing = true; setPlayUI();
+    start();
+    M.querySelector('[data-m="close"]').focus({preventScroll:true});
+  }
+  function close(){
+    M.hidden = true; cancelAnimationFrame(raf); S = null;
+    document.body.classList.remove("mol-lock");
+    if (opener && opener.isConnected) opener.focus({preventScroll:true});
+  }
+  function setPlayUI(){
+    const b = M.querySelector('[data-m="play"]');
+    b.textContent = playing ? "Pause" : "Play"; b.setAttribute("aria-pressed", !playing);
+  }
+  M.addEventListener("click", e => {
+    if (e.target === M){ close(); return; }
+    const b = e.target.closest("[data-m]"); if (!b) return;
+    e.stopPropagation();
+    const m = b.dataset.m;
+    if (m === "close") close();
+    else if (m === "play"){ playing = !playing; setPlayUI(); }
+    else if (m === "restart"){ playing = true; setPlayUI(); build(); }
+    else if (m === "slow"){ slowMo = !slowMo; b.setAttribute("aria-pressed", slowMo); }
+    else if (m === "prev" || m === "next"){ cur = (cur + (m === "next" ? 1 : 7)) % 8; start(); }
+  });
+  ["pointerdown", "keydown", "wheel"].forEach(ev => M.addEventListener(ev, e => e.stopPropagation()));
+  M.addEventListener("keydown", e => {
+    if (e.key === "Escape"){ e.preventDefault(); close(); }
+    else if (e.key === "Tab"){
+      const f = [...M.querySelectorAll("button")].filter(b => b.offsetParent !== null);
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+  let rt = 0;
+  new ResizeObserver(() => { if (M.hidden || !S) return; clearTimeout(rt); rt = setTimeout(() => { if (!M.hidden) build(); }, 150); }).observe(stage);
+  ["fullscreenchange", "webkitfullscreenchange"].forEach(ev => document.addEventListener(ev, () => { if (!M.hidden) place(); }));
+
+
+  /* ================= FULL FILTER: ALL EIGHT LAYERS AT ONCE (added) ================= */
+  (function(){
+    const BW = [.8, 1, 1.35, 1.3, 1.1, 1.1, 1.2, .8];          /* on-screen thickness of each band */
+    const SLOW = [.6, .7, .55, .5, .6, .55, .55, .6];
+    const SPAWN = {sed:1, org:.9, hocl:.8, odour:1, na:.75, cl:.75, pb:.42, hg:.3, bact:.26, h:1.1};
+    const CONTAM = ["sed", "org", "hocl", "odour", "pb", "hg", "bact"];
+    const SUB = ["Sediment and silt trapped", "Molecules redirected sideways", "Organics adsorbed, chlorine reduced",
+      "Ions held on cellulose, microbes hit by Ag⁺", "Ca²⁺ / Mg²⁺ released into the water", "Odour molecules adsorbed",
+      "Pb²⁺ / Hg²⁺ swapped for Na⁺", "Carbon fines caught"];
+    const KEY = ["water", "sed", "org", "hocl", "odour", "na", "cl", "pb", "hg", "bact", "ag", "h", "ca", "mg", "hco3", "fine"];
+
+    const FM = document.createElement("div");
+    FM.className = "mol fa"; FM.hidden = true;
+    FM.setAttribute("role", "dialog"); FM.setAttribute("aria-modal", "true"); FM.setAttribute("aria-labelledby", "faTitle");
+    FM.innerHTML = `
+      <div class="mol-panel">
+        <div class="mol-head">
+          <div><span class="mol-kicker">How it works · All 8 layers at once</span><h3 id="faTitle">The whole cartridge at molecular scale</h3></div>
+          <div class="fa-hbtns">
+            <button class="mol-x fa-fs" type="button" data-f="full" aria-pressed="false" aria-label="Full screen" title="Full screen"><svg class="ic-enter" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="ic-exit" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
+            <button class="mol-x" type="button" data-f="close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          </div>
+        </div>
+        <div class="mol-body">
+          <div class="mol-stage" id="faStage"><canvas id="faCanvas" role="img" aria-label="Molecular animation of water flowing down through all eight filter layers"></canvas><canvas id="fa3d" hidden role="img" aria-label="3D molecular animation of the whole filter cartridge. Drag to rotate, scroll or pinch to zoom."></canvas><canvas id="faOv" hidden aria-hidden="true"></canvas></div>
+          <div class="mol-side">
+            <p class="mol-sum">Raw water enters at the top carrying sediment, organics, chlorine, salt ions, heavy metals, microbes and acidity. Follow it down through all eight layers working at the same time: each one removes or adds something, and clear, remineralised water leaves at the bottom.</p>
+            <div class="mol-stats" id="faStats" aria-live="off"></div>
+            <p class="mol-lh">What each layer is doing · select one to zoom in</p>
+            <div class="fa-rows" id="faRows"></div>
+            <p class="mol-lh">Key</p>
+            <div class="mol-legend" id="faLegend"></div>
+            <p class="mol-note">Sizes and speeds are exaggerated so everything can be seen together. Salt (Na⁺ / Cl⁻) removal by the MCC layer is the proposed mechanism and is still under laboratory evaluation, so only part of the salt is shown being held.</p>
+          </div>
+        </div>
+        <div class="mol-ctrl">
+          <button type="button" data-f="play" aria-pressed="false">Pause</button>
+          <button type="button" data-f="restart">Replay</button>
+          <button type="button" data-f="slow" aria-pressed="false">Slow motion</button>
+          <button type="button" data-f="3d" aria-pressed="false" class="fa-3dbtn">3D view</button>
+        </div>
+      </div>`;
+    document.body.appendChild(FM);
+    const q = id => FM.querySelector("#" + id);
+    const stageF = q("faStage"), cvF = q("faCanvas");
+    let F = null, playing = true, slowMo = false, raf = 0, lastT = 0, statT = 0, openerF = null, hoverB = -1;
+
+    /* side panel rows and key */
+    q("faRows").innerHTML = LAYERS.map((L, i) =>
+      `<button type="button" class="fa-row" data-i="${i}"><i style="background:${L.color}"></i><span><b>${i + 1} · ${L.short}</b><small>${SUB[i]}</small></span><em>0</em></button>`).join("");
+    KEY.forEach(k => { const d = document.createElement("div"); d.appendChild(legendIcon(k)); d.appendChild(document.createTextNode(NAMES[k])); q("faLegend").appendChild(d); });
+
+    /* ---------- particles ---------- */
+    function mk(type, x, y){
+      const p = {type, x, y, vx:0, vy:F.flow, a:rnd(0, TAU), spin:rnd(-1.5, 1.5), ph:rnd(0, TAU), state:"free", alpha:1, t:0, hits:0, cool:0, rolled:{}};
+      shapeFor(p);
+      if (type === "bact"){ p.a = Math.PI/2 + rnd(-.4, .4); p.spin = 0; }
+      if (type !== "water") p.spin *= .4;
+      F.parts.push(p); return p;
+    }
+    function spawnTop(type, y){
+      const p = mk(type, rnd(16*F.u, F.W - 16*F.u), y == null ? -18*F.u : y);
+      if (type === "sed") p.catchY = rnd(F.B[0].y0 + 6*F.u, F.B[0].y1 - 6*F.u);
+      return p;
+    }
+    function bandAt(y){ for (const b of F.B) if (y >= b.y0 && y < b.y1) return b; return null; }
+    function note(b, x, y, txt, col){
+      b.flashT = F.t;
+      if (F.t - b.lastFx < 1.1) return;
+      b.lastFx = F.t;
+      F.fx.push({x, y, txt, col, life:1.7, max:1.7});
+      F.fx.push({ring:1, x, y:y + 14*F.u, life:.7, max:.7, col});
+    }
+    function hold(b, p){
+      p.state = "bound"; p.bx = p.x; p.by = p.y; p.vx = p.vy = 0;
+      b.bound.push(p); if (b.bound.length > b.cap) kill(b.bound.shift(), 1.2);
+    }
+    function roll(p, i, prob){ if (p.rolled[i] == null) p.rolled[i] = Math.random() < prob; return p.rolled[i]; }
+
+    /* ---------- layer structures ---------- */
+    function fibres(b, n){
+      const u = F.u; b.fib = [];
+      for (let k = 0; k < n; k++){
+        const y = rnd(b.y0 + 4*u, b.y1 - 4*u), a = rnd(-.5, .5), L = rnd(.45, 1)*F.W, x = rnd(-.25, .75)*F.W;
+        const x1 = x + Math.cos(a)*L, y1 = Math.min(b.y1 - 3, Math.max(b.y0 + 3, y + Math.sin(a)*L*.35));
+        b.fib.push({x, y, x1, y1, cx:(x + x1)/2 + rnd(-50, 50)*u, cy:Math.min(b.y1, Math.max(b.y0, (y + y1)/2 + rnd(-.35, .35)*b.h)), w:rnd(1.6, 3)*u, s:rnd(.3, .6)});
+      }
+    }
+    function grains(b, rMax){
+      const u = F.u, rows = 2, r = Math.min(rMax*u, b.h/rows/2*.8), cols = Math.max(3, Math.round(F.W/(r*3.1)));
+      b.gr = [];
+      for (let row = 0; row < rows; row++) for (let col = 0; col <= cols; col++){
+        const x = (col + (row % 2 ? 0 : .5))*F.W/cols + rnd(-5, 5)*u, y = b.y0 + (row + .5)*b.h/rows + rnd(-2, 2)*u;
+        if (x < r*.4 || x > F.W - r*.4) continue;
+        const g = {x, y, r:r*rnd(.85, 1.06), poly:Array.from({length:14}, () => rnd(.86, 1.08)),
+          pores:Array.from({length:6}, () => [rnd(0, TAU), rnd(.15, .72), rnd(1.4, 3.2)*u])};
+        b.gr.push(g); b.obst.push(g);
+        for (let k = 0; k < 8; k++){ const a = k/8*TAU + rnd(-.15, .15); b.sites.push({x:g.x + Math.cos(a)*(g.r + 4*u), y:g.y + Math.sin(a)*(g.r + 4*u), g, ox:-9}); }
+      }
+    }
+    function addNa(g, fade){
+      g.na = [-1, 1].map(s => { const p = mk("na", g.x + s*8*F.u, g.y); p.bx = p.x; p.by = p.y; p.state = "bound"; p.alpha = fade ? 0 : 1; p.cageRef = g; if (g.zf != null){ p.zf = p.zr = g.zf; } return p; });
+    }
+    function releaseFrom(o, nx, ny, t){
+      const u = F.u, p = mk(t, o.x + nx*(o.r + 10*u), o.y + ny*(o.r + 10*u));
+      p.vx = nx*45*u + rnd(-15, 15)*u; p.vy = F.flow*.3; p.alpha = 0; p.rolled[4] = false;
+      if (o.zf != null){ p.zf = p.zr = o.zf; }
+      return p;
+    }
+    const SET = [
+      b => fibres(b, 16),
+      b => {
+        const u = F.u, r = Math.min(15*u, b.h*.2), dx = r*3.9, dy = dx*.87, rows = Math.max(1, Math.floor(b.h/dy)), t0 = b.y0 + (b.h - rows*dy)/2 + dy/2;
+        for (let row = 0; row < rows; row++) for (let x = (row % 2 ? dx : dx/2) - dx/4; x < F.W + r; x += dx)
+          b.obst.push({x, y:t0 + row*dy, r, pores:Array.from({length:8}, () => [rnd(0, TAU), rnd(0, .8), rnd(.7, 1.6)*u])});
+      },
+      b => grains(b, 22),
+      b => {
+        const u = F.u, n = 2, sp = 30*u; b.rings = []; b.ag = [];
+        for (let k = 0; k < n; k++){
+          const y = b.y0 + (k + .5)*b.h/n, row = [];
+          for (let x = 18*u + (k % 2)*sp*.5, j = 0; x < F.W - 12*u; x += sp, j++){
+            const up = j % 2 === 0, ry = y + (up ? -3 : 3)*u;
+            row.push({x, y:ry, up});
+            if (j % 4 === 2) b.ag.push({x, y:ry + (up ? -18 : 18)*u, ry, n:3, regen:0});
+            else b.sites.push({x, y:ry + (up ? -15 : 15)*u, ry});
+          }
+          b.rings.push(row);
+        }
+      },
+      b => {
+        const u = F.u, r = Math.min(28*u, b.h*.32), n = Math.max(3, Math.round(F.W/(r*3.6)));
+        b.dis = 0;
+        for (let k = 0; k < n; k++){
+          const x = (k + .5)*F.W/n + rnd(-6, 6)*u;
+          b.obst.push({x, y:b.y0 + b.h/2 + rnd(-4, 4)*u, r:r*rnd(.9, 1.05), poly:Array.from({length:10}, () => rnd(.84, 1.1)),
+            spk:Array.from({length:12}, () => [rnd(0, TAU), rnd(0, .8), rnd(.8, 2)*u, Math.random() < .5 ? "rgba(255,179,92,.55)" : "rgba(110,100,80,.45)"])});
+        }
+      },
+      b => grains(b, 16),
+      b => {
+        const u = F.u, r = Math.min(22*u, b.h*.2), rows = b.h > r*6.5 ? 2 : 1, gap = r*3.6;
+        const cols = Math.max(3, Math.floor((F.W - 30*u)/gap)), off = (F.W - cols*gap)/2 + gap/2;
+        b.cages = [];
+        for (let row = 0; row < rows; row++) for (let k = 0; k < cols; k++){
+          const g = {x:off + k*gap + (row % 2 ? gap/2 : 0), y:b.y0 + (row + .5)*b.h/rows, r, metal:null, t:0, row, k};
+          if (g.x > F.W - r) continue;
+          addNa(g, false); b.cages.push(g);
+        }
+      },
+      b => fibres(b, 22)
+    ];
+
+    /* ---------- what each layer does to a passing particle ---------- */
+    function carbonAct(b, p, pr){
+      if (!(p.type in pr) || !roll(p, b.i, pr[p.type])) return;
+      const s = nearestSite(b, p, 56*F.u); if (s){ goTo(p, s); p.home = b; }
+    }
+    const ACT = [
+      null, null,
+      (b, p) => carbonAct(b, p, {org:.8, hocl:1, odour:.45}),
+      (b, p) => {
+        const u = F.u, pr = {na:.45, cl:1, clion:1, pb:.55};
+        if (p.type === "cl" || p.type === "clion"){
+          /* every chloride ion is held: nearest free site, or the whole layer, or free the oldest held ion */
+          let s = nearestSite(b, p, 90*u);
+          if (!s && p.y > b.y0 + b.h*.5) s = nearestSite(b, p, 1e9);
+          if (!s && p.y > b.y1 - 24*u){
+            const old = b.bound.find(q => q.type !== "cl" && q.type !== "clion" && q.state === "bound") || b.bound[0];
+            if (old){ b.bound.splice(b.bound.indexOf(old), 1); kill(old, 1.2); s = nearestSite(b, p, 1e9); }
+          }
+          if (s){ goTo(p, s); p.home = b; }
+        }
+        else if (p.type in pr){ if (roll(p, 3, pr[p.type])){ const s = nearestSite(b, p, 56*u); if (s){ goTo(p, s); p.home = b; } } }
+        else if (p.type === "bact" && !p.dead && p.cool <= 0){
+          for (const a of b.ag){
+            if (a.n > 0 && Math.hypot(a.x - p.x, a.y - p.y) < 80*u){
+              a.n--; a.regen = 0; p.cool = .45;
+              const s = mk("ag", a.x, a.y); s.state = "chase"; s.tp = p; s.home = b;
+              break;
+            }
+          }
+        }
+      },
+      (b, p, dt) => {
+        if (p.type !== "h") return;
+        let best = null, bd = 1e9;
+        for (const o of b.obst){ const d = Math.hypot(o.x - p.x, o.y - p.y) - o.r; if (d < bd){ bd = d; best = o; } }
+        if (best && bd < 90*F.u){ const d = Math.hypot(best.x - p.x, best.y - p.y); p.vx += (best.x - p.x)/d*170*F.u*dt; }
+      },
+      (b, p) => carbonAct(b, p, {odour:1, org:1}),
+      (b, p) => {
+        if (p.type !== "pb" && p.type !== "hg") return;
+        for (const g of b.cages){
+          if (!g.metal && g.na.length === 2 && Math.hypot(g.x - p.x, g.y - p.y) < g.r + 32*F.u){
+            g.metal = p; p.cage = g; p.home = b; p.state = "seek"; p.tx = g.x; p.ty = g.y;
+            g.na.forEach(n => { n.state = "free"; n.vx = (n.x < g.x ? -1 : 1)*55*F.u; n.vy = F.flow*.25; });
+            g.na = [];
+            return;
+          }
+        }
+      },
+      null
+    ];
+    const HIT = {
+      1(b, p, o, nx){ if (p.lastO !== o){ p.lastO = o; p.vx = (nx >= 0 ? 1 : -1)*rnd(60, 150)*F.u; if (!p.spr){ p.spr = 1; F.cnt[1]++; b.flashT = F.t; } } },
+      4(b, p, o, nx, ny){
+        if (p.type !== "h" || p.used) return;
+        p.used = 1; kill(p, .35);
+        const t = Math.random() < .7 ? "ca" : "mg";
+        releaseFrom(o, nx, ny, t);
+        const h = releaseFrom(o, nx, ny, "hco3"); h.x += (nx >= 0 ? 16 : -16)*F.u; h.vx *= 1.4;
+        F.cnt[4]++; F.neut++;
+        note(b, p.x, p.y - 16*F.u, t === "ca" ? "H⁺ used, +Ca²⁺" : "H⁺ used, +Mg²⁺", ION[t][0]);
+      }
+    };
+    function arrive(p){
+      const b = p.home, u = F.u;
+      if (b.i === 2 || b.i === 5){
+        if (p.type === "hocl"){
+          p.site.taken = null; p.site.ox = F.t; p.site = null;
+          p.type = "clion"; p.state = "free"; p.vx = rnd(-20, 20)*u; p.vy = F.flow*.4;
+          F.cnt[b.i]++; F.st.removed++;
+          note(b, p.x, p.y - 16*u, "HOCl → Cl⁻", "#d4e84a");
+        } else {
+          hold(b, p); F.cnt[b.i]++; F.st.removed++;
+          note(b, p.x, p.y - 16*u, "adsorbed", p.type === "odour" ? "#d7bcff" : "#f0c77a");
+        }
+      } else if (b.i === 3){
+        hold(b, p); F.cnt[3]++;
+        if (p.type === "pb") F.st.removed++; else F.st.salt++;
+        note(b, p.x, p.y + (p.y < p.site.ry ? -16 : 20)*u, ION[p.type][1] + " held", ION[p.type][0]);
+      } else if (b.i === 6){
+        p.state = "bound"; p.bx = p.x; p.by = p.y; p.vx = p.vy = 0; p.cage.t = 0;
+        F.cnt[6]++; F.st.removed++;
+        note(b, p.x, p.y - p.cage.r - 12*u, ION[p.type][1] + " in, 2 Na⁺ out", ION[p.type][0] === "#6f7a86" ? "#b9c3cc" : ION[p.type][0]);
+      }
+    }
+    const TICK = {
+      2(b, dt){ if ((b.shed = (b.shed || 0) + dt) > .8){ b.shed = 0; shed(b); } },
+      5(b, dt){ if ((b.shed = (b.shed || 0) + dt) > 1.1){ b.shed = 0; shed(b); } },
+      3(b, dt){ b.ag.forEach(a => { if (a.n < 3 && (a.regen += dt) > 2.4){ a.n++; a.regen = 0; } }); },
+      4(b, dt){
+        if ((b.dis += dt) > 3.2 && b.obst.length){ b.dis = 0; const o = b.obst[Math.random()*b.obst.length | 0]; releaseFrom(o, 0, 1, Math.random() < .65 ? "ca" : "mg"); F.cnt[4]++; }
+      },
+      6(b, dt){ b.cages.forEach(g => { if (g.metal && g.metal.state === "bound" && (g.t += dt) > 9){ kill(g.metal, 1.2); g.metal = null; addNa(g, true); } }); }
+    };
+    function shed(b){
+      const p = mk("fine", rnd(16*F.u, F.W - 16*F.u), b.y1 - 3*F.u);
+      p.alpha = 0; p.vy = F.flow*.4;
+      const L = F.B[7]; p.catchY = rnd(L.y0 + 5*F.u, L.y1 - 5*F.u);
+    }
+
+    /* ---------- build ---------- */
+    function build(){
+      const r = stageF.getBoundingClientRect();
+      const W = Math.max(260, r.width), H = Math.max(360, r.height), dpr = Math.min(2, window.devicePixelRatio || 1);
+      cvF.width = Math.round(W*dpr); cvF.height = Math.round(H*dpr);
+      const u = Math.max(.5, Math.min(1, Math.min(W/560, H/900)));
+      F = {W, H, u, dpr, c:cvF.getContext("2d"), flow:64*u, parts:[], fx:[], acc:{}, t:0, neut:0, B:[], cnt:new Array(8).fill(0),
+        st:{removed:0, out:0, salt:0, bact:0}};
+      const top = 32, bot = 30, tot = BW.reduce((a, b) => a + b, 0), avail = H - top - bot;
+      let y = top;
+      BW.forEach((w, i) => { const h = avail*w/tot; F.B.push({i, y0:y, y1:y + h, h, obst:[], sites:[], bound:[], cap:i === 3 ? 38 : 26, lastFx:-9, flashT:-9}); y += h; });
+      F.B.forEach(b => SET[b.i](b));
+      /* start with the cartridge already full of water */
+      const sc = F.W/800, nW = Math.round(.3*sc*H*1.5);
+      for (let k = 0; k < nW; k++) spawnTop("water", rnd(0, H));
+      for (let k = 0; k < 360; k++) update(.05);
+      F.fx = []; F.t = 0; F.cnt.fill(0); F.st = {removed:0, out:0, salt:0, bact:0};
+      F.B.forEach(b => { b.lastFx = -9; b.flashT = -9; if (b.sites) b.sites.forEach(s => { if (s.ox != null) s.ox = -9; }); });
+      statT = 0; renderStats();
+      if (mode3D) buildT();
+    }
+
+    /* ---------- simulate ---------- */
+    function update(dt){
+      const u = F.u, sc = F.W/800; F.t += dt;
+      F.acc.water = (F.acc.water || 0) + .3*F.flow*sc*dt;
+      while (F.acc.water >= 1){ F.acc.water--; spawnTop("water"); }
+      for (const k in SPAWN){ F.acc[k] = (F.acc[k] || 0) + SPAWN[k]*Math.max(.6, sc)*dt; while (F.acc[k] >= 1){ F.acc[k]--; spawnTop(k); } }
+      F.B.forEach(b => { if (TICK[b.i]) TICK[b.i](b, dt); });
+      const pad = 10*u;
+      for (const p of F.parts){
+        p.t += dt; p.a += p.spin*dt;
+        if (p.alpha < 1) p.alpha = Math.min(1, p.alpha + dt*1.4);
+        if (p.state === "free"){
+          const b = bandAt(p.y);
+          const tv = F.flow*(b ? SLOW[b.i] : 1)*(SPEED[p.type] || 1);
+          p.vy += (tv - p.vy)*Math.min(1, dt*2.5);
+          p.vx += gauss()*70*u*dt; p.vx *= Math.max(0, 1 - (b && b.i === 1 ? .18 : 1.4)*dt);
+          p.x += p.vx*dt; p.y += p.vy*dt;
+          if (p.x < pad){ p.x = pad; p.vx = Math.abs(p.vx); } else if (p.x > F.W - pad){ p.x = F.W - pad; p.vx = -Math.abs(p.vx); }
+          /* anything held up too long squeezes through the pores (no permanent jams) */
+          if (p.vy < F.flow*.15) p.stk = (p.stk || 0) + dt; else p.stk = 0;
+          if (p.stk > 1.2){ p.ghost = 1.4; p.stk = 0; }
+          if (p.ghost > 0) p.ghost -= dt;
+          if (b && b.obst.length && !(p.ghost > 0)){
+            const pr = Math.min((RAD[p.type] || 6)*u*.6, 4.5*u);
+            for (const o of b.obst){
+              const dx = p.x - o.x, dy = p.y - o.y, d = Math.hypot(dx, dy), m = o.r + pr;
+              if (d < m && d > .001){
+                const nx = dx/d, ny = dy/d; p.x = o.x + nx*m; p.y = o.y + ny*m;
+                const vn = p.vx*nx + p.vy*ny; if (vn < 0){ p.vx -= vn*nx; p.vy -= vn*ny; }
+                p.vx += (nx >= 0 ? 1 : -1)*120*u*dt;
+                if (HIT[b.i]) HIT[b.i](b, p, o, nx, ny);
+                if (p.state !== "free") break;
+              }
+            }
+          }
+          if (p.type === "bact"){ p.cool -= dt; p.a += (Math.atan2(p.vy, p.vx) + Math.sin(p.t*3)*.25 - p.a)*Math.min(1, dt*3); }
+          if (p.state === "free" && p.catchY && p.y >= p.catchY){
+            const cb = bandAt(p.catchY); p.catchY = 0;
+            if (cb){ hold(cb, p); F.cnt[cb.i]++; if (p.type === "sed") F.st.removed++; note(cb, p.x, p.y - 14*u, p.type === "sed" ? "sediment trapped" : "fine caught", "#ffd79a"); }
+          }
+          if (p.state === "free"){ const ab = bandAt(p.y + 18*u); if (ab && ACT[ab.i]) ACT[ab.i](ab, p, dt); }
+          if (p.y > F.H + 24*u){ p.gone = true; if (CONTAM.includes(p.type) && !p.dead) F.st.out++; }
+        } else if (p.state === "seek"){
+          const k = Math.min(1, dt*3.2);
+          p.x += (p.tx - p.x)*k; p.y += (p.ty - p.y)*k;
+          if (Math.hypot(p.tx - p.x, p.ty - p.y) < 1.2*u){ p.x = p.tx; p.y = p.ty; arrive(p); }
+        } else if (p.state === "chase"){
+          const t = p.tp; if (!t || t.gone){ p.gone = true; continue; }
+          const k = Math.min(1, dt*5); p.x += (t.x - p.x)*k; p.y += (t.y - p.y)*k;
+          if (Math.hypot(t.x - p.x, t.y - p.y) < 10*u){
+            p.gone = true; t.hits++;
+            if (t.hits === 1) note(p.home, t.x, t.y - 22*u, "Ag⁺ attaches", "#e9eef3");
+            if (t.hits >= 3 && !t.dead){ t.dead = true; kill(t, 2.6); F.st.bact++; F.st.removed++; note(p.home, t.x, t.y - 22*u, "microbe inactivated", "#ff9a8a"); }
+          }
+        } else if (p.state === "dying"){
+          p.life -= dt;
+          if (p.type === "bact") p.y += F.flow*.35*dt;
+          if (p.life <= 0) p.gone = true;
+        }
+      }
+      F.parts = F.parts.filter(p => !p.gone);
+      F.fx.forEach(f => f.life -= dt); F.fx = F.fx.filter(f => f.life > 0);
+    }
+
+    /* ---------- draw ---------- */
+    const BG = {
+      0(b, c){ fib(b, c, 1); }, 7(b, c){ fib(b, c, 1); },
+      1(b, c){ b.obst.forEach(o => sphere(c, o, F.u)); },
+      2(b, c){ carb(b, c); }, 5(b, c){ carb(b, c); },
+      3(b, c){
+        const u = F.u;
+        b.rings.forEach(row => {
+          c.beginPath(); row.forEach((r, j) => c[j ? "lineTo" : "moveTo"](r.x, r.y));
+          c.strokeStyle = "rgba(226,181,120,.55)"; c.lineWidth = 1.6*u; c.stroke();
+          for (let j = 0; j < row.length - 1; j++){ circ(c, (row[j].x + row[j+1].x)/2, (row[j].y + row[j+1].y)/2, 2.3*u); c.fillStyle = "#e2504a"; c.fill(); }
+          row.forEach(r => { hexPath(c, r.x, r.y, 8*u, TAU/12); c.fillStyle = "rgba(185,138,78,.4)"; c.fill(); c.strokeStyle = "#e2b578"; c.lineWidth = 2*u; c.stroke(); });
+        });
+        b.sites.forEach(s => {
+          const dir = s.y < s.ry ? -1 : 1;
+          c.beginPath(); c.moveTo(s.x, s.ry + dir*8*u); c.lineTo(s.x, s.y); c.strokeStyle = "rgba(226,181,120,.6)"; c.lineWidth = 1.2*u; c.stroke();
+          if (!s.taken){ circ(c, s.x, s.y, 2.6*u); c.fillStyle = "#e2504a"; c.fill(); circ(c, s.x + 3*u, s.y + dir*2.5*u, 1.7*u); c.fillStyle = "#eef8ff"; c.fill(); }
+        });
+        b.ag.forEach(a => {
+          const dir = a.y < a.ry ? -1 : 1;
+          c.beginPath(); c.moveTo(a.x, a.ry + dir*8*u); c.lineTo(a.x, a.y); c.strokeStyle = "rgba(233,238,243,.5)"; c.lineWidth = 1.2*u; c.stroke();
+          const g = c.createRadialGradient(a.x, a.y, 0, a.x, a.y, 15*u);
+          g.addColorStop(0, `rgba(220,232,245,${.12 + a.n*.1})`); g.addColorStop(1, "rgba(220,232,245,0)");
+          c.fillStyle = g; circ(c, a.x, a.y, 15*u); c.fill();
+          if (a.n > 1){ c.globalAlpha = .55; ion(c, a.x + 5*u, a.y + dir*4*u, 5.5*u, "ag"); c.globalAlpha = 1; }
+          if (a.n > 0) ion(c, a.x, a.y, 6.5*u, "ag");
+        });
+      },
+      4(b, c){ b.obst.forEach(o => stone(c, o, F.u)); },
+      6(b, c){
+        const u = F.u;
+        c.strokeStyle = "rgba(230,244,242,.22)"; c.lineWidth = 1.4*u;
+        b.cages.forEach(g => b.cages.forEach(h => {
+          if (h !== g && h.row === g.row && h.k === g.k + 1){
+            const d = Math.hypot(h.x - g.x, h.y - g.y), ux = (h.x - g.x)/d, uy = (h.y - g.y)/d;
+            c.beginPath(); c.moveTo(g.x + ux*g.r, g.y + uy*g.r); c.lineTo(h.x - ux*h.r, h.y - uy*h.r); c.stroke();
+          }
+        }));
+        b.cages.forEach(g => cage(c, g, u, true));
+      }
+    };
+    function fib(b, c, a){
+      b.fib.forEach(f => { c.beginPath(); c.moveTo(f.x, f.y); c.quadraticCurveTo(f.cx, f.cy, f.x1, f.y1); c.strokeStyle = `rgba(232,240,243,${f.s*a})`; c.lineWidth = f.w; c.stroke(); });
+    }
+    function carb(b, c){
+      b.gr.forEach(g => granule(c, g, F.u));
+      b.sites.forEach(s => { const k = 1 - (F.t - s.ox)/4; if (k > 0 && k <= 1){ c.globalAlpha = k; circ(c, s.x, s.y, 3*F.u); c.fillStyle = "#e2504a"; c.fill(); c.globalAlpha = 1; } });
+    }
+    function pill(c, x, y, txt, col, bd, align){
+      c.textAlign = align || "left"; c.textBaseline = "middle";
+      const w = c.measureText(txt).width + 14, h = 19, bx = align === "right" ? x - w : x;
+      c.fillStyle = "rgba(6,32,37,.82)"; c.strokeStyle = bd; c.lineWidth = 1;
+      c.beginPath(); c.rect(bx, y, w, h); c.fill(); c.stroke();
+      c.fillStyle = col; c.fillText(txt, align === "right" ? x - 7 : x + 7, y + h/2 + .5);
+    }
+    function drawF(){
+      const c = F.c, u = F.u, W = F.W, H = F.H;
+      c.setTransform(F.dpr, 0, 0, F.dpr, 0, 0);
+      const bg = c.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, "#0d3f49"); bg.addColorStop(1, "#06252b");
+      c.fillStyle = bg; c.fillRect(0, 0, W, H);
+      F.B.forEach(b => {
+        const L = LAYERS[b.i];
+        c.globalAlpha = b.i === hoverB ? .26 : .13; c.fillStyle = L.color; c.fillRect(0, b.y0, W, b.h);
+        c.globalAlpha = .85; c.fillRect(0, b.y0, 4, b.h); c.globalAlpha = 1;
+      });
+      c.strokeStyle = "rgba(230,244,242,.22)"; c.setLineDash([5, 6]); c.lineWidth = 1; c.beginPath();
+      F.B.forEach(b => { c.moveTo(0, b.y0); c.lineTo(W, b.y0); });
+      const last = F.B[7]; c.moveTo(0, last.y1); c.lineTo(W, last.y1); c.stroke(); c.setLineDash([]);
+      F.B.forEach(b => { if (BG[b.i]) BG[b.i](b, c); });
+      const ctx = {u, t:F.t};
+      for (const p of F.parts) if (p.type === "water") drawP(c, p, ctx);
+      for (const p of F.parts) if (p.type !== "water") drawP(c, p, ctx);
+      fib(F.B[0], c, .7); fib(F.B[7], c, .7);
+      /* labels */
+      const fs = Math.max(10, 11*u);
+      c.font = `600 ${fs}px "IBM Plex Sans", sans-serif`; c.textBaseline = "middle"; c.textAlign = "left";
+      c.fillStyle = "rgba(230,244,242,.7)";
+      c.fillText("RAW WATER IN ↓", 12, 16);
+      c.fillText("CLEAN WATER OUT ↓", 12, H - 14);
+      F.B.forEach(b => {
+        const L = LAYERS[b.i];
+        pill(c, 10, b.y0 + 4, `${b.i + 1} · ${L.short}`, b.i === hoverB ? "#fff" : "#E6F4F2", b.i === hoverB ? "rgba(92,207,227,.8)" : "rgba(230,244,242,.25)");
+      });
+      const ph = 6.5 + (1 - Math.exp(-F.neut/14)), mb = F.B[4];
+      pill(c, W - 10, mb.y1 - 23, `pH in 6.5 → out ${ph.toFixed(1)}`, "#ffd6a6", "rgba(255,179,92,.6)", "right");
+      /* effects */
+      c.textAlign = "center"; c.textBaseline = "middle";
+      for (const f of F.fx){
+        const k = f.life/f.max;
+        if (f.ring){ circ(c, f.x, f.y, (1 - k)*20*u + 5*u); c.strokeStyle = f.col; c.globalAlpha = k*.8; c.lineWidth = 1.5; c.stroke(); c.globalAlpha = 1; continue; }
+        c.globalAlpha = Math.min(1, k*2);
+        c.font = `600 ${Math.max(10.5, 11.5*u)}px "IBM Plex Sans", sans-serif`;
+        const tw = c.measureText(f.txt).width/2 + 6, x = Math.max(tw, Math.min(W - tw, f.x)), y = f.y - (1 - k)*16*u;
+        c.lineWidth = 3.5; c.strokeStyle = "rgba(4,24,28,.9)"; c.strokeText(f.txt, x, y);
+        c.fillStyle = f.col; c.fillText(f.txt, x, y); c.globalAlpha = 1;
+      }
+      if (!playing){
+        c.fillStyle = "rgba(4,24,28,.55)"; c.fillRect(W - 86, 8, 76, 26);
+        c.fillStyle = "#E6F4F2"; c.font = `600 11px "IBM Plex Sans", sans-serif`; c.textAlign = "center"; c.fillText("PAUSED", W - 48, 21);
+      }
+    }
+    function renderStats(){
+      const ph = 6.5 + (1 - Math.exp(-F.neut/14));
+      q("faStats").innerHTML = [[F.st.removed, "Contaminants removed"], [F.st.out, "Contaminants reaching the outlet"],
+        [F.st.salt, "Salt ions held (Na⁺ / Cl⁻)"], [ph.toFixed(1), "pH of water out"]].map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join("");
+      FM.querySelectorAll(".fa-row").forEach((row, i) => {
+        row.querySelector("em").textContent = i === 3 ? `${F.cnt[3]} · ${F.st.bact}` : F.cnt[i];
+        row.classList.toggle("on", F.t - F.B[i].flashT < .9);
+      });
+    }
+    function loopF(now){
+      raf = requestAnimationFrame(loopF);
+      let dt = Math.min(.2, Math.max(0, (now - lastT)/1000)); lastT = now;
+      const realDt = dt;
+      if (!playing) dt = 0; else if (slowMo) dt *= .35;
+      for (let left = dt; left > 1e-4; left -= .034) update(Math.min(.034, left));
+      if (mode3D && T) draw3D(dt, realDt); else drawF();
+      if ((statT += dt) > .25){ statT = 0; renderStats(); }
+    }
+
+    /* ---------- 3D view ---------- */
+    const has3D = (() => {
+      if (!window.THREE) return false;
+      try { const c = document.createElement("canvas"); return !!(c.getContext("webgl") || c.getContext("experimental-webgl")); } catch(e){ return false; }
+    })();
+    const cv3 = q("fa3d"), ov = q("faOv"), btn3 = FM.querySelector('[data-f="3d"]');
+    if (!has3D) btn3.hidden = true;
+    let T = null, mode3D = false;
+    const CAM0 = {yaw:-.4, pitch:.16, zoom:1};
+    const cam = {yaw:CAM0.yaw, pitch:CAM0.pitch, zoom:CAM0.zoom, tYaw:CAM0.yaw, tPitch:CAM0.pitch, tZoom:CAM0.zoom, idle:0};
+
+    function initT(){
+      const renderer = new THREE.WebGLRenderer({canvas:cv3, antialias:true});
+      renderer.setClearColor(0x08262c, 1);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(38, 1, .1, 400);
+      scene.add(new THREE.HemisphereLight(0xdff6f4, 0x0a2c33, .8));
+      const d1 = new THREE.DirectionalLight(0xffffff, .85); d1.position.set(4, 10, 8); scene.add(d1);
+      const d2 = new THREE.DirectionalLight(0x5ccfe3, .35); d2.position.set(-6, -3, -5); scene.add(d2);
+      const world = new THREE.Group(); scene.add(world);
+      const G = {sph:new THREE.SphereGeometry(1, 16, 12), ico:new THREE.IcosahedronGeometry(1, 0), dod:new THREE.DodecahedronGeometry(1, 0)};
+      T = {renderer, scene, camera, world, G, tex:{}, sprites:[], k:1, R:1, ptr:new Map(), drag:null, pinch:0};
+    }
+    const X3 = x => (x - F.W/2)*T.k, Y3 = y => (F.H/2 - y)*T.ky;
+    const Z3 = (x, zf) => { const X = X3(x); return zf*Math.sqrt(Math.max(0, T.R*T.R - X*X)); };
+    const mat = (c, o) => new THREE.MeshStandardMaterial(Object.assign({color:c, roughness:.85, metalness:0}, o || {}));
+
+    function tex(key){
+      if (T.tex[key]) return T.tex[key];
+      const type = key === "bactdead" ? "bact" : key;
+      const TS = 96, ext = {sed:14, org:14, odour:13, bact:44, fine:7}[type] || (RAD[type] || 6) + 1, U = 44/ext;
+      const c = document.createElement("canvas"); c.width = c.height = TS;
+      const p = {type, x:TS/2, y:TS/2, a:type === "bact" ? Math.PI/2 : -Math.PI/2 + .3, state:"free", alpha:1, t:0, ph:0, hits:0, dead:key === "bactdead"};
+      shapeFor(p); drawP(c.getContext("2d"), p, {u:U, t:0});
+      const t = new THREE.CanvasTexture(c); t.minFilter = THREE.LinearFilter;
+      return (T.tex[key] = {t, size:TS/U});
+    }
+
+    function addObst(w, o, geo, m, sc){
+      if (o.zf == null) o.zf = rnd(-.55, .55);
+      /* a second, decorative copy fills the depth of the bed */
+      [o.zf, o.zf > 0 ? o.zf - .95 : o.zf + .95].forEach(zf => {
+        const me = new THREE.Mesh(geo, m);
+        me.position.set(X3(o.x), Y3(o.y), Z3(o.x, zf));
+        me.scale.set(sc[0]*o.r*T.k, sc[1]*o.r*T.k, sc[2]*o.r*T.k);
+        me.rotation.set(rnd(0, TAU), rnd(0, TAU), rnd(0, TAU));
+        w.add(me);
+      });
+    }
+    function fib3(b, w){
+      const m = mat(0xe8f0f3, {roughness:.6, transparent:true, opacity:.7});
+      const cl = x => Math.max(0, Math.min(F.W, x));
+      const P = (x, y, zf) => new THREE.Vector3(X3(cl(x)), Y3(y), Z3(cl(x), zf));
+      for (let rep = 0; rep < 2; rep++) b.fib.forEach(f => {
+        const z0 = rnd(-.9, .9), z1 = rnd(-.9, .9);
+        const curve = new THREE.QuadraticBezierCurve3(P(f.x, f.y, z0), P(f.cx, f.cy, (z0 + z1)/2), P(f.x1, f.y1, z1));
+        w.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 20, Math.max(.01, f.w*.45*T.k), 5), m));
+      });
+    }
+    function mcc3(b, w){
+      const u = F.u, k = T.k;
+      const ringG = new THREE.TorusGeometry(8*u*k, 1.1*u*k, 4, 6);
+      const mzf = (ri, x, base) => base + (ri ? .38 : -.38) + .28*Math.sin(x*.018/u + ri*2.1 + base*3);
+      const rowOf = ry => { let bi = 0, bd = 1e9; b.rings.forEach((row, ri) => { const d = Math.abs(row[0].y - ry); if (d < bd){ bd = d; bi = ri; } }); return bi; };
+      [0, -.5, .5].forEach((base, pi) => {
+        const op = pi ? .4 : 1;
+        const m = mat(0xe2b578, pi ? {transparent:true, opacity:op} : {roughness:.5, emissive:0x3a2a10});
+        b.rings.forEach((row, ri) => {
+          if (pi && ri === (pi === 1 ? 0 : 1)) return;
+          const pts = row.map(r => new THREE.Vector3(X3(r.x), Y3(r.y), Z3(r.x, Math.max(-.95, Math.min(.95, mzf(ri, r.x, base))))));
+          w.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({color:0xe2b578, transparent:true, opacity:.6*op})));
+          row.forEach((r, j) => { const me = new THREE.Mesh(ringG, m); me.position.copy(pts[j]); me.rotation.z = Math.PI/6; w.add(me); });
+        });
+      });
+      const om = mat(0xe2504a, {roughness:.4}), hm = mat(0xeef8ff, {roughness:.4});
+      b.sites.forEach(s => {
+        s.zf = mzf(rowOf(s.ry), s.x, 0);
+        const g = new THREE.Group(); g.position.set(X3(s.x), Y3(s.y), Z3(s.x, s.zf));
+        const o = new THREE.Mesh(T.G.sph, om); o.scale.setScalar(2.6*u*k); g.add(o);
+        const h = new THREE.Mesh(T.G.sph, hm); h.scale.setScalar(1.7*u*k); h.position.set(3*u*k, (s.y < s.ry ? 2.5 : -2.5)*u*k, 0); g.add(h);
+        w.add(g); s.m3 = g;
+      });
+      b.ag.forEach(a => {
+        const me = new THREE.Mesh(T.G.sph, mat(0xe9eef3, {emissive:0xcfe6ff, emissiveIntensity:.6, metalness:.5, roughness:.25}));
+        a.zf = mzf(rowOf(a.ry), a.x, 0); me.position.set(X3(a.x), Y3(a.y), Z3(a.x, a.zf)); w.add(me); a.m3 = me;
+      });
+    }
+    function zeo3(b, w){
+      const u = F.u, k = T.k;
+      const lm = new THREE.LineBasicMaterial({color:0xe6f4f2, transparent:true, opacity:.5});
+      const si = mat(0xe8d27a, {roughness:.5}), al = mat(0x7fb2ff, {emissive:0x1b3a66, roughness:.5});
+      b.cages.forEach(g => {
+        const geo = new THREE.IcosahedronGeometry(g.r*k, 0);
+        g.zf = rnd(-.6, .6);
+        (g.na || []).forEach(n => { n.zf = n.zr = g.zf; });
+        const grp = new THREE.Group(); grp.position.set(X3(g.x), Y3(g.y), Z3(g.x, g.zf));
+        grp.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), lm));
+        const pos = geo.attributes.position, seen = new Set();
+        for (let i = 0; i < pos.count; i++){
+          const key = [pos.getX(i), pos.getY(i), pos.getZ(i)].map(v => v.toFixed(3)).join();
+          if (seen.has(key)) continue; seen.add(key);
+          const a = new THREE.Mesh(T.G.sph, seen.size % 4 === 1 ? al : si);
+          a.scale.setScalar(2.4*u*k); a.position.set(pos.getX(i), pos.getY(i), pos.getZ(i)); grp.add(a);
+        }
+        geo.dispose();
+        grp.rotation.set(rnd(0, 1), rnd(0, 1), 0); w.add(grp); g.m3 = grp;
+      });
+    }
+    const STRUCT = {
+      0:fib3, 7:fib3, 3:mcc3, 6:zeo3,
+      1:(b, w) => { const m = mat(0xd5723f, {roughness:.95}); b.obst.forEach(o => addObst(w, o, T.G.sph, m, [1, 1, 1])); },
+      2:(b, w) => { const m = mat(0x2b2f35, {flatShading:true, roughness:1}); b.gr.forEach(g => addObst(w, g, T.G.ico, m, [1, .9, 1])); },
+      5:(b, w) => { const m = mat(0x2b2f35, {flatShading:true, roughness:1}); b.gr.forEach(g => addObst(w, g, T.G.ico, m, [1, .9, 1])); },
+      4:(b, w) => { const m = mat(0xcfc5ae, {flatShading:true}); b.obst.forEach(o => addObst(w, o, T.G.dod, m, [1, .8, .9])); }
+    };
+
+    function buildT(){
+      if (!T) initT();
+      const w = T.world, keep = Object.values(T.G);
+      while (w.children.length){
+        const o = w.children.pop();
+        o.traverse(n => {
+          if (n.geometry && !keep.includes(n.geometry)) n.geometry.dispose();
+          if (n.material) [].concat(n.material).forEach(m => m.dispose());
+        });
+      }
+      T.sprites = [];
+      T.k = 10/F.H; T.R = F.W*T.k/2; T.ky = T.k*Math.max(1, 1.45*F.W/F.H);
+      const R = T.R, top = Y3(F.B[0].y0), bot = Y3(F.B[7].y1);
+      const glass = new THREE.Mesh(new THREE.CylinderGeometry(R*1.03, R*1.03, top - bot, 64, 1, true),
+        mat(0xbfe8ee, {transparent:true, opacity:.07, side:THREE.DoubleSide, depthWrite:false, roughness:.2}));
+      glass.position.y = (top + bot)/2; w.add(glass);
+      const ringAt = (y, col, r) => { const m = new THREE.Mesh(new THREE.TorusGeometry(R*1.03, r, 6, 72), mat(col, {emissive:col, emissiveIntensity:.35})); m.rotation.x = Math.PI/2; m.position.y = y; w.add(m); };
+      F.B.forEach(b => {
+        const col = new THREE.Color(LAYERS[b.i].color), y0 = Y3(b.y0), y1 = Y3(b.y1);
+        const vol = new THREE.Mesh(new THREE.CylinderGeometry(R, R, y0 - y1, 48, 1, true),
+          mat(col, {transparent:true, opacity:.1, side:THREE.DoubleSide, depthWrite:false}));
+        vol.position.y = (y0 + y1)/2; w.add(vol);
+        ringAt(y0, col, .02);
+        if (STRUCT[b.i]) STRUCT[b.i](b, w);
+      });
+      ringAt(bot, new THREE.Color(LAYERS[7].color), .02);
+      T.wO = new THREE.InstancedMesh(T.G.sph, mat(0xe2504a, {roughness:.35}), 1600);
+      T.wH = new THREE.InstancedMesh(T.G.sph, mat(0xeef8ff, {roughness:.35}), 3200);
+      T.wO.frustumCulled = T.wH.frustumCulled = false;
+      w.add(T.wO); w.add(T.wH);
+      T.sg = new THREE.Group(); w.add(T.sg);
+      T.renderer.setPixelRatio(F.dpr); T.renderer.setSize(F.W, F.H, false);
+      T.camera.aspect = F.W/F.H; T.camera.updateProjectionMatrix();
+      ov.width = Math.round(F.W*F.dpr); ov.height = Math.round(F.H*F.dpr);
+    }
+
+    let _m, _q, _s, _p, _v, _r;
+    if (has3D){ _m = new THREE.Matrix4(); _q = new THREE.Quaternion(); _s = new THREE.Vector3(); _p = new THREE.Vector3(); _v = new THREE.Vector3(); _r = new THREE.Vector3(); }
+    function proj(x, y, z){ _v.set(x, y, z).project(T.camera); return [(_v.x + 1)/2*F.W, (1 - _v.y)/2*F.H, _v.z]; }
+
+    function draw3D(dt, realDt){
+      const u = F.u, k = T.k, camera = T.camera;
+      /* camera */
+      cam.idle += realDt;
+      if (!T.drag && cam.idle > 3) cam.tYaw += realDt*.12;
+      const e = 1 - Math.pow(.002, realDt);
+      cam.yaw += (cam.tYaw - cam.yaw)*e; cam.pitch += (cam.tPitch - cam.pitch)*e; cam.zoom += (cam.tZoom - cam.zoom)*e;
+      const H3 = Y3(F.B[0].y0) - Y3(F.B[7].y1), asp = F.W/F.H, tn = Math.tan(19*Math.PI/180);
+      const dist = (Math.max(H3*.58, T.R*1.2/asp) / tn + T.R)*cam.zoom;
+      camera.position.set(dist*Math.cos(cam.pitch)*Math.sin(cam.yaw), dist*Math.sin(cam.pitch), dist*Math.cos(cam.pitch)*Math.cos(cam.yaw));
+      camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
+
+      /* layer structures that change */
+      const mb = F.B[3];
+      mb.sites.forEach(s => { if (s.m3) s.m3.visible = !s.taken; });
+      mb.ag.forEach(a => { if (a.m3){ a.m3.scale.setScalar((a.n > 0 ? 3.5 + a.n*1.3 : 1.6)*u*k); a.m3.material.emissiveIntensity = .2 + a.n*.25; } });
+      F.B[6].cages.forEach(g => { if (g.m3) g.m3.rotation.y += dt*.25; });
+
+      /* molecules */
+      let nO = 0, nH = 0;
+      const live = new Set();
+      for (const p of F.parts){
+        if (p.zf == null){ p.zf = rnd(-.92, .92); p.zr = p.zf; }
+        let tz = p.zf;
+        if (p.site && p.site.g) tz = p.site.g.zf;
+        else if (p.site && p.site.zf != null) tz = p.site.zf;
+        else if (p.cage && p.cage.zf != null) tz = p.cage.zf;
+        else if (p.state === "bound" && p.cageRef && p.cageRef.zf != null) tz = p.cageRef.zf;
+        else if (p.state === "chase" && p.tp && p.tp.zr != null) tz = p.tp.zr;
+        p.zr += (tz - p.zr)*Math.min(1, dt*(p.state === "chase" ? 6 : 3));
+        const bd = p.state === "bound";
+        const x = bd ? p.bx + Math.sin(F.t*3 + p.ph)*.8*u : p.x, y = bd ? p.by + Math.cos(F.t*2.6 + p.ph)*.8*u : p.y;
+        const X = X3(x), Y = Y3(y), Z = Z3(x, p.zr);
+        const al = (p.alpha == null ? 1 : p.alpha)*(p.state === "dying" ? Math.max(0, p.life/p.max) : 1);
+        if (p.type === "water"){
+          if (nO >= 1600) continue;
+          _q.set(0, 0, 0, 1);
+          _p.set(X, Y, Z); _s.setScalar(5.2*u*k*al*1.2); _m.compose(_p, _q, _s); T.wO.setMatrixAt(nO++, _m);
+          for (const sg of [-1, 1]){
+            const a = p.a + sg*.91, d = 6.2*u*k*1.2, hx = Math.cos(a)*d, hy = -Math.sin(a)*d;
+            _p.set(X + hx*Math.cos(p.ph), Y + hy, Z + hx*Math.sin(p.ph)); _s.setScalar(3*u*k*al*1.2); _m.compose(_p, _q, _s); T.wH.setMatrixAt(nH++, _m);
+          }
+          continue;
+        }
+        let s = p.s3;
+        if (!s){ s = new THREE.Sprite(new THREE.SpriteMaterial({transparent:true, depthWrite:false})); T.sg.add(s); p.s3 = s; s.p = p; T.sprites.push(s); }
+        const key = p.type === "bact" && p.dead ? "bactdead" : p.type;
+        if (s.key !== key){ const tx = tex(key); s.material.map = tx.t; s.material.needsUpdate = true; s.key = key; s.scale.setScalar(tx.size*u*k*1.3); }
+        s.position.set(X, Y, Z); s.material.opacity = al;
+        live.add(s);
+      }
+      T.wO.count = nO; T.wH.count = nH;
+      T.wO.instanceMatrix.needsUpdate = true; T.wH.instanceMatrix.needsUpdate = true;
+      T.sprites = T.sprites.filter(s => { if (live.has(s)) return true; T.sg.remove(s); s.material.dispose(); if (s.p) s.p.s3 = null; return false; });
+      T.renderer.render(T.scene, camera);
+
+      /* labels and effects on a 2D overlay */
+      const c = ov.getContext("2d"), W = F.W, H = F.H;
+      c.setTransform(F.dpr, 0, 0, F.dpr, 0, 0); c.clearRect(0, 0, W, H);
+      _r.setFromMatrixColumn(camera.matrixWorld, 0).normalize();
+      const R = T.R*1.05, fs = Math.max(10, 11*u);
+      c.font = `600 ${fs}px "IBM Plex Sans", sans-serif`;
+      const [tx, ty] = proj(0, Y3(F.B[0].y0) + .45, 0), [bx, by] = proj(0, Y3(F.B[7].y1) - .45, 0);
+      c.fillStyle = "rgba(230,244,242,.75)"; c.textAlign = "center"; c.textBaseline = "middle";
+      c.fillText("RAW WATER IN ↓", tx, Math.max(12, ty)); c.fillText("CLEAN WATER OUT ↓", bx, Math.min(H - 12, by));
+      F.B.forEach(b => {
+        const yy = Y3(b.y0) - (Y3(b.y0) - Y3(b.y1))*.5;
+        const [sx, sy] = proj(-_r.x*R, yy - _r.y*R, -_r.z*R);
+        const txt = `${b.i + 1} · ${LAYERS[b.i].short}`, w = c.measureText(txt).width + 14;
+        pill(c, Math.max(4, sx - w - 6), sy - 9.5, txt, "#E6F4F2", "rgba(230,244,242,.25)");
+      });
+      const ph = 6.5 + (1 - Math.exp(-F.neut/14)), m4 = F.B[4], y4 = (Y3(m4.y0) + Y3(m4.y1))/2;
+      const [px, py] = proj(_r.x*R, y4 + _r.y*R, _r.z*R);
+      const ptxt = `pH in 6.5 → out ${ph.toFixed(1)}`, pw = c.measureText(ptxt).width + 14;
+      pill(c, Math.min(W - 4 - pw, px + 6), py - 9.5, ptxt, "#ffd6a6", "rgba(255,179,92,.6)");
+      c.textAlign = "center"; c.textBaseline = "middle";
+      for (const f of F.fx){
+        const kk = f.life/f.max, [fx2, fy2] = proj(X3(f.x), Y3(f.y), 0);
+        if (f.ring) continue;
+        c.globalAlpha = Math.min(1, kk*2);
+        c.font = `600 ${Math.max(10.5, 11.5*u)}px "IBM Plex Sans", sans-serif`;
+        const tw = c.measureText(f.txt).width/2 + 6, x = Math.max(tw, Math.min(W - tw, fx2)), y = fy2 - (1 - kk)*16*u;
+        c.lineWidth = 3.5; c.strokeStyle = "rgba(4,24,28,.9)"; c.strokeText(f.txt, x, y);
+        c.fillStyle = f.col; c.fillText(f.txt, x, y); c.globalAlpha = 1;
+      }
+      c.font = `500 11px "IBM Plex Sans", sans-serif`; c.textAlign = "right"; c.fillStyle = "rgba(230,244,242,.55)";
+      c.fillText(W < 480 ? "Drag to rotate · pinch to zoom" : "Drag to rotate · scroll to zoom · double-click to reset", W - 10, H - 12);
+      if (!playing){
+        c.fillStyle = "rgba(4,24,28,.55)"; c.fillRect(W - 86, 8, 76, 26);
+        c.fillStyle = "#E6F4F2"; c.font = `600 11px "IBM Plex Sans", sans-serif`; c.textAlign = "center"; c.fillText("PAUSED", W - 48, 21);
+      }
+    }
+
+    /* rotate, zoom, pinch */
+    const pdist = () => { const v = [...T.ptr.values()]; return Math.hypot(v[0].x - v[1].x, v[0].y - v[1].y); };
+    cv3.addEventListener("pointerdown", e => {
+      if (!T) return;
+      T.ptr.set(e.pointerId, {x:e.clientX, y:e.clientY}); cv3.setPointerCapture(e.pointerId); cam.idle = 0;
+      if (T.ptr.size === 2){ T.drag = null; T.pinch = pdist(); T.pz = cam.tZoom; }
+      else T.drag = {x:e.clientX, y:e.clientY, yaw:cam.tYaw, pitch:cam.tPitch};
+      cv3.classList.add("grab");
+    });
+    cv3.addEventListener("pointermove", e => {
+      if (!T || !T.ptr.has(e.pointerId)) return;
+      T.ptr.set(e.pointerId, {x:e.clientX, y:e.clientY}); cam.idle = 0;
+      if (T.ptr.size === 2 && T.pinch){ cam.tZoom = Math.max(.45, Math.min(1.8, T.pz*T.pinch/Math.max(1, pdist()))); }
+      else if (T.drag){ cam.tYaw = T.drag.yaw - (e.clientX - T.drag.x)*.008; cam.tPitch = Math.max(-1.25, Math.min(1.25, T.drag.pitch + (e.clientY - T.drag.y)*.006)); }
+    });
+    const endP = e => { if (!T) return; T.ptr.delete(e.pointerId); if (T.ptr.size < 2) T.pinch = 0; if (!T.ptr.size){ T.drag = null; cv3.classList.remove("grab"); } };
+    cv3.addEventListener("pointerup", endP); cv3.addEventListener("pointercancel", endP);
+    cv3.addEventListener("wheel", e => { e.preventDefault(); cam.idle = 0; cam.tZoom = Math.max(.45, Math.min(1.8, cam.tZoom*(1 + e.deltaY*.0012))); }, {passive:false});
+    cv3.addEventListener("dblclick", () => { cam.tYaw = CAM0.yaw; cam.tPitch = CAM0.pitch; cam.tZoom = CAM0.zoom; cam.idle = 0; });
+
+    function set3D(on){
+      mode3D = !!on && has3D;
+      cvF.hidden = mode3D; cv3.hidden = ov.hidden = !mode3D;
+      btn3.setAttribute("aria-pressed", mode3D); btn3.textContent = mode3D ? "2D view" : "3D view";
+      FM.querySelector(".mol-kicker").textContent = "How it works · All 8 layers at once" + (mode3D ? " · 3D" : "");
+      if (mode3D && F){ buildT(); cam.yaw = cam.tYaw = CAM0.yaw; cam.pitch = cam.tPitch = CAM0.pitch; cam.idle = 0; }
+    }
+
+    /* ---------- open / close / full screen ---------- */
+    const fsElF = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+    function placeF(){ const par = fsElF(); if (par === FM || FM.contains(par)) return; const to = par || document.body; if (FM.parentNode !== to) to.appendChild(FM); }
+    function setPlayF(){ const b = FM.querySelector('[data-f="play"]'); b.textContent = playing ? "Pause" : "Play"; b.setAttribute("aria-pressed", !playing); }
+    const fsBtnF = FM.querySelector('[data-f="full"]');
+    function setFullF(on){
+      FM.classList.toggle("isfull", on);
+      fsBtnF.setAttribute("aria-pressed", on);
+      fsBtnF.setAttribute("aria-label", on ? "Exit full screen" : "Full screen"); fsBtnF.title = on ? "Exit full screen" : "Full screen";
+    }
+    function exitFullF(){
+      if (fsElF() === FM) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      FM.classList.remove("cssfull"); setFullF(false);
+    }
+    function toggleFullF(){
+      if (FM.classList.contains("isfull")){ exitFullF(); return; }
+      const req = FM.requestFullscreen || FM.webkitRequestFullscreen;
+      const css = () => { FM.classList.add("cssfull"); setFullF(true); };
+      if (req){ try { const r = req.call(FM); if (r && r.catch) r.catch(css); } catch(e){ css(); } } else css();
+    }
+    function openAll(from){
+      openerF = from || document.activeElement;
+      placeF(); FM.hidden = false; document.body.classList.add("mol-lock");
+      playing = true; setPlayF();
+      requestAnimationFrame(() => { build(); lastT = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(loopF); });
+      FM.querySelector('[data-f="close"]').focus({preventScroll:true});
+    }
+    function closeAll(refocus){
+      if (FM.classList.contains("isfull")) exitFullF();
+      FM.hidden = true; cancelAnimationFrame(raf); F = null; hoverB = -1;
+      document.body.classList.remove("mol-lock");
+      if (refocus !== false && openerF && openerF.isConnected) openerF.focus({preventScroll:true});
+    }
+    function zoomLayer(i){ const from = openerF; closeAll(false); open(i, from); }
+
+    FM.addEventListener("click", e => {
+      if (e.target === FM){ closeAll(); return; }
+      const row = e.target.closest(".fa-row"); if (row){ e.stopPropagation(); zoomLayer(+row.dataset.i); return; }
+      const b = e.target.closest("[data-f]"); if (!b) return;
+      e.stopPropagation();
+      const m = b.dataset.f;
+      if (m === "close") closeAll();
+      else if (m === "full") toggleFullF();
+      else if (m === "3d") set3D(!mode3D);
+      else if (m === "play"){ playing = !playing; setPlayF(); }
+      else if (m === "restart"){ playing = true; setPlayF(); build(); }
+      else if (m === "slow"){ slowMo = !slowMo; b.setAttribute("aria-pressed", slowMo); }
+    });
+    const bandFromEvent = e => { if (!F) return null; const r = cvF.getBoundingClientRect(); return bandAt(e.clientY - r.top); };
+    cvF.addEventListener("pointermove", e => { const b = bandFromEvent(e); hoverB = b ? b.i : -1; cvF.title = b ? `Zoom into layer ${b.i + 1}: ${LAYERS[b.i].name}` : ""; });
+    cvF.addEventListener("pointerleave", () => { hoverB = -1; });
+    cvF.addEventListener("click", e => { const b = bandFromEvent(e); if (b) zoomLayer(b.i); });
+    ["pointerdown", "keydown", "wheel"].forEach(ev => FM.addEventListener(ev, e => e.stopPropagation()));
+    FM.addEventListener("keydown", e => {
+      if (e.key === "Escape"){ e.preventDefault(); if (FM.classList.contains("cssfull")) exitFullF(); else closeAll(); }
+      else if (e.key === "Tab"){
+        const f = [...FM.querySelectorAll("button")].filter(b => b.offsetParent !== null);
+        const first = f[0], lastB = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); lastB.focus(); }
+        else if (!e.shiftKey && document.activeElement === lastB){ e.preventDefault(); first.focus(); }
+      }
+    });
+    let rtF = 0;
+    new ResizeObserver(() => { if (FM.hidden || !F) return; clearTimeout(rtF); rtF = setTimeout(() => { if (!FM.hidden) build(); }, 150); }).observe(stageF);
+    ["fullscreenchange", "webkitfullscreenchange"].forEach(ev => document.addEventListener(ev, () => {
+      if (FM.hidden) return;
+      if (!FM.classList.contains("cssfull")) setFullF(fsElF() === FM);
+      placeF();
+    }));
+    document.querySelectorAll("[data-fullfilter]").forEach(b => b.addEventListener("click", () => openAll(b)));
+    window.openFullFilter = openAll;
+  })();
+  window.openHowItWorks = open;
+})();
+</script>
+</body>
+</html>
